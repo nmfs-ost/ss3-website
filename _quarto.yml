@@ -6,7 +6,7 @@ website:
   title: "Stock Synthesis (SS3) Documentation"
   navbar:
     left:
-      - href: index.qmd
+      - href: qmds/index.qmd
         text: Home
       - href: qmds/about.qmd
         text: About

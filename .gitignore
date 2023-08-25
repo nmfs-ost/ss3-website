@@ -6,3 +6,4 @@ quarto_doc_website.Rproj
 .git
 
 /.quarto/
+/_site/
