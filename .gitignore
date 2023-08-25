@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+quarto_doc_website.Rproj
+.git
+
+/.quarto/

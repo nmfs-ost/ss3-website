@@ -1,6 +1,5 @@
 project:
   type: website
-  output-dir: docs
 
 website:
   title: "Stock Synthesis (SS3) Documentation"
@@ -20,3 +19,5 @@ format:
 
 editor: visual
 
+execute: 
+  freeze: auto
