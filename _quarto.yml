@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Stock Synthesis (SS3) Documentation"
@@ -7,7 +8,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: docs/about.qmd
+      - href: qmds/about.qmd
         text: About
         
 
@@ -18,6 +19,3 @@ format:
     toc: true
 
 editor: visual
-
-execute: 
-  freeze: true
