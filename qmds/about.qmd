@@ -1,0 +1,9 @@
+---
+title: "About"
+---
+
+About this site, testing nested builds
+
+```{r}
+1 + 1
+```

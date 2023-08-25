@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Stock Synthesis (SS3) Documentation"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: qmds/about.qmd
+        text: About
+        
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
