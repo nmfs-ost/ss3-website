@@ -12,6 +12,8 @@ website:
         text: About
       - href: qmds/html.qmd
         text: HTML
+      - href: qmds/manuals.qmd
+        text: manuals
         
 
 format:
