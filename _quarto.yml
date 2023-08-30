@@ -9,11 +9,8 @@ website:
       - href: qmds/index.qmd
         text: Home
       - href: qmds/about.qmd
-        text: About
       - href: qmds/html.qmd
-        text: HTML
       - href: qmds/manuals.qmd
-        text: manuals
         
 
 format:
