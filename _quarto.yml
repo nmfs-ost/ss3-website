@@ -12,6 +12,8 @@ website:
       - href: qmds/html.qmd
       - href: SS330_User_Manual_release.html
         text: HTML
+      - href: https://github.com/e-gugliotti-NOAA/quarto-doc-website/blob/main/SS330_User_Manual_release.html
+        text: full url
         
 
 format:
