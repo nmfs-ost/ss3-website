@@ -19,5 +19,5 @@ website:
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css: html_usermanual.css
     toc: true
