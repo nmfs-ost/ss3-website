@@ -10,7 +10,8 @@ website:
         text: Home
       - href: qmds/about.qmd
       - href: qmds/html.qmd
-      - href: qmds/manuals.qmd
+      - href: SS330_User_Manual_release.html
+        text: HTML
         
 
 format:
