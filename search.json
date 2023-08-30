@@ -495,5 +495,12 @@
     "title": "quarto_doc_website",
     "section": "",
     "text": "This is a Quarto website.\nTest change.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "qmds/manuals.html",
+    "href": "qmds/manuals.html",
+    "title": "Manuals",
+    "section": "",
+    "text": "Manuals"
   }
 ]
