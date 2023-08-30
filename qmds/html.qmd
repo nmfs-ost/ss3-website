@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+---
+title: "RAW HTML CONTENT"
+format: html
+css: html_usermanual.css
+---
+
+```{=html}
 <html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
 <div class="navbar">
   <a href="https://nmfs-stock-synthesis.github.io/doc/">Manual home page</a>    
   <a href="https://github.com/nmfs-stock-synthesis/doc"><i class="fa fa-fw fa-github"></i>nmfs-stock-synthesis/doc</a>
   <a href="https://github.com/nmfs-stock-synthesis/doc/issues/new">Report an issue</a>
-  <a href="https://e-gugliotti-noaa.github.io/quarto-doc-website/docs/html/SS330_User_Manual_release.html">Table of contents</a>
+  <a href="https://e-gugliotti-noaa.github.io/quarto-doc-website/html/SS330_User_Manual_release.html">Table of contents</a>
 </div>
 <head>
   <meta charset="utf-8" />
@@ -11791,3 +11797,4 @@ Xu, Haikun, James T. Thorson, Richard D. Methot, and Ian G. Taylor. 2019. <span>
 </div>
 </body>
 </html>
+```
