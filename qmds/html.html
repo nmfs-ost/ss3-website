@@ -61,7 +61,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../html_usermanual.css">
 <link rel="stylesheet" href="html_usermanual.css">
 </head>
 
@@ -86,26 +85,31 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../qmds/index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../qmds/about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li class="dropdown-header">getting_started_ss.qmd</li>
+        <li class="dropdown-header">model_tutorial.qmd</li>
+        <li class="dropdown-header">ss_model_tips.qmd</li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html" rel="" target="">
+ <span class="dropdown-text">HTML Version</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../qmds/html.html" rel="" target="" aria-current="page">
- <span class="menu-text">HTML Embedded Version</span></a>
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf" rel="" target="">
+ <span class="dropdown-text">PDF Version</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../SS330_User_Manual_release.html" rel="" target="">
- <span class="menu-text">HTML</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://github.com/e-gugliotti-NOAA/quarto-doc-website/blob/main/SS330_User_Manual_release.html" rel="" target="">
- <span class="menu-text">full url</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html" rel="" target="">
- <span class="menu-text">real documentation</span></a>
-  </li>  
+    </ul>
+  </li>
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
