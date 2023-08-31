@@ -4,22 +4,32 @@ project:
 
 website:
   title: "Stock Synthesis (SS3) Documentation"
+  issue-url: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
+  repo-actions: [issue]
   navbar:
     left:
       - href: qmds/index.qmd
         text: "Home"
+        icon: "house"
       - text: "SS3 User Manuals"
-        href: qmds/user_manual.qmd
+        icon: "journal"
         menu:
+          - href: qmds/user_manual.qmd
+            text: "Citing the SS3 User Manual"
           - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
             text: "HTML Version"
           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
             text: "PDF Version"
       - text: "Tutorials"
+        icon: "person-vcard"
         menu:
           - qmds/getting_started_ss.qmd
           - qmds/ss_model_tips.qmd
           - qmds/model_tutorial.qmd
+    right:
+       - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
+         icon: github
+       
         
 
 format:

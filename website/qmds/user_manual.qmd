@@ -1,5 +1,5 @@
 ---
-title: "SS3 User Manual"
+title: "Citing the SS3 User Manual"
 format: html
 ---
 ## How to Cite the Stock Synthesis User Manual
