@@ -4,8 +4,8 @@ project:
 
 website:
   title: "Stock Synthesis (SS3) Documentation"
-  issue-url: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
-  repo-actions: [source, issue]
+  issue-url: "https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"
+  repo-actions: [issue]
   navbar:
     left:
       - text: "Home"
