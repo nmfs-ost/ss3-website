@@ -8,9 +8,10 @@ website:
   repo-actions: [issue]
   navbar:
     left:
-      - href: qmds/index.qmd
-        text: "Home"
+      - text: "Home"
+        href: index.qmd
         icon: "house"
+
       - text: "SS3 User Manuals"
         icon: "journal"
         menu:
@@ -20,6 +21,7 @@ website:
             text: "HTML Version"
           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
             text: "PDF Version"
+
       - text: "Tutorials"
         icon: "person-vcard"
         menu:
