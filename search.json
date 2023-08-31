@@ -84,39 +84,81 @@
     "text": "What to do when SS3 doesn’t run\nHere are some basic checks for when SS3 does not run:\n\nMake sure that all files and directories are named correctly.\nCheck that starter.ss references the correct names of the control and data files.\nIf SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read corectly or not.\n\nFor further information on troubleshooting, please refer to the SS3 User Manual “Running Stock Synthesis” subsections, especially “Re-Starting a Run” and “Debugging Tips”."
   },
   {
-    "objectID": "qmds/index.html",
-    "href": "qmds/index.html",
-    "title": "Stock Synthesis Documentation",
+    "objectID": "qmds/ss_model_tips.html",
+    "href": "qmds/ss_model_tips.html",
+    "title": "Developing your first Stock Synthesis (SS3) model",
     "section": "",
-    "text": "Getting Started Tutorial\nBuilding Your First SS3 Model Tutorial"
+    "text": "The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.\nIf you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the Getting Started guide before attempting to develop and run your own model as outlined here.\nBy the end of using this guide, you should be able to:\n\nDevelop your own SS3 model development workflow based on the tools and methods suggested\nFind information on the required inputs for different model specifications\nUnderstand how to use phases within an SS3 model\nDebug basic issues with input in Stock Synthesis models and identify when there are more advanced model problems"
   },
   {
-    "objectID": "qmds/index.html#tutorials",
-    "href": "qmds/index.html#tutorials",
-    "title": "Stock Synthesis Documentation",
-    "section": "",
-    "text": "Getting Started Tutorial\nBuilding Your First SS3 Model Tutorial"
+    "objectID": "qmds/ss_model_tips.html#first-runs-without-estimation",
+    "href": "qmds/ss_model_tips.html#first-runs-without-estimation",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "First runs without estimation",
+    "text": "First runs without estimation\nFirst, check that SS3 reads the input files as intended. Use -stopph 0 -nohess command line options to run the model without estimation. Then examine warning.sso, echoinput.sso, and the .ss_new files produced to see how SS3 interpreted your input files and if it was as you intended.\nAfter you have verified that SS3 is reading your input correctly, you can also consider adjustment to selectivity, growth, and recruitment parameters."
   },
   {
-    "objectID": "qmds/index.html#user-manual",
-    "href": "qmds/index.html#user-manual",
-    "title": "Stock Synthesis Documentation",
-    "section": "User Manual ",
-    "text": "User Manual \n\nCurrent User Manual (html)\nCurrent User Manual (pdf)"
+    "objectID": "qmds/ss_model_tips.html#runs-estimating-some-parameters",
+    "href": "qmds/ss_model_tips.html#runs-estimating-some-parameters",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Runs estimating some parameters",
+    "text": "Runs estimating some parameters\nTry changing max phase to be greater than 0 (perhaps 2 or 3) to estimate some but not all parameters. Do this by using -stopph x -nohess, where x should the maximum phase desired (e.g., 2 or 3). -nohess is still used to reduce run time. During this stage of model runs, you should try to adjust the model to resolve all major patterns in the residuals. This may include considering and making changes to the model structure."
   },
   {
-    "objectID": "qmds/index.html#how-to-cite-the-stock-synthesis-user-manual",
-    "href": "qmds/index.html#how-to-cite-the-stock-synthesis-user-manual",
-    "title": "Stock Synthesis Documentation",
-    "section": "How to Cite the Stock Synthesis User Manual ",
-    "text": "How to Cite the Stock Synthesis User Manual \nPlease cite the manual as:\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User Manual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report NMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
+    "objectID": "qmds/ss_model_tips.html#runs-estimating-all-parameters",
+    "href": "qmds/ss_model_tips.html#runs-estimating-all-parameters",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Runs estimating all parameters",
+    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 User Manual for additional details).\nDo runs with or without estimating the hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
   },
   {
-    "objectID": "qmds/index.html#how-to-cite-stock-synthesis",
-    "href": "qmds/index.html#how-to-cite-stock-synthesis",
-    "title": "Stock Synthesis Documentation",
-    "section": "How to Cite Stock Synthesis",
-    "text": "How to Cite Stock Synthesis\nPlease cite Stock Synthesis as:\nMethot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical\nframework for fish stock assessment and fishery management. Fisheries Research, \n142: 86-99. https://doi.org/10.1016/j.fishres.2012.10.012\nThe following BibTeX entry can be copied and used in a .bib file:\n@article{methotwetzel2013,\n  title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},\n  author={Methot, Richard Donald and Wetzel, Chantel R},\n  year={2013}, \n  journal={Fisheries Research},\n  volume={142},\n  pages={86--99},\n  doi={10.1016/j.fishres.2012.10.012},\n}\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries"
+    "objectID": "qmds/ss_model_tips.html#if-the-residuals-have-substantial-patterns",
+    "href": "qmds/ss_model_tips.html#if-the-residuals-have-substantial-patterns",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "If the residuals have substantial patterns",
+    "text": "If the residuals have substantial patterns\nIt is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model. If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue."
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
+    "href": "qmds/ss_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "If SS3 runs, but there is a large gradient at the end",
+    "text": "If SS3 runs, but there is a large gradient at the end\nLarge gradients are usually reported in warnings.sso file, so this problem should be clear when examining the file after a model run. If this is the case, try the following\n\nExamine Report.sso for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.\nExamine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population."
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#if-the-hessian-does-not-invert",
+    "href": "qmds/ss_model_tips.html#if-the-hessian-does-not-invert",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "If the hessian does not invert",
+    "text": "If the hessian does not invert\nThe hessian information is reported in the Report.sso file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the hessian will not invert."
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#does-my-model-model-make-sense",
+    "href": "qmds/ss_model_tips.html#does-my-model-model-make-sense",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Does my model model make sense?",
+    "text": "Does my model model make sense?\n\nDoes the biology make sense? Selectivity?\nIs the model fitting the indices? Length and age data?\nWhat is the pattern in recruitment?\nDoes the prior type match what I thought I was specifying?"
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#does-my-model-model-fit-well",
+    "href": "qmds/ss_model_tips.html#does-my-model-model-fit-well",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Does my model model fit well?",
+    "text": "Does my model model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#does-my-data-weighting-make-sense",
+    "href": "qmds/ss_model_tips.html#does-my-data-weighting-make-sense",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Does my data weighting make sense?",
+    "text": "Does my data weighting make sense?\nThe r4ss::SS_output() function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister Ianelli weighting (i.e., weighting by the harmonic mean). The r4ss::SS_plots() function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model."
+  },
+  {
+    "objectID": "qmds/ss_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
+    "href": "qmds/ss_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
+    "title": "Developing your first Stock Synthesis (SS3) model",
+    "section": "Did I fix variation in recruitment correctly?",
+    "text": "Did I fix variation in recruitment correctly?\nCheck the the sigmaR (i.e., recruitment devs standard deviation) information. The sigmaR parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.\nFor a fixed value of sigmaR, a section of the output will provide diagnostics to determine if the fixed sigmaR value is capturing the estimated variations in recruitment. The r4ss::SS_output() function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using."
   },
   {
     "objectID": "qmds/model_tutorial.html",
@@ -196,81 +238,32 @@
     "text": "Looking at model results\nOnce verifying that there is no indication that the model hasn’t converged (although an extensive jittering analysis need not be done at this stage), looking at estimates from the model can be helpful. Perhaps the easiest and quickest way to look at many plots from a model is to use the SS_plots() in r4ss. To plot the results, use:\n\noutput &lt;- SS_output(dir = \"simpler\")\nSS_plots(output)\n\nWhen the function is done run running, an HTML window will open up in your browser and you can look through plots quickly to determine if the model “makes sense” or if adjustments need to be made."
   },
   {
-    "objectID": "qmds/ss_model_tips.html",
-    "href": "qmds/ss_model_tips.html",
-    "title": "Developing your first Stock Synthesis (SS3) model",
+    "objectID": "qmds/index.html",
+    "href": "qmds/index.html",
+    "title": "Stock Synthesis Documentation",
     "section": "",
-    "text": "The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.\nIf you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the Getting Started guide before attempting to develop and run your own model as outlined here.\nBy the end of using this guide, you should be able to:\n\nDevelop your own SS3 model development workflow based on the tools and methods suggested\nFind information on the required inputs for different model specifications\nUnderstand how to use phases within an SS3 model\nDebug basic issues with input in Stock Synthesis models and identify when there are more advanced model problems"
+    "text": "Welcome to the Stock Synthesis repository!"
   },
   {
-    "objectID": "qmds/ss_model_tips.html#first-runs-without-estimation",
-    "href": "qmds/ss_model_tips.html#first-runs-without-estimation",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "First runs without estimation",
-    "text": "First runs without estimation\nFirst, check that SS3 reads the input files as intended. Use -stopph 0 -nohess command line options to run the model without estimation. Then examine warning.sso, echoinput.sso, and the .ss_new files produced to see how SS3 interpreted your input files and if it was as you intended.\nAfter you have verified that SS3 is reading your input correctly, you can also consider adjustment to selectivity, growth, and recruitment parameters."
+    "objectID": "qmds/index.html#how-to-cite-stock-synthesis",
+    "href": "qmds/index.html#how-to-cite-stock-synthesis",
+    "title": "Stock Synthesis Documentation",
+    "section": "How to Cite Stock Synthesis",
+    "text": "How to Cite Stock Synthesis\nPlease cite Stock Synthesis as:\nMethot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical\nframework for fish stock assessment and fishery management. Fisheries Research, \n142: 86-99. https://doi.org/10.1016/j.fishres.2012.10.012\nThe following BibTeX entry can be copied and used in a .bib file:\n@article{methotwetzel2013,\n  title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},\n  author={Methot, Richard Donald and Wetzel, Chantel R},\n  year={2013}, \n  journal={Fisheries Research},\n  volume={142},\n  pages={86--99},\n  doi={10.1016/j.fishres.2012.10.012},\n}\nTo see how to cite the Stock Synthesis User Manual, please refer to the SS3 User Manual tab).\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries"
   },
   {
-    "objectID": "qmds/ss_model_tips.html#runs-estimating-some-parameters",
-    "href": "qmds/ss_model_tips.html#runs-estimating-some-parameters",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Runs estimating some parameters",
-    "text": "Runs estimating some parameters\nTry changing max phase to be greater than 0 (perhaps 2 or 3) to estimate some but not all parameters. Do this by using -stopph x -nohess, where x should the maximum phase desired (e.g., 2 or 3). -nohess is still used to reduce run time. During this stage of model runs, you should try to adjust the model to resolve all major patterns in the residuals. This may include considering and making changes to the model structure."
+    "objectID": "qmds/user_manual.html",
+    "href": "qmds/user_manual.html",
+    "title": "SS3 User Manual",
+    "section": "",
+    "text": "Please cite the manual as:\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User Manual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report NMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
   },
   {
-    "objectID": "qmds/ss_model_tips.html#runs-estimating-all-parameters",
-    "href": "qmds/ss_model_tips.html#runs-estimating-all-parameters",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Runs estimating all parameters",
-    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 User Manual for additional details).\nDo runs with or without estimating the hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#if-the-residuals-have-substantial-patterns",
-    "href": "qmds/ss_model_tips.html#if-the-residuals-have-substantial-patterns",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "If the residuals have substantial patterns",
-    "text": "If the residuals have substantial patterns\nIt is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model. If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
-    "href": "qmds/ss_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "If SS3 runs, but there is a large gradient at the end",
-    "text": "If SS3 runs, but there is a large gradient at the end\nLarge gradients are usually reported in warnings.sso file, so this problem should be clear when examining the file after a model run. If this is the case, try the following\n\nExamine Report.sso for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.\nExamine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#if-the-hessian-does-not-invert",
-    "href": "qmds/ss_model_tips.html#if-the-hessian-does-not-invert",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "If the hessian does not invert",
-    "text": "If the hessian does not invert\nThe hessian information is reported in the Report.sso file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the hessian will not invert."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#does-my-model-model-make-sense",
-    "href": "qmds/ss_model_tips.html#does-my-model-model-make-sense",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Does my model model make sense?",
-    "text": "Does my model model make sense?\n\nDoes the biology make sense? Selectivity?\nIs the model fitting the indices? Length and age data?\nWhat is the pattern in recruitment?\nDoes the prior type match what I thought I was specifying?"
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#does-my-model-model-fit-well",
-    "href": "qmds/ss_model_tips.html#does-my-model-model-fit-well",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Does my model model fit well?",
-    "text": "Does my model model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#does-my-data-weighting-make-sense",
-    "href": "qmds/ss_model_tips.html#does-my-data-weighting-make-sense",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Does my data weighting make sense?",
-    "text": "Does my data weighting make sense?\nThe r4ss::SS_output() function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister Ianelli weighting (i.e., weighting by the harmonic mean). The r4ss::SS_plots() function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model."
-  },
-  {
-    "objectID": "qmds/ss_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
-    "href": "qmds/ss_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
-    "title": "Developing your first Stock Synthesis (SS3) model",
-    "section": "Did I fix variation in recruitment correctly?",
-    "text": "Did I fix variation in recruitment correctly?\nCheck the the sigmaR (i.e., recruitment devs standard deviation) information. The sigmaR parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.\nFor a fixed value of sigmaR, a section of the output will provide diagnostics to determine if the fixed sigmaR value is capturing the estimated variations in recruitment. The r4ss::SS_output() function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using."
+    "objectID": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
+    "href": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
+    "title": "SS3 User Manual",
+    "section": "",
+    "text": "Please cite the manual as:\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User Manual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report NMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
   },
   {
     "objectID": "qmds/html.html",
