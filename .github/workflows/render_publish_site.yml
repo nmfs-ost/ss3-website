@@ -32,7 +32,9 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'website/docs/'
-    
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
