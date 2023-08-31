@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SS Development Team">
+<meta name="dcterms.date" content="2019-10-23">
+
+<title>Stock Synthesis (SS3) Documentation - Model building tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Stock Synthesis (SS3) Documentation</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../qmds/index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li class="dropdown-header">getting_started_ss.qmd</li>
+        <li class="dropdown-header">model_tutorial.qmd</li>
+        <li class="dropdown-header">ss_model_tips.qmd</li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html">
+ <span class="dropdown-text">HTML Version</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf">
+ <span class="dropdown-text">PDF Version</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#scope" id="toc-scope" class="nav-link active" data-scroll-target="#scope">Scope</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description">Model description</a>
+  <ul class="collapse">
+  <li><a href="#general" id="toc-general" class="nav-link" data-scroll-target="#general">General</a></li>
+  <li><a href="#fishery-and-survey-data" id="toc-fishery-and-survey-data" class="nav-link" data-scroll-target="#fishery-and-survey-data">Fishery and survey data</a></li>
+  <li><a href="#more-specific-parameter-assumptions" id="toc-more-specific-parameter-assumptions" class="nav-link" data-scroll-target="#more-specific-parameter-assumptions">More specific parameter assumptions</a>
+  <ul class="collapse">
+  <li><a href="#natural-mortality-growth-maturity-and-sex-ratio" id="toc-natural-mortality-growth-maturity-and-sex-ratio" class="nav-link" data-scroll-target="#natural-mortality-growth-maturity-and-sex-ratio">Natural mortality, growth, maturity, and sex ratio</a></li>
+  <li><a href="#spawner-recruitment" id="toc-spawner-recruitment" class="nav-link" data-scroll-target="#spawner-recruitment">Spawner-Recruitment</a></li>
+  <li><a href="#recruitment" id="toc-recruitment" class="nav-link" data-scroll-target="#recruitment">Recruitment</a></li>
+  <li><a href="#fishing-mortality" id="toc-fishing-mortality" class="nav-link" data-scroll-target="#fishing-mortality">Fishing mortality</a></li>
+  <li><a href="#data-weighting" id="toc-data-weighting" class="nav-link" data-scroll-target="#data-weighting">Data weighting</a></li>
+  <li><a href="#forecasting" id="toc-forecasting" class="nav-link" data-scroll-target="#forecasting">Forecasting</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#stepping-through-stock-synthesis-input-files" id="toc-stepping-through-stock-synthesis-input-files" class="nav-link" data-scroll-target="#stepping-through-stock-synthesis-input-files">Stepping through Stock synthesis input files</a>
+  <ul class="collapse">
+  <li><a href="#starter-and-forecast" id="toc-starter-and-forecast" class="nav-link" data-scroll-target="#starter-and-forecast">Starter and Forecast</a></li>
+  <li><a href="#data-file" id="toc-data-file" class="nav-link" data-scroll-target="#data-file">Data file</a></li>
+  <li><a href="#control-file" id="toc-control-file" class="nav-link" data-scroll-target="#control-file">Control file</a></li>
+  </ul></li>
+  <li><a href="#running-the-model-and-afterwards" id="toc-running-the-model-and-afterwards" class="nav-link" data-scroll-target="#running-the-model-and-afterwards">Running the model and afterwards</a>
+  <ul class="collapse">
+  <li><a href="#checks-for-convergence" id="toc-checks-for-convergence" class="nav-link" data-scroll-target="#checks-for-convergence">Checks for convergence</a></li>
+  <li><a href="#check-that-the-hessian-inverted" id="toc-check-that-the-hessian-inverted" class="nav-link" data-scroll-target="#check-that-the-hessian-inverted">Check that the hessian inverted</a></li>
+  <li><a href="#further-convergence-check-jitter-the-start-values" id="toc-further-convergence-check-jitter-the-start-values" class="nav-link" data-scroll-target="#further-convergence-check-jitter-the-start-values">Further convergence check: Jitter the start values</a></li>
+  <li><a href="#looking-at-model-results" id="toc-looking-at-model-results" class="nav-link" data-scroll-target="#looking-at-model-results">Looking at model results</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Model building tutorial</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>SS Development Team </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 23, 2019</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="scope" class="level1">
+<h1>Scope</h1>
+<!-- Note that this guide is not yet complete! -->
+<p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS model.</p>
+<p>If you are a new SS user who is not yet comfortable running an SS model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
+<p>Throughout this example, we use an even simpler version of the Stock Synthesis example model “Simple”. To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package <a href="github.com/r4ss/r4ss">r4ss</a>.</p>
+</section>
+<section id="model-description" class="level1">
+<h1>Model description</h1>
+<section id="general" class="level2">
+<h2 class="anchored" data-anchor-id="general">General</h2>
+<p>The Simple model is a 2-sex age-structured assessment model for a single population in 1 area starting in 1971 and ending in 2001. The maximum age in the model is 40 years. It includes 1 fishery and 2 surveys. Survey 1 is a fisheries independent survey, while the second survey is for age-0 fish.</p>
+</section>
+<section id="fishery-and-survey-data" class="level2">
+<h2 class="anchored" data-anchor-id="fishery-and-survey-data">Fishery and survey data</h2>
+<p>The fishery does not discard and thus retains all fish that it catches. Logistic length-based selectivity was assumed for the fishery and for survey 1. Full selectivity was assumed for age-0 fish only (i.e., the survey does not catch any fish older than age 0) for the second survey. Catchability is estimated for both surveys, and to adjust for data quality, additional standard deviation is specified.</p>
+<p>Catch comes from the fishery. Indices of abundance come from both survey 1 and survey 2. Length composition and age composition data comes from the fishery and survey 1.</p>
+<p>No aging error bias is assumed and aging is considered to be very precise.</p>
+</section>
+<section id="more-specific-parameter-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="more-specific-parameter-assumptions">More specific parameter assumptions</h2>
+<section id="natural-mortality-growth-maturity-and-sex-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="natural-mortality-growth-maturity-and-sex-ratio">Natural mortality, growth, maturity, and sex ratio</h3>
+<p>All parameters are assumed to be the same over time. Natural mortality is specified at 0.1. A von Bertalanfy growth curve is used with K estimated. Maturity is assumed to be length logistic with some specified parameter values. The sex ratio is assumed 50-50 female and male.</p>
+</section>
+<section id="spawner-recruitment" class="level3">
+<h3 class="anchored" data-anchor-id="spawner-recruitment">Spawner-Recruitment</h3>
+<p>A beverton-holt SR relationship is assumed, with values for steepness and R0 estimated.</p>
+</section>
+<section id="recruitment" class="level3">
+<h3 class="anchored" data-anchor-id="recruitment">Recruitment</h3>
+<p>Recuitment deviations are assumed, and include a bias ramp to account for early and late observations having less information than recruitments during 1971-2001.</p>
+</section>
+<section id="fishing-mortality" class="level3">
+<h3 class="anchored" data-anchor-id="fishing-mortality">Fishing mortality</h3>
+<p>Fishing mortality is found using a hybrid approach, meaning that F’s are estimated parameters, but are constrained using Pope’s approximation.</p>
+</section>
+<section id="data-weighting" class="level3">
+<h3 class="anchored" data-anchor-id="data-weighting">Data weighting</h3>
+<p>This model has not yet undergone data weighting, which would of course be necessary in a true model. This will be discussed later on in this write-up.</p>
+</section>
+<section id="forecasting" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting">Forecasting</h3>
+<p><em>This needs to be considered more carefully; try to use the most standard options for this</em></p>
+</section>
+</section>
+</section>
+<section id="stepping-through-stock-synthesis-input-files" class="level1">
+<h1>Stepping through Stock synthesis input files</h1>
+<section id="starter-and-forecast" class="level2">
+<h2 class="anchored" data-anchor-id="starter-and-forecast">Starter and Forecast</h2>
+<p>Generic starter and forecast files were used. There were no need to modify them specifically for this example. However, it should be checked that the correct data and control file names are listed at the top of the starter file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_user_info_available_at:https://vlab.ncep.noaa.gov/group/stock-synthesis</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#C starter comment here</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data.ss</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>control.ss</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># 0=use init values in control file; 1=use ss.par</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># run display detail (0,1,2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the case of this example, data.ss is the name of the data file, while control.ss is the name of the control file.</p>
+</section>
+<section id="data-file" class="level2">
+<h2 class="anchored" data-anchor-id="data-file">Data file</h2>
+<p>This is where the data inputs are specified. At the top, general information about the model is specified: the model years, number of seasons, number of sexes, maximum age, number of areas, number of fleets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Foreign copyrights may apply. See copyright.txt for more information.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1971</span> <span class="co">#_StartYr</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="co">#_EndYr</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Nseas</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span> <span class="co">#_months/season</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Nsubseasons (even number, minimum is 2)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_spawn_month</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="co">#_Nages=accumulator age, first age is always age 0</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Nareas</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="co">#_Nfleets (including surveys)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, the fleet types are specified. Since we have one fishery and 2 surveys (3 fleets in all), there will be three lines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=ignore </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month;  (always 1 for surveys)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#_fleet_area:  area the fleet/survey operates in </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#_units of catch:  1=bio; 2=num (ignored for surveys; their units read later)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#_catch_mult: 0=no; 1=yes</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#_rows are fleets</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#_fleet_type fishery_timing area catch_units need_catch_mult fleetname</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> FISHERY  <span class="co"># 1</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> SURVEY1  <span class="co"># 2</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> SURVEY2  <span class="co"># 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Most notable here is that the fishery has type 1 (because it is a catch fleet) and the surveys have type 3. Units for each fleet (what is called “catch units” in the header) are also specified here, although for the surveys they are ignored. For the fishery, it has “catch-units” = 1, which means it is in units of biomass and not numbers.The names for the fleets are specified last on each line (before the comment). For example, in this case, the fishery has been named FISHERY, while the first survey has been named SURVEY1.</p>
+<p>Next, the catch is specified:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_Catch data: yr, seas, fleet, catch, catch_se</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#_catch_se:  standard error of log(catch)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#_NOTE:  catch data is ignored for survey fleets</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">999</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="fl">0.01</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1971</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="fl">0.01</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1972</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">200</span> <span class="fl">0.01</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1973</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1000</span> <span class="fl">0.01</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="dv">2000</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3000</span> <span class="fl">0.01</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3000</span> <span class="fl">0.01</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first line of the above code chunk shows the column headers for the catch data. Note that all catch comes from the fishery. The line <code>-999 1 1 0 0.01</code> specifies equilibirum catch for years before the model starts - in this case, there is no equilibrium catch because the catch column is 0. To terminate this catch data section the line <code>-9999 0 0 0 0</code> is needed. This tells SS that it can stop reading catch data.</p>
+<p>Next comes specification for indices of abundance. First is the setup for all of the fleets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_CPUE_and_surveyabundance_observations</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#_Units:  0=numbers; 1=biomass; 2=F; &gt;=30 for special types</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#_Errtype:  -1=normal; 0=lognormal; &gt;0=T</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#_SD_Report: 0=no sdreport; 1=enable sdreport</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#_Fleet Units Errtype SD_Report</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># FISHERY</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co"># SURVEY1</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># SURVEY2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The column headers for this section are directly above the numbers. Note that all fleets are defined here (i.e., each fleet needs a line), including the fishery and are listed in the same order as when the fleet types were specified. Most importantly in this section, the units and error type that will be used when reading the the indices of abundance are specified. In this case, the fishery and survey 1 have units of biomass, wheras survey 2 is in numbers. Lognormal error is assumed for all 3 of the fleets.</p>
+<p>Directly after its header, the indices of abundance data is included:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_yr month fleet obs stderr</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1977</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">339689</span> <span class="fl">0.3</span> <span class="co">#_ SURVEY1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1980</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">193353</span> <span class="fl">0.3</span> <span class="co">#_ SURVEY1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1983</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">151984</span> <span class="fl">0.3</span> <span class="co">#_ SURVEY1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2000</span> <span class="dv">7</span> <span class="dv">3</span> <span class="fl">5.97125</span> <span class="fl">0.7</span> <span class="co">#_ SURVEY2</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">7</span> <span class="dv">3</span> <span class="fl">1.69379</span> <span class="fl">0.7</span> <span class="co">#_ SURVEY2</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="co"># terminator for survey observations </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Like the catch data, a terminator line is needed to tell SS when to stop reading the indices.</p>
+<p>Next, discards and mean body size data could be specified, but they are 0 in this example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_N_fleets_with_discard</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_use meanbodysize_data (0/1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next section sets up the population length bins. This needs to be specified whether or not length composition data is used (although you could generate the population length bins from the length composition data bins).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up population length bin structure (note - irrelevant if not using size data and using empirical wtatage</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co"># length bin method: 1=use databins; 2=generate from binwidth,min,max below; 3=read vector</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co"># binwidth for population size comp </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="co"># minimum size in the population (lower edge of first bin and size at age 0.00) </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dv">94</span> <span class="co"># maximum size in the population (lower edge of last bin) </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co"># use length composition data (0/1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Following the population bins is the setup for length composition (expecting 1 line per fleet):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_mintailcomp addtocomp combM+F CompressBins CompError ParmSelect minsamplesize</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:1_FISHERY</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:2_SURVEY1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:3_SURVEY2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The length composition bin setup:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span> <span class="co">#_N_LengthBins; then enter lower edge of each length bin</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">26</span> <span class="dv">28</span> <span class="dv">30</span> <span class="dv">32</span> <span class="dv">34</span> <span class="dv">36</span> <span class="dv">38</span> <span class="dv">40</span> <span class="dv">42</span> <span class="dv">44</span> <span class="dv">46</span> <span class="dv">48</span> <span class="dv">50</span> <span class="dv">52</span> <span class="dv">54</span> <span class="dv">56</span> <span class="dv">58</span> <span class="dv">60</span> <span class="dv">62</span> <span class="dv">64</span> <span class="dv">68</span> <span class="dv">72</span> <span class="dv">76</span> <span class="dv">80</span> <span class="dv">90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And then the length composition data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_yr month fleet sex part Nsamp datavector(female-male)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">1971</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">11</span> <span class="dv">8</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">9</span> <span class="dv">17</span> <span class="dv">8</span> <span class="dv">3</span> <span class="dv">8</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">1972</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">6</span> <span class="dv">2</span> <span class="dv">7</span> <span class="dv">4</span> <span class="dv">10</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">3</span> <span class="dv">8</span> <span class="dv">11</span> <span class="dv">4</span> <span class="dv">10</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">1973</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">7</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">3</span> <span class="dv">10</span> <span class="dv">12</span> <span class="dv">6</span> <span class="dv">10</span> <span class="dv">9</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">5</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">0</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1974</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">8</span> <span class="dv">8</span> <span class="dv">10</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">15</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">0</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">1998</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">10</span> <span class="dv">5</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">8</span> <span class="dv">6</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">125</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">7</span> <span class="dv">5</span> <span class="dv">9</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">5</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">8</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">6</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this 2 sex model, length composition data is put in for females, with 1 number per length composition bin set up previously, followed by data for males with also 1 number per length composition bin.</p>
+<p>Age composition data follows. First, the age bins and ageerror definitions are established:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="co">#_N_age_bins</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">20</span> <span class="dv">25</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_N_ageerror_definitions</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.5</span> <span class="fl">1.5</span> <span class="fl">2.5</span> <span class="fl">3.5</span> <span class="fl">4.5</span> <span class="fl">5.5</span> <span class="fl">6.5</span> <span class="fl">7.5</span> <span class="fl">8.5</span> <span class="fl">9.5</span> <span class="fl">10.5</span> <span class="fl">11.5</span> <span class="fl">12.5</span> <span class="fl">13.5</span> <span class="fl">14.5</span> <span class="fl">15.5</span> <span class="fl">16.5</span> <span class="fl">17.5</span> <span class="fl">18.5</span> <span class="fl">19.5</span> <span class="fl">20.5</span> <span class="fl">21.5</span> <span class="fl">22.5</span> <span class="fl">23.5</span> <span class="fl">24.5</span> <span class="fl">25.5</span> <span class="fl">26.5</span> <span class="fl">27.5</span> <span class="fl">28.5</span> <span class="fl">29.5</span> <span class="fl">30.5</span> <span class="fl">31.5</span> <span class="fl">32.5</span> <span class="fl">33.5</span> <span class="fl">34.5</span> <span class="fl">35.5</span> <span class="fl">36.5</span> <span class="fl">37.5</span> <span class="fl">38.5</span> <span class="fl">39.5</span> <span class="fl">40.5</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the age bins, SS reads in the number (17 in this case) and then expects that number of inputs for the age bins (the 17 values below it). Next, SS reads the age error definitions. In this case, there is only 1 definition, so SS expects 2 vectors, each which contain the max number of ages + 1 values (41 values per vector in this case). The first line defines the <em>bias</em> for the aging error, while the second vector defines the <em>standard deviation</em> of the aging error. This example has no aging bias and very high aging precision (low standard deviation), so this is close to assuming no aging error.</p>
+<p>Next comes the age composition setup lines:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_mintailcomp addtocomp combM+F CompressBins CompError ParmSelect minsamplesize</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:1_FISHERY</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:2_SURVEY1</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="fl">1e-007</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co">#_fleet:3_SURVEY2</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Lbin_method_for_Age_Data: 1=poplenbins; 2=datalenbins; 3=lengths</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which includes the length bin method for ages. Finally, the age composition data is input:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_yr month fleet sex part ageerr Lbin_lo Lbin_hi Nsamp datavector(female-male)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">1971</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">13</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">6</span> <span class="dv">5</span> <span class="dv">8</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="dv">1972</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">8</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">5</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">2</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">1973</span> <span class="dv">7</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">7</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">6</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1998</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">9</span> <span class="dv">4</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">7</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">6</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">5</span> <span class="dv">1</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
+<p>SS has some additional options that we have not used here and thus set to 0:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_Use_MeanSize-at-Age_obs (0/1)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_N_environ_variables</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Yr Variable Value</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># N sizefreq methods to read </span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># do tags (0/1)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#    morphcomp data(0/1) </span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  Nobs, Nmorphs, mincomp</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  yr, seas, type, partition, Nsamp, datavector_by_Nmorphs</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co">#  Do dataread for selectivity priors(0/1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And finally, the data file must end in <code>999</code> to tell SS to stop reading.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="control-file" class="level2">
+<h2 class="anchored" data-anchor-id="control-file">Control file</h2>
+<p>The control file contains the setup for model parameter values (both fixed values and estimated values). The first option to be aware of is a line to read the empirical weight at age file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co"># 0 means do not read wtatage.ss; 1 means read and use wtatage.ss and also read and use growth parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this case, it is not being used, so is set to 0. If empirical weight at age were used, SS would ignore all inputs relating to growth, maturity, and fecundity that are specified later in the control file (although it does still expect inputs).</p>
+<p>Next are options for number of growth patterns and platoons. These are set to 1 because we assume the whole population is the same growth pattern, and there are not platoons within the growth patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="co">#_N_Growth_Patterns (Growth Patterns, Morphs, Bio Patterns, GP are terms used interchangeably in SS)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_N_platoons_Within_GrowthPattern </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The recruitment distribution is then specified. We are assuming for this population that there is only 1 growth pattern, 1 time of settlement, and 1 area, so we can use option 4. This is the simplest, because it requires no full parameter lines futher on in the control file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="co"># recr_dist_method for parameters:  2=main effects for GP, Area, Settle timing; 3=each Settle entity; 4=none (only when N_GP*Nsettle*pop==1)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co"># not yet implemented; Future usage: Spawner-Recruitment: 1=global; 2=by area</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#  number of recruitment settlement assignments </span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># unused option</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#GPattern month  area  age (for each settlement assignment)</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that we also used 1 settlement assignement, and specified that the fish settled in January at age 0. This could be modified if the fish settled at a different age or time.</p>
+<p>We are not using time blocks, but there are some specified in this model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Nblock_Patterns</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_blocks_per_pattern </span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># begin and end years of blocks</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1970</span> <span class="dv">1970</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that any blocks could be specified and not used (blocks are set up here, but are not used until it is specified within a parameter line), so there could be any number of blocks specified here.</p>
+<p>Likewise, timevarying parameters are not used, so it is unimportant what is specified in the time varying control parameters:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># controls for all timevary parameters </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_env/block/dev_adjust_method for all time-vary parms (1=warn relative to base parm bounds; 3=no bound check)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># AUTOGEN</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># autogen: 1st element for biology, 2nd for SR, 3rd for Q, 4th reserved, 5th for selex</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># where: 0 = autogen all time-varying parms; 1 = read each time-varying parm line; 2 = read then autogen if parm min==-12345</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The setup lines for natural mortality, growth, and maturity come next.</p>
+<p>Option 0 is used for natural mortality because only 1 value is being assumed. Growth model 1 is used to specify a von Bertalanffy growth model, followed by lines specifying details about growth:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_natM_type:_0=1Parm; 1=N_breakpoints;_2=Lorenzen;_3=agespecific;_4=agespec_withseasinterpolate</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#_no additional input for selected M option; read 1P per morph</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co"># GrowthModel: 1=vonBert with L1&amp;L2; 2=Richards with L1&amp;L2; 3=age_specific_K_incr; 4=age_specific_K_decr; 5=age_specific_K_each; 6=NA; 7=NA; 8=growth cessation</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_Age(post-settlement)_for_L1;linear growth below this</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span> <span class="co">#_Growth_Age_for_L2 (999 to use as Linf)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">999</span> <span class="co">#_exponential decay for growth above maxage (value should approx initial Z; -999 replicates 3.24; -998 to not allow growth above maxage)</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co">#_placeholder for future growth feature</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_SD_add_to_LAA (set to 0.1 for SS2 V1.x compatibility)</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_CV_Growth_Pattern:  0 CV=f(LAA); 1 CV=F(A); 2 SD=F(LAA); 3 SD=F(A); 4 logSD=F(A)</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, the setup lines for maturity, fecundity, and other specialized options:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_maturity_option:  1=length logistic; 2=age logistic; 3=read age-maturity matrix by growth_pattern; 4=read age-fecundity; 5=disabled; 6=read length-maturity</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_First_Mature_Age</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_fecundity option:(1)eggs=Wt*(a+b*Wt);(2)eggs=a*L^b;(3)eggs=a*Wt^b; (4)eggs=a+b*L; (5)eggs=a+b*W</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_hermaphroditism option:  0=none; 1=female-to-male age-specific fxn; -1=male-to-female age-specific fxn</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_parameter_offset_approach (1=none, 2= M, G, CV_G as offset from female-GP1, 3=like SS2 V1.x)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The parameter lines resulting from the natural mortality, growth, and maturity (this section is sometimes called MG parms) are specified next. The number of paramter lines depends on the options selected in the setup lines. The parameters must also be specified in a particular order, with female parameters coming before male parameters in a 2-sex model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_ LO HI INIT PRIOR PR_SD PR_type PHASE env_var&amp;link dev_link dev_minyr dev_maxyr dev_PH Block Block_Fxn</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 1  BioPattern: 1  NatMort</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.15</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># NatM_p_1_Fem_GP_1</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 1  BioPattern: 1  Growth</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">10</span> <span class="dv">45</span> <span class="fl">21.6535</span> <span class="dv">36</span> <span class="dv">10</span> <span class="dv">6</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># L_at_Amin_Fem_GP_1</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">40</span> <span class="dv">90</span> <span class="fl">71.6493</span> <span class="dv">70</span> <span class="dv">10</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># L_at_Amax_Fem_GP_1</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.147297</span> <span class="fl">0.15</span> <span class="fl">0.8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># VonBert_K_Fem_GP_1</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># CV_young_Fem_GP_1</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># CV_old_Fem_GP_1</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 1  BioPattern: 1  WtLen</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">3</span> <span class="fl">2.44e-006</span> <span class="fl">2.44e-006</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Wtlen_1_Fem_GP_1</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">4</span> <span class="fl">3.34694</span> <span class="fl">3.34694</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Wtlen_2_Fem_GP_1</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 1  BioPattern: 1  Maturity&amp;Fecundity</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">50</span> <span class="dv">60</span> <span class="dv">55</span> <span class="dv">55</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Mat50%_Fem_GP_1</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">3</span> <span class="sc">-</span><span class="fl">0.25</span> <span class="sc">-</span><span class="fl">0.25</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Mat_slope_Fem_GP_1</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Eggs/kg_inter_Fem_GP_1</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Eggs/kg_slope_wt_Fem_GP_1</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 2  BioPattern: 1  NatMort</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.15</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># NatM_p_1_Mal_GP_1</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 2  BioPattern: 1  Growth</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">45</span> <span class="dv">0</span> <span class="dv">36</span> <span class="dv">10</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># L_at_Amin_Mal_GP_1</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a> <span class="dv">40</span> <span class="dv">90</span> <span class="fl">69.5362</span> <span class="dv">70</span> <span class="dv">10</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># L_at_Amax_Mal_GP_1</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.163533</span> <span class="fl">0.15</span> <span class="fl">0.8</span> <span class="dv">6</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># VonBert_K_Mal_GP_1</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># CV_young_Mal_GP_1</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.05</span> <span class="fl">0.25</span> <span class="fl">0.1</span> <span class="fl">0.1</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># CV_old_Mal_GP_1</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex: 2  BioPattern: 1  WtLen</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">3</span> <span class="fl">2.44e-006</span> <span class="fl">2.44e-006</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Wtlen_1_Mal_GP_1</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">3</span> <span class="dv">4</span> <span class="fl">3.34694</span> <span class="fl">3.34694</span> <span class="fl">0.8</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># Wtlen_2_Mal_GP_1</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Hermaphroditism</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="co">#  Recruitment Distribution  </span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="co">#  Cohort growth dev base</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.1</span> <span class="dv">10</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># CohortGrowDev</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="co">#  Movement</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="co">#  Age Error from parameters</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  catch multiplier</span></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  fraction female, by GP</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a> <span class="fl">1e-006</span> <span class="fl">0.999999</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">99</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># FracFemale_GP_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that the first line in the block of SS input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:</p>
+<ul>
+<li>Anything with negative phase (7th value in a long parameter line) is not estimated and is set at the initial value (3rd value in the line), while positivie phases are estimated.</li>
+<li>Natural mortality for both males and females is specified at 0.1.</li>
+<li>The 3 parameters of the von Bertalanffy growth curve are estimated.</li>
+</ul>
+<p>Next are some unused options, because there is no seasonality in the biology parameters:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_no timevary MG parameters</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#_seasonal_effects_on_biology_parms</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co">#_femwtlen1,femwtlen2,mat1,mat2,fec1,fec2,Malewtlen1,malewtlen2,L1,K</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#_ LO HI INIT PRIOR PR_SD PR_type PHASE</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#_Cond -2 2 0 0 -1 99 -2 #_placeholder when no seasonal MG parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, the Spawner recruitment setup and Spawner recruit long parameter lines are specified (sometimes referred to as SR parms). To set up the lines, a Beverton-Holt SR curve is specified:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="co">#_Spawner-Recruitment; Options: 2=Ricker; 3=std_B-H; 4=SCAA; 5=Hockey; 6=B-H_flattop; 7=survival_3Parm; 8=Shepherd_3Parm; 9=RickerPower_3parm</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co"># 0/1 to use steepness in initial equ recruitment calculation</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co">#  future feature:  0/1 to make realized sigmaR a function of SR curvature</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which effects the number of SR parameter lines that follow:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_          LO            HI          INIT         PRIOR         PR_SD       PR_type      PHASE    env-var    use_dev   dev_mnyr   dev_mxyr     dev_PH      Block    Blk_Fxn #  parm_name</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>             <span class="dv">3</span>            <span class="dv">31</span>       <span class="fl">8.81505</span>          <span class="fl">10.3</span>            <span class="dv">10</span>             <span class="dv">0</span>          <span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span> <span class="co"># SR_LN(R0)</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="fl">0.2</span>             <span class="dv">1</span>      <span class="fl">0.614248</span>           <span class="fl">0.7</span>          <span class="fl">0.05</span>             <span class="dv">1</span>          <span class="dv">4</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span> <span class="co"># SR_BH_steep</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>             <span class="dv">2</span>           <span class="fl">0.6</span>           <span class="fl">0.8</span>           <span class="fl">0.8</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">4</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span> <span class="co"># SR_sigmaR</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="sc">-</span><span class="dv">5</span>             <span class="dv">5</span>             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">1</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">4</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span> <span class="co"># SR_regime</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">0</span>             <span class="dv">0</span>        <span class="sc">-</span><span class="dv">99</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span> <span class="co"># SR_autocorr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The recruitment deviation options are specified after the SR parms. First are the standard recruitment deviations options:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#do_recdev:  0=none; 1=devvector (R=F(SSB)+dev); 2=deviations (R=F(SSB)+dev); 3=deviations (R=R0*dev; dev2=R-f(SSB)); 4=like 3 with sum(dev2) adding penalty</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1971</span> <span class="co"># first year of main recr_devs; early devs can preceed this era</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="co"># last year of main recr_devs; forecast devs start in following year</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_recdev phase </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These define the main recruitment devitations, which in this case last from the first year of the model to the last year. Advanced options are also read:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co"># (0/1) to read 13 advanced options</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_recdev_early_start (0=none; neg value makes relative to recdev_start)</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">4</span> <span class="co">#_recdev_early_phase</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_forecast_recruitment phase (incl. late recr) (0 value resets to maxphase+1)</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="co">#_lambda for Fcast_recr_like occurring before endyr+1</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_last_yr_nobias_adj_in_MPD; begin of ramp</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_first_yr_fullbias_adj_in_MPD; begin of plateau</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="co">#_last_yr_fullbias_adj_in_MPD</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2002</span> <span class="co">#_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS sets bias_adj to 0.0 for fcast yrs)</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="co">#_max_bias_adj_in_MPD (-1 to override ramp and set biasadj=1.0 for all estimated recdevs)</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_period of cycles in recruitment (N parms read below)</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">5</span> <span class="co">#min rec_dev</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> <span class="co">#max rec_dev</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_read_recdevs</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">#_end of advanced SR options</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The advanced options allow the user to bias adjust the recruitment deviations. There is more on bias adjustment in the SS user manual, but the general idea is to account for the fact that earlier and later recruitment deviations likely have less information informing them than the ones in the middle. The bias adjustment ramp accounts for this and is typically “tuned” by looking at bias ramp in the model results after it is run, respecifying the bias ramp as needed, and rerunning the model.</p>
+<p>Fishing mortality info is next specified:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fishing Mortality info </span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.3</span> <span class="co"># F ballpark</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">2001</span> <span class="co"># F ballpark year (neg value to disable)</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="co"># F_Method:  1=Pope; 2=instan. F; 3=hybrid (hybrid is recommended)</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fl">2.95</span> <span class="co"># max F or harvest rate, depends on F_Method</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># no additional F input needed for Fmethod 1</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># if Fmethod=2; read overall start F value; overall phase; N detailed inputs to read</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># if Fmethod=3; read N iterations for tuning for Fmethod 3</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  <span class="co"># N iterations for tuning F in hybrid method (recommend 3 to 7)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are no paricular special settings for fishing mortality information for this model, but note that the recommended hybrid F method is used.</p>
+<p>Catchability setup and parameter lines follow fishing mortality info:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_Q_setup for fleets with cpue or survey data</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#_1:  fleet number</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#_2:  link type: (1=simple q, 1 parm; 2=mirror simple q, 1 mirrored parm; 3=q and power, 2 parm; 4=mirror with offset, 2 parm)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">#_3:  extra input for link, i.e. mirror fleet# or dev index number</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">#_4:  0/1 to select extra sd parameter</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#_5:  0/1 for biasadj or not</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co">#_6:  0/1 to float</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co">#_   fleet      link link_info  extra_se   biasadj     float  #  fleetname</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>         <span class="dv">2</span>         <span class="dv">1</span>         <span class="dv">0</span>         <span class="dv">1</span>         <span class="dv">0</span>         <span class="dv">0</span>  <span class="co">#  SURVEY1</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>         <span class="dv">3</span>         <span class="dv">1</span>         <span class="dv">0</span>         <span class="dv">0</span>         <span class="dv">0</span>         <span class="dv">0</span>  <span class="co">#  SURVEY2</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co">#_Q_parms(if_any);Qunits_are_ln(q)</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="co">#_ LO HI INIT PRIOR PR_SD PR_type PHASE env-var use_dev dev_mnyr dev_mxyr dev_PH Block Blk_Fxn # parm_name</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="dv">7</span> <span class="dv">5</span>   <span class="fl">0.516018</span> <span class="dv">0</span>    <span class="dv">1</span> <span class="dv">0</span>  <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span>  <span class="co">#  LnQ_base_SURVEY1(2)</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="fl">0.5</span> <span class="dv">0</span>        <span class="fl">0.05</span> <span class="dv">1</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span>  <span class="co">#  Q_extraSD_SURVEY1(2)</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="dv">7</span> <span class="dv">5</span>   <span class="sc">-</span><span class="fl">6.6281</span>  <span class="dv">0</span>    <span class="dv">1</span> <span class="dv">0</span>  <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span>  <span class="co">#  LnQ_base_SURVEY2(3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because the fishery is not used as an index of abundance, it does not require any catchability setup lines or parameters. Note that the log scale (LNQ) catchability parameters are both estimated for the surveys. Also, for fleet 2 in the setup lines, it was specified to used extra standard error, so there is an extraSD fixed value specified as a parameter line.</p>
+<p>Selectivity comes next. First, the size and age selectivity setup lines:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_size_selex_patterns</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">#_Pattern Discard Male Special</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 1 FISHERY</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 2 SURVEY1</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 3 SURVEY2</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a> <span class="co">#</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">#_age_selex_patterns</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a> <span class="co">#_Pattern Discard Male Special</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 1 FISHERY</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 2 SURVEY1</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 3 SURVEY2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A selectivity pattern must be specified for both size and age selectivity for each fleet; however, using patterns 0 and 1 for size selectivity allow the user to specify that selectivity is the same across all sizes (within the range specified, if using pattern 1). Here, age selectivity pattern 11 (logistic) is used for all of the fleets. The selectivity setup lines are followed by the selectivity parameter lines:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_          LO            HI          INIT         PRIOR         PR_SD       PR_type      PHASE    env-var    use_dev   dev_mnyr   dev_mxyr     dev_PH      Block    Blk_Fxn  #  parm_name</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1   FISHERY LenSelex</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="dv">19</span>            <span class="dv">80</span>       <span class="fl">53.6411</span>            <span class="dv">50</span>          <span class="fl">0.01</span>             <span class="dv">1</span>          <span class="dv">2</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  Size_inflection_FISHERY(1)</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>          <span class="fl">0.01</span>            <span class="dv">60</span>       <span class="fl">18.9232</span>            <span class="dv">15</span>          <span class="fl">0.01</span>             <span class="dv">1</span>          <span class="dv">3</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  Size_95%width_FISHERY(1)</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2   SURVEY1 LenSelex</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="dv">19</span>            <span class="dv">70</span>        <span class="fl">36.653</span>            <span class="dv">30</span>          <span class="fl">0.01</span>             <span class="dv">1</span>          <span class="dv">2</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  Size_inflection_SURVEY1(2)</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>          <span class="fl">0.01</span>            <span class="dv">60</span>       <span class="fl">6.59179</span>            <span class="dv">10</span>          <span class="fl">0.01</span>             <span class="dv">1</span>          <span class="dv">3</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  Size_95%width_SURVEY1(2)</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 3   SURVEY2 LenSelex</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1   FISHERY AgeSelex</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>             <span class="dv">0</span>             <span class="dv">5</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  minage@sel=1_FISHERY(1)</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>            <span class="dv">40</span>             <span class="dv">6</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  maxage@sel=1_FISHERY(1)</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2   SURVEY1 AgeSelex</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>             <span class="dv">0</span>             <span class="dv">5</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  minage@sel=1_SURVEY1(2)</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>            <span class="dv">40</span>             <span class="dv">6</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  maxage@sel=1_SURVEY1(2)</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3   SURVEY2 AgeSelex</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>             <span class="dv">0</span>             <span class="dv">5</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  minage@sel=1_SURVEY2(3)</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>             <span class="dv">0</span>            <span class="dv">40</span>             <span class="dv">0</span>             <span class="dv">6</span>            <span class="dv">99</span>             <span class="dv">0</span>         <span class="sc">-</span><span class="dv">1</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>          <span class="dv">0</span>  <span class="co">#  maxage@sel=1_SURVEY2(3)</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co">#_no timevary selex parameters</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These paramter lines are specified in order, with the size (or length) selectivity lines specified before the age selectivity lines and the fleets in the same order as in the setup lines. Also, the selectivity pattern used determines the number of parameters needed to specify each fleets’ size or age selectivity.</p>
+<p>Some special features (2DAR selectivity, tagging data, variance adjusment, lambdas, and additional standard deviation reporting) in the control file are turned off for this model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>   <span class="co">#  use 2D_AR1 selectivity(0/1):  experimental feature</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#_no 2D_AR1 selex offset used</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tag loss and Tag reporting parameters go next</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co"># TG_custom:  0=no read and autogen if tag data exist; 1=read</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Input variance adjustments factors: </span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">#_Factor  Fleet  Value</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">9999</span>   <span class="dv">1</span>    <span class="dv">0</span>  <span class="co"># terminator</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="co">#_maxlambdaphase</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_sd_offset; must be 1 if any growthCV, sigmaR, or survey extraSD is an estimated parameter</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co">#like_comp fleet  phase  value  sizefreq_method</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span>  <span class="dv">1</span>  <span class="dv">1</span>  <span class="dv">1</span>  <span class="dv">1</span>  <span class="co">#  terminator</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># (0/1) read specs for more stddev reporting </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Varaiance adjustment factors and/or lambdas can be used for data weighting, but in this case they have not yet been used. The control file then ends with 999 so that SS knows it can stop reading:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="running-the-model-and-afterwards" class="level1">
+<h1>Running the model and afterwards</h1>
+<p>The model was run using Stock Synthesis 3.30.14 and no additional ADMB command line options. The model should have no issues running, but if you have issues, please see debugging sections in the <strong>Getting Started</strong> and <strong>Developing your first Stock Synthesis model</strong> guides.</p>
+<section id="checks-for-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="checks-for-convergence">Checks for convergence</h2>
+<p>After running the model, open the warning.sso file to check for any warnings from Stock Synthesis. This file shows no warnings:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a> N warnings<span class="sc">:</span> <span class="dv">0</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Number_of_active_parameters_on_or_near_bounds<span class="sc">:</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which suggests that the model is not misspecified in a way that SS knows to warn about.</p>
+<p>Next, we want to quickly check for any evidence that the model did not converge. In Report.sso, underneath information about the data file and control file names is information about the convergence level:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Convergence_Level<span class="sc">:</span> <span class="fl">2.14568e-005</span> is_final_gradient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The convergence criteria is set in the starter.ss file before the run, and is typically 0.0001. In this case, the final gradient is smaller than the convergence criteria, so this suggests (but does not guarantee) that the model has converged.</p>
+<p>We also want to check that there are no estimated parameters on bounds, which can also be done in the Report.sso file. Further down in Report.sso (around line 272), should be a line that tells how many activie (i.e., estimated) parameters were on bounds:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Number_of_active_parameters_on_or_near_bounds<span class="sc">:</span> <span class="dv">0</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Active_count <span class="dv">54</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If there were any parameters on bounds, the analyst would need to decide if the bounds on the parameter are appropriate or not and consider expanding the bounds or fixing the parameter (if there is not enough information informing the parameter estimate, fixing it may be necessary).</p>
+</section>
+<section id="check-that-the-hessian-inverted" class="level2">
+<h2 class="anchored" data-anchor-id="check-that-the-hessian-inverted">Check that the hessian inverted</h2>
+<p>Checking if the hessian inverted is useful, although it is possible to use point estimates from a model for which the hessian does not invert. To see if the hessian inverted, look for the presence of the ss.cor file (the first line of which is something like “The logarithm of the determinant of the hessian = 280.952”) and/or to check the covar.sso file which will contain the text “Variances are 0.0 for first two elements, so do not write” if the Hessian failed to invert.</p>
+</section>
+<section id="further-convergence-check-jitter-the-start-values" class="level2">
+<h2 class="anchored" data-anchor-id="further-convergence-check-jitter-the-start-values">Further convergence check: Jitter the start values</h2>
+<p>A common method to have even more confidence that the model has converged is to jitter (i.e., change slightly) the starting values in the model. The r4ss function `SS_RunJitter()’ can be used to easily do this.</p>
+<p>To jitter a mondel, first the amount of jitter and the option to use the .par file should be set in the starter.ss file. Typically, 0.01 is used:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span> <span class="co"># jitter initial parm value by this fraction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and option to read the par file in the starter file is set to 1:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co"># 0=use init values in control file; 1=use ss.par</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using the .par file from a previous run is useful because starting the model from previous values will speed up the runs.</p>
+<p>The starter file values can be modified by opening up the starter.ss file and modifying it by hand, or r4ss functions can be used to change this within R, as shown in this example from r4ss:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(r4ss)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>starter <span class="ot">&lt;-</span> <span class="fu">SS_readstarter</span>(<span class="fu">file.path</span>(mydir, <span class="st">'starter.ss'</span>))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>starter<span class="sc">$</span>init_values_src <span class="ot">=</span> <span class="dv">1</span> <span class="co"># Change to use .par file</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change jitter (0.1 is an arbitrary, but common choice for jitter amount)</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>starter<span class="sc">$</span>jitter_fraction <span class="ot">=</span> <span class="fl">0.1</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_writestarter</span>(starter, <span class="at">dir =</span> mydir, <span class="at">overwrite =</span> <span class="cn">TRUE</span>) <span class="co"># write modified starter file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, the jitter can be run:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_RunJitter</span>(<span class="at">mydir =</span> <span class="st">"simpler"</span>, <span class="at">model =</span> <span class="st">"ss"</span>, <span class="at">Njitter =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The previous code assumes that the model directory <code>mydir</code> is called “simpler”, which is a folder within the working directory. The <code>model</code> argument specifies the name of the ss executable, so in this case, it assumes that the SS executable is within the “simpler” folder and called “ss.exe”. Finally, <code>Njitter</code> tells the function how many times to run the function. For west coast stock assessment jitters, 100 runs is a common value to use, but note that the run time is not trivial (it depends on the model, but may take an hour or more to run).</p>
+<p>After the jitter is run, the final likelihood values are the most important part of the results to look at. If the original model run has found a global minimum, you would expect all likelihood values from the jitter to be the same or higher than the original model run. If there are any likehood values that are lower than the original model run, this indicates that the model run did not find a global minimum. Investigating the run or runs with lower likelihood values would be the next step in figuring out what the “final” model run will be.</p>
+<p>To check on the results of the jitter, code similar to this example code from r4ss can be used:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a> <span class="do">#### Read in results using other r4ss functions</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a> profilemodels <span class="ot">&lt;-</span> <span class="fu">SSgetoutput</span>(<span class="at">dirvec =</span> <span class="st">"simpler"</span>, <span class="at">keyvec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">getcovar=</span><span class="cn">FALSE</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># summarize output</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a> profilesummary <span class="ot">&lt;-</span> <span class="fu">SSsummarize</span>(profilemodels)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a> profilesummary<span class="sc">$</span>likelihoods[<span class="dv">1</span>,]  <span class="co"># Likelihoods</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a> profilesummary<span class="sc">$</span>pars <span class="co"># Parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="looking-at-model-results" class="level2">
+<h2 class="anchored" data-anchor-id="looking-at-model-results">Looking at model results</h2>
+<p>Once verifying that there is no indication that the model hasn’t converged (although an extensive jittering analysis need not be done at this stage), looking at estimates from the model can be helpful. Perhaps the easiest and quickest way to look at many plots from a model is to use the <code>SS_plots()</code> in <code>r4ss</code>. To plot the results, use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">SS_output</span>(<span class="at">dir =</span> <span class="st">"simpler"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_plots</span>(output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When the function is done run running, an HTML window will open up in your browser and you can look through plots quickly to determine if the model “makes sense” or if adjustments need to be made.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

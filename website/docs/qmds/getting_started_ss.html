@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SS3 Development Team">
+<meta name="dcterms.date" content="2023-08-31">
+
+<title>Stock Synthesis (SS3) Documentation - Getting Started with Stock Synthesis (SS3)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Stock Synthesis (SS3) Documentation</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../qmds/index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li class="dropdown-header">getting_started_ss.qmd</li>
+        <li class="dropdown-header">model_tutorial.qmd</li>
+        <li class="dropdown-header">ss_model_tips.qmd</li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html">
+ <span class="dropdown-text">HTML Version</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf">
+ <span class="dropdown-text">PDF Version</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#scope" id="toc-scope" class="nav-link active" data-scroll-target="#scope">Scope</a></li>
+  <li><a href="#stock-synthesis-file-structures-and-tools" id="toc-stock-synthesis-file-structures-and-tools" class="nav-link" data-scroll-target="#stock-synthesis-file-structures-and-tools">Stock Synthesis file structures and tools</a>
+  <ul class="collapse">
+  <li><a href="#ss3-files-required-inputs" id="toc-ss3-files-required-inputs" class="nav-link" data-scroll-target="#ss3-files-required-inputs">SS3 files: Required inputs</a></li>
+  <li><a href="#ss3-files-optional-inputs" id="toc-ss3-files-optional-inputs" class="nav-link" data-scroll-target="#ss3-files-optional-inputs">SS3 files: Optional inputs</a></li>
+  <li><a href="#ss3-output-files" id="toc-ss3-output-files" class="nav-link" data-scroll-target="#ss3-output-files">SS3 output files</a></li>
+  <li><a href="#tool-definitions" id="toc-tool-definitions" class="nav-link" data-scroll-target="#tool-definitions">Tool definitions</a></li>
+  </ul></li>
+  <li><a href="#running-ss3" id="toc-running-ss3" class="nav-link" data-scroll-target="#running-ss3">Running SS3</a>
+  <ul class="collapse">
+  <li><a href="#the-one-folder-approach-and-demonstration-of-an-ss3-model-run" id="toc-the-one-folder-approach-and-demonstration-of-an-ss3-model-run" class="nav-link" data-scroll-target="#the-one-folder-approach-and-demonstration-of-an-ss3-model-run">The one folder approach and demonstration of an SS3 model run</a>
+  <ul class="collapse">
+  <li><a href="#setup-for-the-1-folder-approach" id="toc-setup-for-the-1-folder-approach" class="nav-link" data-scroll-target="#setup-for-the-1-folder-approach">Setup for the 1 folder approach</a></li>
+  <li><a href="#run-ss3" id="toc-run-ss3" class="nav-link" data-scroll-target="#run-ss3">Run SS3</a></li>
+  <li><a href="#examine-the-output" id="toc-examine-the-output" class="nav-link" data-scroll-target="#examine-the-output">Examine the output</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#options-for-running-ss3" id="toc-options-for-running-ss3" class="nav-link" data-scroll-target="#options-for-running-ss3">Options for running SS3</a>
+  <ul class="collapse">
+  <li><a href="#options" id="toc-options" class="nav-link" data-scroll-target="#options">Command line options</a></li>
+  <li><a href="#using-ss.par-for-initial-values" id="toc-using-ss.par-for-initial-values" class="nav-link" data-scroll-target="#using-ss.par-for-initial-values">Using ss.par for initial values</a></li>
+  <li><a href="#using-wtatage.ss" id="toc-using-wtatage.ss" class="nav-link" data-scroll-target="#using-wtatage.ss">Using wtatage.ss</a></li>
+  </ul></li>
+  <li><a href="#plotting-results-and-basic-troubleshooting" id="toc-plotting-results-and-basic-troubleshooting" class="nav-link" data-scroll-target="#plotting-results-and-basic-troubleshooting">Plotting results and basic troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#using-r4ss-to-organize-and-plot-ss3-output" id="toc-using-r4ss-to-organize-and-plot-ss3-output" class="nav-link" data-scroll-target="#using-r4ss-to-organize-and-plot-ss3-output">Using r4ss to organize and plot SS3 output</a></li>
+  <li><a href="#what-to-do-when-ss3-doesnt-run" id="toc-what-to-do-when-ss3-doesnt-run" class="nav-link" data-scroll-target="#what-to-do-when-ss3-doesnt-run">What to do when SS3 doesn’t run</a></li>
+  </ul></li>
+  <li><a href="#where-to-get-additional-help" id="toc-where-to-get-additional-help" class="nav-link" data-scroll-target="#where-to-get-additional-help">Where to get additional help</a></li>
+  <li><a href="#app1" id="toc-app1" class="nav-link" data-scroll-target="#app1">Appendix 1: An introduction to the command line</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Getting Started with Stock Synthesis (SS3)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>SS3 Development Team </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 31, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="scope" class="level1">
+<h1>Scope</h1>
+<p>Stock Synthesis (SS3) is a statistical fisheries population dynamics modeling framework built in <a href="http://www.admb-project.org/">AD Model Builder</a>. This Getting Started Guide introduces users to running SS3. We assume some experience with population dynamics models and a basic understanding of how to use the command line.</p>
+<p>If you have never used the command line, please see the resources in <a href="#app1">Appendix 1</a>.</p>
+<p>To follow along, we recommend downloading the <a href="https://github.com/nmfs-stock-synthesis/user-examples/tree/main/model_files/simple">simple example</a> (<a href="https://github.com/nmfs-stock-synthesis/user-examples#how-to-download">Instructions for downloading</a>) and the <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest">latest release of SS3</a>. Simple is a working SS3 model that runs in less than three minutes and should allow you to experiment with SS3 workflows without having to worry about the model’s contents.</p>
+<p>By the end of using this guide, you should:</p>
+<ol type="1">
+<li>Understand the input and output file structure for SS3</li>
+<li>Be able to run an SS3 model via the command line</li>
+<li>Understand which tools are available to work with SS3 models</li>
+<li>Troubleshoot basic problems associated with running an SS3 model</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/SS_tools_files.png" class="img-fluid figure-img" width="450"></p>
+<p></p><figcaption class="figure-caption">Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="stock-synthesis-file-structures-and-tools" class="level1">
+<h1>Stock Synthesis file structures and tools</h1>
+<p>SS3 uses text input files and produces text output files. In this section, the SS3 input and output files are described, as are tools that can be used with these files. See how they relate in Figure 1.</p>
+<section id="ss3-files-required-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="ss3-files-required-inputs">SS3 files: Required inputs</h2>
+<p>Four required input files are read by the SS3 executable. Throughout this document, we will refer to the SS3 executable as ss.exe. Keep in mind that the Linux and Mac versions of SS3 have no file extension (e.g., ss), and the executable can be renamed by the user as desired (e.g., ss_win.exe, ss_3.30.18.exe). These input files are:</p>
+<ol type="1">
+<li><strong>starter.ss:</strong> Required file containing file names of the data file and the control file plus other run controls. Must be named starter.ss.</li>
+<li><strong>data file:</strong> File containing model dimensions and the data. The data file can have any name, as specified in the starter file, but typically ends in .ss or .dat.</li>
+<li><strong>control file:</strong> File containing set-up for the parameters. The control file can have any name, as specified in the starter file, but typically ends in .ss or .ctl.</li>
+<li><strong>forecast.ss:</strong> File containing specifications for reference points and forecasts. Must be named forecast.ss.</li>
+</ol>
+</section>
+<section id="ss3-files-optional-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="ss3-files-optional-inputs">SS3 files: Optional inputs</h2>
+<p>The two optional input files for SS3 are:</p>
+<ol type="1">
+<li><strong>ss.par:</strong> A text file with one line per parameter where order matters. Usually created from a previous model run. This file can provide initial parameter values instead of using the initial values in the control file. The option to use the ss.par file or the control file for initial parameter values is selected in starter.ss.</li>
+<li><strong>wtatage.ss:</strong> File containing empirical input of body weight by fleet and population and empirical fecundity-at-age. The option to use the wtatage.ss file is selected in a line of the control file.</li>
+</ol>
+</section>
+<section id="ss3-output-files" class="level2">
+<h2 class="anchored" data-anchor-id="ss3-output-files">SS3 output files</h2>
+<p>Many output text files are created during a model run. The most useful output files can be divided into:</p>
+<ol type="1">
+<li><strong>Files containing results</strong>. These files include ss_summary.sso and report.sso that contain model results summarized in different ways.</li>
+<li><strong>.ss_new files</strong>. These files echo the SS3 input files, but include standardized comments. The values should be the same as the input files, except for control.ss_new, which updates the initial values to the final estimated values. The .ss_new files can be useful to standardize comments in the input files and can be checked to make sure that SS3 interpreted the inputs as the user intended.</li>
+<li><strong>Files used for debugging</strong>. These files include warnings.sso and echoinput.sso.</li>
+</ol>
+</section>
+<section id="tool-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="tool-definitions">Tool definitions</h2>
+<ul>
+<li><p><strong>Any text editor</strong> can be used to view and edit SS3 input and output files. Defining a custom syntax highlighting scheme for SS3 files may improve SS3 file readability. Some commonly used text editors include Atom, Emacs, Notepad++, and Sublime Text.</p></li>
+<li><p><strong>r4ss</strong>: An R package to plot SS3 model results and manipulate SS3 input and output files. Available at: https://github.com/r4ss/r4ss</p></li>
+<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-stock-synthesis/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs.</p></li>
+</ul>
+</section>
+</section>
+<section id="running-ss3" class="level1">
+<h1>Running SS3</h1>
+<p>SS3 is typically run through the command line (although it can also be run indirctly via the commandline through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS">“Running Stock Synthesis” section of the user manual</a>.</p>
+<section id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run" class="level2">
+<h2 class="anchored" data-anchor-id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run">The one folder approach and demonstration of an SS3 model run</h2>
+<p>The one folder approach is so named because the model input files and SS3 executable are in the same folder. The one folder approach is the simplest way to run SS3 via the command line, so we will walk through an example run using this approach.</p>
+<section id="setup-for-the-1-folder-approach" class="level3">
+<h3 class="anchored" data-anchor-id="setup-for-the-1-folder-approach">Setup for the 1 folder approach</h3>
+<p>Create a folder and add:</p>
+<ul>
+<li>Control File (Must match name in starter.ss)</li>
+<li>Data File (Must match name in starter.ss)</li>
+<li>forecast.ss</li>
+<li>ss.exe</li>
+<li>starter.ss</li>
+<li>Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss.par (to continue from a previous run)</li>
+</ul>
+<p>For example, here is what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):</p>
+<p><img src="images/SS_input_files_folder.png" class="img-fluid"></p>
+</section>
+<section id="run-ss3" class="level3">
+<h3 class="anchored" data-anchor-id="run-ss3">Run SS3</h3>
+<p>Once all of the model files and the SS3 executable are in the same folder, you can open your command window of choice at the location of the model files.</p>
+<p>To do this, you can typically click to highlight the folder the model files are in, then shift + right click on the same folder and select the option from the menu to open the command line of choice (e.g., Windows Powershell). This should bring up a command window. Then, type <code>ss</code> (or other name of the ss exe) into the command prompt and hit enter. Note that if you are using Windows Powershell, you will need to type <code>./ss</code>.</p>
+<p>The exact instructions for running SS3 can differ depending on the command window used. If you have trouble, search for resources that describe running an executable for your specific command line.</p>
+<p>If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type <code>ss_win</code> to run an executable called <code>ss_win.exe</code>.) and that the command line has the correct directory.</p>
+<p>After starting the run, you should see output to the command line similar to:</p>
+<p><img src="images/SS_start_run.png" class="img-fluid"></p>
+<p>If the output gets past <code>Estimating…please wait…</code>, then the structure of the SS3 inputs is correct. The volume of information displayed during the run within the command window is controlled in starter.ss file on the line with the comment <code># run display detail (0,1,2)</code>. The 0 setting is the least verbose option, while the 2 setting is the most verbose.</p>
+<p>SS3 always opens and reads files in the same order (starter.ss, data file, forecast.ss, control, then wtatage.ss if using, and finally ss.par if using), writing to echoinput.sso (a file for debugging runs) and warnings.sso (a file which collects warnings from SS3) as it reads. SS3 inputs are read in order by value, without reference to comments (i.e., anything after <code>#</code> on a line). Linebreaks and whitespace are both treated as separators. Depending on which options are selected, SS3 will expect a particular number of values in a certain order, so failing to provide them will result in errors or at least a different model specification than intended.</p>
+<p>After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.</p>
+<p>SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless <code>–nohess</code> option is specified; See <a href="#options">command line options</a>). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#optional-output-subfolders">this special subfolder option</a>).</p>
+<p>When the run completes, SS3 shows <code>!! Run has completed !!</code> and the number of warnings:</p>
+<p><img src="images/SS_end_run.png" class="img-fluid"> Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message <code>!! Run has completed !!</code>. Here is an example of a run that exited on error due to invalid inputs:</p>
+<p><img src="images/SS_exit_on_error.png" class="img-fluid"></p>
+</section>
+<section id="examine-the-output" class="level3">
+<h3 class="anchored" data-anchor-id="examine-the-output">Examine the output</h3>
+<p><strong>.ss_new files</strong> are generated if a model run completes. For more information on the .ss_new files, see the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#output-files">“Output Files” section of the SS3 user manual</a>.</p>
+<p><strong>ss_summary.sso</strong> files are included with the examples on vlab so that you can compare it with the <code>ss_summary.sso</code> file generated by your model run. You should see similar if not exactly the same values for the likelihood and parameter values if using the same version of SS3.</p>
+<p>Output from SS3 can be read into <a href="https://github.com/r4ss/r4ss">r4ss</a> or the excel viewer.</p>
+</section>
+</section>
+</section>
+<section id="options-for-running-ss3" class="level1">
+<h1>Options for running SS3</h1>
+<section id="options" class="level2">
+<h2 class="anchored" data-anchor-id="options">Command line options</h2>
+<p>ADMB options can be added to the run when calling the SS3 executable from the command line. The most commonly used option is <code>ss -nohess</code> to skip standard errors (for quicker results or to get Report.sso if the hessian does not invert).</p>
+<p>To list all command line options, use one of these calls: <code>SS -?</code> or <code>SS -help</code>. More info about the ADMB command line options is available in the <a href="http://www.admb-project.org/docs/manuals/">ADMB Manual</a> (Chapter 12: Command line options).</p>
+<p>To run SS3 without estimation use: <code>ss -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in SS3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
+</section>
+<section id="using-ss.par-for-initial-values" class="level2">
+<h2 class="anchored" data-anchor-id="using-ss.par-for-initial-values">Using ss.par for initial values</h2>
+<p>Typically, SS3 uses initial parameter values as specified in the parameter lines of the control file. However, initial values can be read from the ss.par file instead. To use ss.par, in starter.ss below the names of the data and control files, set the value to 1 rather than 0 on the line with comment:</p>
+<p><code># 0=use init values in control file; 1=use ss.par</code>.</p>
+<p>Using the ss.par file is helpful when you want to use different initial values without modifying the control file. An ss.par file is an output file created during each model run and contains the ending parameter values. Using this ss.par file from a previous model run with a similar model (that still has the same parameters) will speed up run time because the initial values are likely closer to the maximum likelihood estimation (MLE) parameter estimates.</p>
+</section>
+<section id="using-wtatage.ss" class="level2">
+<h2 class="anchored" data-anchor-id="using-wtatage.ss">Using wtatage.ss</h2>
+<p>As stated in the manual, SS3 has the capability to read empirical body weight at age for the population and each fleet, in lieu of generating these weights internally from the growth parameters, weight-at-length, and size-selectivity. Please see the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#WAA">Empirical Weight-at-Age (wtatage.ss) section of the SS3 user manual</a> for more information on using wtatage.ss with a model. There is also a <a href="https://github.com/nmfs-stock-synthesis/user-examples/tree/main/model_files/empirical_wtatage_and_age_selex">weight at age SS3 example model available</a> if you would like to try using this feature without having to build your own model.</p>
+</section>
+</section>
+<section id="plotting-results-and-basic-troubleshooting" class="level1">
+<h1>Plotting results and basic troubleshooting</h1>
+<section id="using-r4ss-to-organize-and-plot-ss3-output" class="level2">
+<h2 class="anchored" data-anchor-id="using-r4ss-to-organize-and-plot-ss3-output">Using r4ss to organize and plot SS3 output</h2>
+<p>To plot the results of an SS3 model after it has run, use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(r4ss) <span class="co"># use r4ss package on github</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create list of quantities for the model in the directory mydir</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>replist <span class="ot">&lt;-</span> <span class="fu">SS_output</span>(mydir)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_plots</span>(replist)<span class="co"># create plots for SS3 run</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>See https://github.com/r4ss/r4ss for {r4ss} installation instructions. r4ss includes other functionality for working with SS3 models, see the <a href="https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html">r4ss vignette</a> for an introduction.</p>
+</section>
+<section id="what-to-do-when-ss3-doesnt-run" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-do-when-ss3-doesnt-run">What to do when SS3 doesn’t run</h2>
+<p>Here are some basic checks for when SS3 does not run:</p>
+<ul>
+<li>Make sure that all files and directories are named correctly.</li>
+<li>Check that starter.ss references the correct names of the control and data files.</li>
+<li>If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read corectly or not.</li>
+</ul>
+<p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
+</section>
+</section>
+<section id="where-to-get-additional-help" class="level1">
+<h1>Where to get additional help</h1>
+<ul>
+<li>The <a href="https://vlab.noaa.gov/web/stock-synthesis">SS3 vlab website</a> resources, including the SS3 user manual and the SSI user guide</li>
+<li>Post questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a></li>
+<li>Email questions to nmfs.stock.synthesis@noaa.gov</li>
+<li>Report bugs or request features using the <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues">Stock Synthesis issue tracker</a></li>
+<li><a href="https://www.sciencedirect.com/journal/fisheries-research/vol/142/suppl/C">Fisheries Research special issue (vol.&nbsp;142) on Stock Synthesis</a></li>
+<li><a href="http://www.capamresearch.org/">Center for the Advancement of Population Assessment Methodology (CAPAM)</a> provides information about good practices in stock assessment</li>
+</ul>
+</section>
+<section id="app1" class="level1">
+<h1>Appendix 1: An introduction to the command line</h1>
+<p>If you have never used the command line before, it will be helpful to learn a few basics. Some potential resources include:</p>
+<ul>
+<li><a href="https://happygitwithr.com/shell.html">Appendix A</a> to the Happy Git and GitHub for the useR book, which introduces the command line on Linux, OSX, and Windows systems.</li>
+<li><a href="https://launchschool.com/books/command_line">Introduction to the Command Line by Launch School</a> has even more detail about using the command line specifically on Linux (which should also apply to OSX systems)</li>
+<li>A web search on “Command Line” will reveal plenty of other resources</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
