@@ -8,17 +8,18 @@ website:
     left:
       - href: qmds/index.qmd
         text: "Home"
-      - text: "Tutorials"
-        menu:
-          - qmds/getting_started_ss.qmd
-          - qmds/model_tutorial.qmd
-          - qmds/ss_model_tips.qmd
-      - text: "User Manuals"
+      - text: "SS3 User Manuals"
+        href: qmds/user_manual.qmd
         menu:
           - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
             text: "HTML Version"
           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
             text: "PDF Version"
+      - text: "Tutorials"
+        menu:
+          - qmds/getting_started_ss.qmd
+          - qmds/ss_model_tips.qmd
+          - qmds/model_tutorial.qmd
         
 
 format:
