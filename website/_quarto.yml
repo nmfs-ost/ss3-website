@@ -19,7 +19,7 @@ website:
           - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
             text: "HTML Version"
           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
-            text: "PDF Version"
+            text: "PDF Version (downloads on click)"
       - text: "Tutorials"
         icon: "person-vcard"
         menu:
