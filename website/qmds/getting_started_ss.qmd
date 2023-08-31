@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with Stock Synthesis (SS3)"
+title: "Getting Started with Stock Synthesis"
 author: "SS3 Development Team"
 date: '`r format(Sys.Date(), "Last Updated: %B %d, %Y")`'
 ---
