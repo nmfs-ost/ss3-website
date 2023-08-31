@@ -10,8 +10,9 @@ website:
         text: "Home"
       - text: "Tutorials"
         menu:
-          - about.qmd
-          - tutorial.qmd
+          - getting_started_ss.qmd
+          - model_tutorial.qmd
+          - ss_model_tips.qmd
       - text: "User Manuals"
         menu:
           - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html

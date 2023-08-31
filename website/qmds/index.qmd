@@ -1,7 +1,6 @@
 ---
 title: "Stock Synthesis Documentation"
 ---
-# Stock Synthesis Documentation
 
 ## Tutorials <a name = "tutorials"></a>
 * [Getting Started Tutorial](Getting_Started_SS.html)
