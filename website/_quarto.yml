@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Stock Synthesis (SS3) Documentation"
+  navbar:
+    left:
+      - href: qmds/index.qmd
+        text: "Home"
+      - text: "Tutorials"
+        menu:
+          - about.qmd
+          - tutorial.qmd
+      - text: "User Manuals"
+        menu:
+          - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
+            text: "HTML Version"
+          - href: 
+            text: "PDF Version"
+        
+
+format:
+  html:
+    theme: cosmo
+    toc: true
