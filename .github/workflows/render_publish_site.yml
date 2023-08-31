@@ -21,19 +21,32 @@ jobs:
       
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          # To install LaTeX to build PDF book 
-          tinytex: true 
 
-      # - name: Render Quarto Project
-      #   uses: quarto-dev/quarto-actions/render@v2
-        # with:
-        #   to: html # If set, it will be equivalent to `quarto render --to html`
-        #   path: source-folder # By default, the current working dir is used i.e `quarto render .`
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html
+          path: website # By default, the current working dir is used i.e `quarto render .`
       
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'website/docs/'
+    
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+          render: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      #  - name: Setup Pages
+      #    uses: actions/configure-pages@v3
+      #  - name: Upload artifact
+      #    uses: actions/upload-pages-artifact@v1
+      #    with:
+      #      path: 'docs/'
+      #  - name: Deploy to GitHub Pages
+      #    id: deployment
+      #    uses: actions/deploy-pages@v2

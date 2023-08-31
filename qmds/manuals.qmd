@@ -1,7 +1,0 @@
----
-title: "Manuals"
-resources:
-    - "SS330_User_Manual_release.html"
----
-
-Manuals
