@@ -27,7 +27,6 @@ website:
         menu:
           - qmds/getting_started_ss.qmd
           - qmds/ss_model_tips.qmd
-          - qmds/model_tutorial.qmd
     right:
        - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
          icon: github
