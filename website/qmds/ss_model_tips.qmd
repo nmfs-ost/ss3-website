@@ -2,13 +2,6 @@
 title: "Developing your first Stock Synthesis (SS3) model"
 author: "SS3 Development Team"
 date: '`r format(Sys.Date(), "Last Updated: %B %d, %Y")`'
-output:
-  html_document:
-    df_print: paged
-    number_sections: yes
-  pdf_document:
-    number_sections: true
-urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
