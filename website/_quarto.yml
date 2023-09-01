@@ -12,7 +12,7 @@ website:
         href: index.qmd
         icon: "house"
       - text: "SS3 User Manuals"
-        icon: "journal"
+        icon: "journal-code"
         menu:
           - href: qmds/user_manual.qmd
             text: "Citing the SS3 User Manual"
@@ -26,8 +26,24 @@ website:
           - qmds/getting_started_ss.qmd
           - qmds/ss_model_tips.qmd
     right:
-       - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
-         icon: github
+       - icon: github
+         menu:
+           - text: "Stock Synthesis"
+             menu:
+               - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
+                 text: "Source Code"
+                 icon: "code"
+               - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
+                 text: "Report an Issue"
+                 icon: "exclamation-circle"
+           - text: "User Manual"
+             menu:
+               - href: https://github.com/nmfs-stock-synthesis/doc
+                 text: "Source Code"
+                 icon: "code"
+               - href: https://github.com/nmfs-stock-synthesis/doc/issues/new
+                 text: "Report an Issue"
+                 icon: "exclamation-circle"
        
         
 
