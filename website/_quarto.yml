@@ -4,8 +4,8 @@ project:
 
 website:
   title: "Stock Synthesis (SS3) Documentation"
-  issue-url: "https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"
-  repo-actions: [issue]
+  # issue-url: "https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"
+  # repo-actions: [issue]
   navbar:
     left:
       - text: "Home"
@@ -28,22 +28,18 @@ website:
     right:
        - icon: github
          menu:
-           - text: "Stock Synthesis"
-             menu:
-               - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
-                 text: "Source Code"
-                 icon: "code"
-               - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
-                 text: "Report an Issue"
-                 icon: "exclamation-circle"
-           - text: "User Manual"
-             menu:
-               - href: https://github.com/nmfs-stock-synthesis/doc
-                 text: "Source Code"
-                 icon: "code"
-               - href: https://github.com/nmfs-stock-synthesis/doc/issues/new
-                 text: "Report an Issue"
-                 icon: "exclamation-circle"
+           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
+             text: "Stock Synthesis Source Code"
+             icon: "code"
+           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
+             text: "Stock Synthesis Report an Issue"
+             icon: "exclamation-circle"
+           - href: https://github.com/nmfs-stock-synthesis/doc
+             text: "User Manual Source Code"
+             icon: "code"
+           - href: https://github.com/nmfs-stock-synthesis/doc/issues/new
+             text: "User Manual Report an Issue"
+             icon: "exclamation-circle"
        
         
 
