@@ -2,7 +2,7 @@
 title: "Stock Synthesis Documentation"
 ---
 
-Welcome to the Stock Synthesis repository!
+Welcome to the Stock Synthesis documentation page! This is the website to get to the Stock Synthesis User Manual as well as tutorials and other helpful materials.
 
 ## How to Cite Stock Synthesis
 
