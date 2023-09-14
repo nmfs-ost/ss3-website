@@ -10,9 +10,9 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-        icon: "house"
+        icon: house
       - text: "SS3 User Manuals"
-        icon: "journal-code"
+        icon: journal-code
         menu:
           - href: qmds/user_manual.qmd
             text: "Citing the SS3 User Manual"
@@ -21,10 +21,13 @@ website:
           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
             text: "PDF Version (downloads on click)"
       - text: "Tutorials"
-        icon: "person-vcard"
+        icon: person-workspace
         menu:
           - qmds/getting_started_ss.qmd
           - qmds/ss_model_tips.qmd
+          - qmds/predator.qmd
+          - qmds/start_year_considerations.qmd
+          
     right:
        - icon: github
          menu:

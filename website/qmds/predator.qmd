@@ -1,0 +1,189 @@
+---
+title: "Predator Vignette"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Goal
+
+Model the overall natural morality (M) to include explicit mortality (M2) caused by each major predator.
+
+- M = M1 + sum(M2)
+- The M1 is the base and is modeled with the existing M options to allow various approaches to age-specific M1
+- M2 is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.
+- M1 should be less than the total M value you were using previously such that M1 plus the time-varying M2 will be similar to what previously was a constant overall M.
+
+## Predators (M2)
+
+- There can be multiple predators, each adding a M2.
+- These are contained in the same arrays as fishing fleets, so M2 has available all the code characteristics as a fishing fleet.
+- Very little code is specific to predators...*yet*.
+- Each predator will kill fish. M2(f)/Z is the fraction of the total kill that is consumed by predator(f) in a given area x season.
+- Each predator will have selectivity (age and/or length) just as any other fleet.
+    - Many predators tend to select smaller fish.
+
+## M2 is area-specific
+
+- If a predator occurs in multiple areas, they might be named "seals_A1" and "seals_A2" and would have separate data inputs and controls, just like fishing fleets.
+- A "fleet" is designated as a predator at the top of the data file.
+
+    ```         
+    4 #_Nfleets (including surveys)
+    #_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=predator(M2) 
+    #_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month; (always 1 for surveys)
+    #_fleet_area:  area the fleet/survey operates in
+    #_units of catch:  1=bio; 2=num (ignored for surveys; their units read later)
+    #_catch_mult: 0=no; 1=yes
+    #_rows are fleets
+    #_fleet_type fishery_timing area catch_units need_catch_mult fleetname
+    1 -1 1 1 0 Fleet  # 1
+    4 -1 1 1 0 Seals  # 2
+    3 1 1 2 0 CPUE  # 3
+    3 1 1 2 0 Acoustic  # 4
+    ```
+
+::: {.callout-note}
+Retained catch is not entered for predator fleets, nor is there a need to enter placeholder values.
+:::
+
+## Consumption by predators is stored in discard arrays
+
+- Data on the amount of consumption can be entered as discard data, where SS3 will include it in the estimation of M2 values.
+
+    ```         
+    1 #_N_fleets_with_discard
+    #_discard_units (1=same_as_catchunits(bio/num); 2=fraction; 3=numbers)
+    #_discard_errtype: >0 for DF of T-dist(read CV below); 0 for normal with CV; -1 for normal with se; -2 for lognormal; -3 for trunc normal with CV
+    # note: only enter units and errtype for fleets with discard 
+    # note: discard data is the total for an entire season, so input of month here must be to a month in that season
+    #_Fleet units errtype
+    2 1 -2 # Seals
+    #_yr month fleet obs stderr
+    1980 2.5 2 76 0.2 #_ Seals
+    1980 5.5 2 76 0.2 #_ Seals
+    ```
+
+## Predator abundance
+
+- The abundance of the predator is the "fishing effort" this is correlated with the level of M2.
+- If the predator abundance is available, it can be entered as a survey of "F".
+- The format looks like:
+
+    ```         
+    #_Units:  0=numbers; 1=biomass; 2=F; 30=spawnbio; ……
+    #_Errtype:  -1=normal; 0=lognormal; >0=T
+    #_SD_Report: 0=no sdreport; 1=enable sdreport
+    #_Fleet Units Errtype SD_Report
+    1 1 0 0 # fishing_fleet
+    2 2 0 0 # pred
+    ```
+
+- This triggers the need to specify a catchability for this fleet in the control file.
+- Neither consumption data nor predator abundance data is necessary, but they are both helpful in tuning the level and time-variation of M2.
+
+## Future predator options
+
+- Add a new option that is specific to predators
+- Develop specific catchability (*e.g.* Type 1 vs. Type 2 response for consumption/predator options).
+
+## M2 parameter for each predator, in each season
+
+- The recommended approach is to set up this parameter to have a mean-reverting random walk over time.
+- The time series of predator consumption (in the discard section), and the series of predator relative abundance (as effort), will inform SS3 about changes in M2 over time.
+
+Control file:
+
+```
+# M2 parameter for each predator fleet
+0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1
+0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1
+0 10 0.936248 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s2
+0 10 2.71282 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s3
+0 10 2.83102 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s4
+#
+# timevary MG parameters 
+#_ LO HI INIT PRIOR PR_SD PR_type  PHASE
+1e-05 2.4 1.4368 0.2 0.8 0 3 #M2_pred1_BLK1repl_1964
+0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_dev_se
+-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_dev_autocorr
+0.0001 2 1.7 0.5 0.5 6 -5 #M2_pred1_s2_dev_se
+-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s2_dev_autocorr
+0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s3_dev_se
+-0.99 0.99 0 0 0.5 -6 -6 # M2_pred1_s3_dev_autocorr
+0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s4_dev_se
+-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s4_dev_autocorr
+```
+
+## Diet data
+
+- If diet data with size or age composition of the prey is available, it can be entered in the composition data section where it will inform the estimation of the age/length selectivity of the predator for it's prey.
+- It should have a retained code of 0 for total kill, not 1 for discard.
+
+## Predator example
+
+```{r, echo = FALSE}
+path_files <- list.files(path = file.path(getwd(), "example_files"), full.names = TRUE)
+
+downloadthis::download_file(
+  path = path_files,
+  output_name = "predator_vignette",
+  button_label = "Download predator SS3 input files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+### Example Info: 4 seasons, and M2 can vary by season
+
+- M2 has a random dev over time to allow time-varying flexibility.
+- Then we add data to inform those devs.
+- In this example, those data are consumption entered as discard data.
+- An alternative is to enter an indicator (*e.g.* survey or other indicator of predator abundance) of the level of M2 itself.
+    - This is not done here but would be a survey of Type 2.
+    - Hopefully we can create more meaningful linkages between preators and M2 in the future.
+
+### Data file:
+
+- One fleet is Type 4 and labeled as *Pred*
+- The section of discard data is used as a place to enter the amount of consumption. This is not necessary, but it does help calibrate the M2 levels.
+- The fact that at least one fleet is a predator triggers the need to include M2 internal to the SS3 calculations.
+
+### Control file:
+
+- This example has somewhat complex M1 pattern by age. This is independent of M2 so need not be maintained in your work.
+- The M2 parameter setup begins at line 106.
+- The M2 parameter has a block to shift it's value in 1964 and annual devs.
+- It also is set up to have annual devs in the seasonal values of M2. There are a lot of parameters. In this case, it works because there is a discard observation for each one. It should still work without all that consumption data because it is a random effect, but let's talk if you have challenges.
+- SS3 also needs to setup the size & age selectivity of the predator
+    
+    ```
+    #_Pattern Discard Male Special
+    24 0 0 0 # 1 Fleet
+    24 3 0 0 # 2 Pred
+    ```
+    
+::: callout-note
+Notice that the discard flag is "3". This means that for the predator fleet the data file contains no relevant "retained catch", so the M2 level will only be informing the amount of "discard" which is the predator consumption.
+:::
+
+- In this example, the selectivity of the predator was setup using double normal (Type = 24), but parameters set to essentially be logistic. You can change this as needed.
+
+### M2 in Report.sso
+
+- If you search through the Report.sso file for "M2", you will find the parameter values near the top.
+- The consumption output is in the "Discard" section.
+- The time-series of M2 is further down.
+
+### Predator Data
+
+```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. {r4ss} data output with predator data."}
+knitr::include_graphics("images/predators.png")
+```
+
+::: {.callout-note}
+The discard label will appear in the plot because predator consumption is stored internally in the same place as discards.
+:::
