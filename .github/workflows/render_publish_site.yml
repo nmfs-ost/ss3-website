@@ -18,6 +18,7 @@ jobs:
           packages:
             any::knitr
             any::rmarkdown
+            any::downloadthis
       
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
