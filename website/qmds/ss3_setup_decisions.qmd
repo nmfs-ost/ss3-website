@@ -12,7 +12,8 @@ format:
 flowchart TB
     A["How many areas should I have?"] --> B["Do I have lots of data"]
     B -- Yes --> C["Is there limited movement"]
-    C -- Yes --> D["Is there evidence of significant spatial differences in growth or relative stock size?"]
+    C -- Yes --> D["Is there evidence of significant spatial 
+                    differences in growth or relative stock size?"]
     D -- Yes --> E("Use more than one area")
     B -- No --> F("Use one area")
     C -- No --> F
@@ -25,11 +26,13 @@ flowchart TB
 ### Seasons
 ```{mermaid}
 flowchart TB
-    A["How many seasons should I have?"] --> B["Is it a short-lived, fast growing species?"]
+    A["How many seasons should I have?"] --> B["Is it a short-lived, 
+                                                fast growing species?"]
     B -- Yes --> C["Am I using length data?"]
     C --Yes --> D("Use multiple seasons")
     C -- No --> E("Use one season")
-    B -- No --> F["Is fishing during a short season that preceeds the survey or spawning?"]
+    B -- No --> F["Is fishing during a short season that 
+                  preceeds the survey or spawning?"]
     F -- Yes --> D
     F -- No --> E
     linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
@@ -41,7 +44,8 @@ flowchart TB
 ```{mermaid}
 flowchart TB
     A["Should I use EWAA or paramateric growth?"] --> B["Do I have lots of age data"]
-    B -- Yes --> C["Is there evidence of variability in weight-at-age"]
+    B -- Yes --> C["Is there evidence of variability 
+                  in weight-at-age"]
     C -- Yes --> D("Use EWWA")
     B -- No --> E("Use parametric growth")
     C -- No --> E
@@ -54,9 +58,12 @@ flowchart TB
 ### Fleets
 ```{mermaid}
 flowchart TB
-    A["How many fleets should I have?"] --> B["Are there significant differences in size composition of the catch of different subsets of the fishery?"]
+    A["How many fleets should I have?"] --> B["Are there significant differences in size
+                                              composition of the catch of different subsets
+                                              of the fishery?"]
     B --Yes --> C("Multiple fleets")
-    B -- No --> D["Is there some management reason to model the catch separately?"]
+    B -- No --> D["Is there some management reason to 
+                  model the catch separately?"]
     D -- Yes --> C
     D -- No --> E("Group all catch as one fleet")
     linkStyle 1,2,3,4 stroke-width:2px,color:black
@@ -89,9 +96,12 @@ The first age is always 0, but recruitment can occur at age 1.
 ```{mermaid}
 flowchart TB
     A["Can population age bins go higher than data age bins?"] --> B["Is growth asymptotic within observed ages?"]
-    B -- Yes --> C("Population age bins **can** go higher than data age bins")
-    D["Is unfished equilibrium estimated to have older fish than has been observed?"] -- Yes --> C
-    B -- No --> E("Population age bins **can't** go higher than data age bins")
+    B -- Yes --> C("Population age bins can go 
+                  higher than data age bins")
+    D["Is unfished equilibrium estimated to 
+      have older fish than has been observed?"] -- Yes --> C
+    B -- No --> E("Population age bins can't go 
+                  higher than data age bins")
     D -- No --> E
     linkStyle 1,2,3,4 stroke-width:2px,color:black
     style C fill:steelblue
