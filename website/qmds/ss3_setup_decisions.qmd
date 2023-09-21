@@ -6,7 +6,7 @@ format:
       theme: dark
 ---
 
-## Model dimensions to figure out before adding data (part 1)
+## Model dimensions to figure out before adding data
 ### Areas
 ```{mermaid}
 flowchart TB
