@@ -1,0 +1,101 @@
+---
+title: "Important SS3 Set-up Decisions"
+format: 
+  html:
+    mermaid: 
+      theme: dark
+---
+
+## Model dimensions to figure out before adding data (part 1)
+### Areas
+```{mermaid}
+flowchart TB
+    A["How many areas should I have?"] --> B["Do I have lots of data"]
+    B -- Yes --> C["Is there limited movement"]
+    C -- Yes --> D["Is there evidence of significant spatial differences in growth or relative stock size?"]
+    D -- Yes --> E("Use more than one area")
+    B -- No --> F("Use one area")
+    C -- No --> F
+    D -- No --> F
+    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
+    style F fill:steelblue
+    style E fill:steelblue
+```
+
+### Seasons
+```{mermaid}
+flowchart TB
+    A["How many seasons should I have?"] --> B["Is it a short-lived, fast growing species?"]
+    B -- Yes --> C["Am I using length data?"]
+    C --Yes --> D("Use multiple seasons")
+    C -- No --> E("Use one season")
+    B -- No --> F["Is fishing during a short season that preceeds the survey or spawning?"]
+    F -- Yes --> D
+    F -- No --> E
+    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
+    style D fill:steelblue
+    style E fill:steelblue
+```
+
+### Empirical weight-at-age vs. parametric growth
+```{mermaid}
+flowchart TB
+    A["Should I use EWAA or paramateric growth?"] --> B["Do I have lots of age data"]
+    B -- Yes --> C["Is there evidence of variability in weight-at-age"]
+    C -- Yes --> D("Use EWWA")
+    B -- No --> E("Use parametric growth")
+    C -- No --> E
+    linkStyle 1,2,3,4 stroke-width:2px,color:black
+    style D fill:steelblue
+    style E fill:steelblue
+```
+
+
+### Fleets
+```{mermaid}
+flowchart TB
+    A["How many fleets should I have?"] --> B["Are there significant differences in size composition of the catch of different subsets of the fishery?"]
+    B --Yes --> C("Multiple fleets")
+    B -- No --> D["Is there some management reason to model the catch separately?"]
+    D -- Yes --> C
+    D -- No --> E("Group all catch as one fleet")
+    linkStyle 1,2,3,4 stroke-width:2px,color:black
+    style C fill:steelblue
+    style E fill:steelblue
+```
+
+### One sex or two
+```{mermaid}
+flowchart TB
+    A["Should I have one sex or two"] --> B["Am I modeling growth?"]
+    B -- Yes --> C["Is the species sexually dimorphic?"]
+    C -- Yes --> D("Use two sexes")
+    A --> E["Do I have sex-specific composition data?"]
+    E -- Yes --> D
+    B -- No --> F("Combine females and males into one sex")
+    C -- No --> F
+    E -- No --> F
+    linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black
+    style D fill:steelblue
+    style F fill:steelblue
+```
+
+
+### Number of ages
+Data age bins should cover the majority of the observed ages (*i.e.* not too large that a fraction is in the maximum age/plus group).
+
+The first age is always 0, but recruitment can occur at age 1.
+
+```{mermaid}
+flowchart TB
+    A["Can population age bins go higher than data age bins?"] --> B["Is growth asymptotic within observed ages?"]
+    B -- Yes --> C("Population age bins **can** go higher than data age bins")
+    D["Is unfished equilibrium estimated to have older fish than has been observed?"] -- Yes --> C
+    B -- No --> E("Population age bins **can't** go higher than data age bins")
+    D -- No --> E
+    linkStyle 1,2,3,4 stroke-width:2px,color:black
+    style C fill:steelblue
+    style E fill:steelblue
+```
+
+In models with growth, the plus group should be old enough so that fish nearly achieve Linf by the time they are in the plus group.

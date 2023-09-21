@@ -27,6 +27,7 @@ website:
           - qmds/ss_model_tips.qmd
           - qmds/predator.qmd
           - qmds/start_year_considerations.qmd
+          - qmds/ss3_setup_decisions.qmd
           
     right:
        - icon: github
