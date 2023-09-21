@@ -2,8 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
-quarto_doc_website.Rproj
+quarto-doc-website.Rproj
 .git
+.DS_Store
 
 /.quarto/
 /_site/
+/website/qmds/*.html
