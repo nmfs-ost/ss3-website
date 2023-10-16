@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Scope
 <!-- Note that this guide is not yet complete! -->
-This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS model.
+This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.
 
-If you are a new SS user who is not yet comfortable running an SS model, we suggest trying to run a working example model using advice in the **Getting Started** document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the **Developing your first Stock Synthesis model** guide.
+If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the **Getting Started** document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the **Developing your first Stock Synthesis model** guide.
 
 Throughout this example, we use an even simpler version of the Stock Synthesis example model "Simple". To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package [r4ss](github.com/r4ss/r4ss).
 
@@ -79,7 +79,7 @@ In the case of this example, data.ss is the name of the data file, while control
 This is where the data inputs are specified. At the top, general information about the model is specified: the model years, number of seasons, number of sexes, maximum age, number of areas, number of fleets:
 
 ```{R eval = FALSE}
-#Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.
+#Stock Synthesis (SS3) is a work of the U.S. Government and is not subject to copyright protection in the United States.
 #Foreign copyrights may apply. See copyright.txt for more information.
 1971 #_StartYr
 2001 #_EndYr
@@ -87,7 +87,7 @@ This is where the data inputs are specified. At the top, general information abo
 12 #_months/season
 2 #_Nsubseasons (even number, minimum is 2)
 1 #_spawn_month
-2 #_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)
+2 #_Nsexes: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)
 40 #_Nages=accumulator age, first age is always age 0
 1 #_Nareas
 3 #_Nfleets (including surveys)
@@ -382,7 +382,7 @@ The parameter lines resulting from the natural mortality, growth, and maturity (
  1e-006 0.999999 0.5 0.5 0.5 0 -99 0 0 0 0 0 0 0 # FracFemale_GP_1
 
 ```
-Note that the first line in the block of SS input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:
+Note that the first line in the block of SS3 input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:
 
 - Anything with negative phase (7th value in a long parameter line) is not estimated and is set at the initial value (3rd value in the line), while positivie phases are estimated. 
 - Natural mortality for both males and females is specified at 0.1.
