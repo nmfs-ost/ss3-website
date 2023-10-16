@@ -284,8 +284,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scope" class="level1">
 <h1>Scope</h1>
 <!-- Note that this guide is not yet complete! -->
-<p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS model.</p>
-<p>If you are a new SS user who is not yet comfortable running an SS model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
+<p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.</p>
+<p>If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
 <p>Throughout this example, we use an even simpler version of the Stock Synthesis example model “Simple”. To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package <a href="github.com/r4ss/r4ss">r4ss</a>.</p>
 </section>
 <section id="model-description" class="level1">
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-file">Data file</h2>
 <p>This is where the data inputs are specified. At the top, general information about the model is specified: the model years, number of seasons, number of sexes, maximum age, number of areas, number of fleets:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stock Synthesis (SS3) is a work of the U.S. Government and is not subject to copyright protection in the United States.</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Foreign copyrights may apply. See copyright.txt for more information.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1971</span> <span class="co">#_StartYr</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="co">#_EndYr</span></span>
@@ -355,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span> <span class="co">#_months/season</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Nsubseasons (even number, minimum is 2)</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_spawn_month</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Nsexes: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="co">#_Nages=accumulator age, first age is always age 0</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Nareas</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="co">#_Nfleets (including surveys)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -619,7 +619,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  fraction female, by GP</span></span>
 <span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a> <span class="fl">1e-006</span> <span class="fl">0.999999</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">99</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># FracFemale_GP_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that the first line in the block of SS input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:</p>
+<p>Note that the first line in the block of SS3 input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:</p>
 <ul>
 <li>Anything with negative phase (7th value in a long parameter line) is not estimated and is set at the initial value (3rd value in the line), while positivie phases are estimated.</li>
 <li>Natural mortality for both males and females is specified at 0.1.</li>
