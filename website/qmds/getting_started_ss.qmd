@@ -60,8 +60,6 @@ Many output text files are created during a model run. The most useful output fi
 
 + **r4ss**: An R package to plot SS3 model results and manipulate SS3 input and output files. Available at: https://github.com/r4ss/r4ss
 
-+ **SSI**: Stock Synthesis Interface (i.e., the SS3 GUI). The [latest version of SSI](https://github.com/nmfs-stock-synthesis/ssi/releases/latest) can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs.
-
 # Running SS3
 
 SS3 is typically run through the command line (although it can also be run indirctly via the commandline through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the ["Running Stock Synthesis" section of the user manual](https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS).
