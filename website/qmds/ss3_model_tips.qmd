@@ -30,15 +30,14 @@ There are many potential workflows for developing a new SS3 model, but a common 
 
 Some commonly used tools for editing the SS3 input files are:
 
-1. [**Stock Synthesis Interface (SSI; the SS3 GUI)**](https://github.com/nmfs-stock-synthesis/ssi). The SSI allows you to read in a model, performs some checks to ensure valid inputs, make modifications to the model, and offers visualizations of inputs. You can also run models from SSI.
-2. **Your favorite text editor**.
-3. **The ```SS_read*``` and ```SS_write*``` functions in the R package [r4ss](https://github.com/r4ss/r4ss)**. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The [r4ss vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss) demonstrates how to use these functions
+1. **Your favorite text editor**.
+2. **The ```SS_read*``` and ```SS_write*``` functions in the R package [r4ss](https://github.com/r4ss/r4ss)**. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The [r4ss vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss) demonstrates how to use these functions
 
 # Guidance on model specification
 
 SS3 has a rich set of features. Some required inputs are conditional on other inputs, so it is important to be mindful that changing an option might result in SS3 expecting a different number of values in the input files than it did previously. Most of the time, these conditional inputs are read right after the option.
 
-The [SS3 user manual](https://github.com/nmfs-stock-synthesis/doc/releases) can be used as a guide to help you edit your model. Conditional inputs are noted in the manual. The SSI can also help guide you through changes in model inputs required as you select different SS3 model options.
+The [SS3 user manual](https://github.com/nmfs-stock-synthesis/ss3-doc/releases) can be used as a guide to help you edit your model. Conditional inputs are noted in the manual.
 
 If you are unsure if you got the setup right (e.g., adding the correct number of parameter lines for a chosen catchability setup), try running the model with ```maxphase = 0``` in the starter file and ADMB option ```-nohess``` (or for SS3 3.30.16 and greater, run the model with command line options ```-stopph 0 -nohess```, no need to change the starter file). If the model run completes, you can compare the **control.ss_new** file and the first data set in **data.ss_new** to your SS3 input files to make sure SS3 interpreted the values as intended. If the run exits before completion, you can look at **warning.sso** and **echoinput.sso** for clues as to what was wrong with your setup.
 
