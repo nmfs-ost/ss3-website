@@ -116,10 +116,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li class="dropdown-header">qmds/getting_started_ss.qmd</li>
-        <li>
-    <a class="dropdown-item" href="../qmds/ss_model_tips.html" rel="" target="">
- <span class="dropdown-text">Developing your first Stock Synthesis model</span></a>
-  </li>  
+        <li class="dropdown-header">qmds/ss_model_tips.qmd</li>
         <li>
     <a class="dropdown-item" href="../qmds/ss3_setup_decisions.html" rel="" target="">
  <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
@@ -264,7 +261,6 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>Some commonly used tools for editing the SS3 input files are:</p>
 <ol type="1">
-<li><a href="https://github.com/nmfs-stock-synthesis/ssi"><strong>Stock Synthesis Interface (SSI; the SS3 GUI)</strong></a>. The SSI allows you to read in a model, performs some checks to ensure valid inputs, make modifications to the model, and offers visualizations of inputs. You can also run models from SSI.</li>
 <li><strong>Your favorite text editor</strong>.</li>
 <li><strong>The <code>SS_read*</code> and <code>SS_write*</code> functions in the R package <a href="https://github.com/r4ss/r4ss">r4ss</a></strong>. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The <a href="https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss">r4ss vignette</a> demonstrates how to use these functions</li>
 </ol>
@@ -272,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="guidance-on-model-specification" class="level1">
 <h1>Guidance on model specification</h1>
 <p>SS3 has a rich set of features. Some required inputs are conditional on other inputs, so it is important to be mindful that changing an option might result in SS3 expecting a different number of values in the input files than it did previously. Most of the time, these conditional inputs are read right after the option.</p>
-<p>The <a href="https://github.com/nmfs-stock-synthesis/doc/releases">SS3 user manual</a> can be used as a guide to help you edit your model. Conditional inputs are noted in the manual. The SSI can also help guide you through changes in model inputs required as you select different SS3 model options.</p>
+<p>The <a href="https://github.com/nmfs-stock-synthesis/ss3-doc/releases">SS3 user manual</a> can be used as a guide to help you edit your model. Conditional inputs are noted in the manual.</p>
 <p>If you are unsure if you got the setup right (e.g., adding the correct number of parameter lines for a chosen catchability setup), try running the model with <code>maxphase = 0</code> in the starter file and ADMB option <code>-nohess</code> (or for SS3 3.30.16 and greater, run the model with command line options <code>-stopph 0 -nohess</code>, no need to change the starter file). If the model run completes, you can compare the <strong>control.ss_new</strong> file and the first data set in <strong>data.ss_new</strong> to your SS3 input files to make sure SS3 interpreted the values as intended. If the run exits before completion, you can look at <strong>warning.sso</strong> and <strong>echoinput.sso</strong> for clues as to what was wrong with your setup.</p>
 <p>For additional help with model specification, please post your questions on the vlab <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a> (for registered SS3 users) or send an email to the SS3 team at NMFS.Stock.Synthesis@noaa.gov.</p>
 </section>
