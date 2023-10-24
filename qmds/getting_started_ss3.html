@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SS3 Development Team">
-<meta name="dcterms.date" content="2023-10-16">
+<meta name="dcterms.date" content="2023-10-24">
 
 <title>Stock Synthesis (SS3) Documentation - Getting Started with Stock Synthesis</title>
 <style>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 16, 2023</p>
+      <p class="date">October 24, 2023</p>
     </div>
   </div>
   
@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>SS3 uses text input files and produces text output files. In this section, the SS3 input and output files are described, as are tools that can be used with these files. See how they relate in Figure 1.</p>
 <section id="ss3-files-required-inputs" class="level2">
 <h2 class="anchored" data-anchor-id="ss3-files-required-inputs">SS3 files: Required inputs</h2>
-<p>Four required input files are read by the SS3 executable. Throughout this document, we will refer to the SS3 executable as ss.exe. Keep in mind that the Linux and Mac versions of SS3 have no file extension (e.g., ss3), and the executable can be renamed by the user as desired (e.g., ss_win.exe, ss_3.30.18.exe). These input files are:</p>
+<p>Four required input files are read by the SS3 executable. Throughout this document, we will refer to the SS3 executable as ss3.exe. Keep in mind that the Linux and Mac versions of SS3 have no file extension (e.g., ss3), and the executable can be renamed by the user as desired (e.g.,ss3.exe, ss_win.exe, ss_3.30.18.exe). These input files are:</p>
 <ol type="1">
 <li><strong>starter.ss:</strong> Required file containing file names of the data file and the control file plus other run controls. Must be named starter.ss.</li>
 <li><strong>data file:</strong> File containing model dimensions and the data. The data file can have any name, as specified in the starter file, but typically ends in .ss or .dat.</li>
@@ -335,6 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p><strong>Any text editor</strong> can be used to view and edit SS3 input and output files. Defining a custom syntax highlighting scheme for SS3 files may improve SS3 file readability. Some commonly used text editors include Atom, Emacs, Notepad++, and Sublime Text.</p></li>
 <li><p><strong>r4ss</strong>: An R package to plot SS3 model results and manipulate SS3 input and output files. Available at: https://github.com/r4ss/r4ss</p></li>
+<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-stock-synthesis/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.</p></li>
+<li><p><strong>Stock Assessment Continuum Tool</strong>: Available through github at https://github.com/shcaba/SS-DL-tool, the Stock Assessment Continuum Tool (previously known as the Stock Synthesis Data-limited Tool) is a Shiny-based application that provides an interface to upload catch time-series, age composition, length composition, and abundance index data and define model options within the application, which then writes the Stock Synthesis input files.</p></li>
 </ul>
 </section>
 </section>
@@ -388,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="options">Command line options</h2>
 <p>ADMB options can be added to the run when calling the SS3 executable from the command line. The most commonly used option is <code>ss3 -nohess</code> to skip standard errors (for quicker results or to get Report.sso if the hessian does not invert).</p>
 <p>To list all command line options, use one of these calls: <code>SS3-?</code> or <code>SS3 -help</code>. More info about the ADMB command line options is available in the <a href="http://www.admb-project.org/docs/manuals/">ADMB Manual</a> (Chapter 12: Command line options).</p>
-<p>To run SS3 without estimation use: <code>ss3 -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in SS3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
+<p>To run SS3 without estimation use: <code>ss3 -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in v.3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
 </section>
 <section id="using-ss.par-for-initial-values" class="level2">
 <h2 class="anchored" data-anchor-id="using-ss.par-for-initial-values">Using ss.par for initial values</h2>
@@ -428,6 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="where-to-get-additional-help" class="level1">
 <h1>Where to get additional help</h1>
 <ul>
+<li>Post to the Stock Synthesis <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/discussions">discussion boards on GitHub</a></li>
 <li>The <a href="https://vlab.noaa.gov/web/stock-synthesis">SS3 vlab website</a> resources, including the SS3 user manual</li>
 <li>Post questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a></li>
 <li>Email questions to nmfs.stock.synthesis@noaa.gov</li>

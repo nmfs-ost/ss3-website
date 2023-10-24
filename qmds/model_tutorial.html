@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="SS Development Team">
+<meta name="author" content="SS3 Development Team">
 <meta name="dcterms.date" content="2019-10-23">
 
 <title>Stock Synthesis (SS3) Documentation - Model building tutorial</title>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>SS Development Team </p>
+             <p>SS3 Development Team </p>
           </div>
   </div>
     
@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3000</span> <span class="fl">0.01</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The first line of the above code chunk shows the column headers for the catch data. Note that all catch comes from the fishery. The line <code>-999 1 1 0 0.01</code> specifies equilibirum catch for years before the model starts - in this case, there is no equilibrium catch because the catch column is 0. To terminate this catch data section the line <code>-9999 0 0 0 0</code> is needed. This tells SS that it can stop reading catch data.</p>
+<p>The first line of the above code chunk shows the column headers for the catch data. Note that all catch comes from the fishery. The line <code>-999 1 1 0 0.01</code> specifies equilibirum catch for years before the model starts - in this case, there is no equilibrium catch because the catch column is 0. To terminate this catch data section the line <code>-9999 0 0 0 0</code> is needed. This tells SS3 that it can stop reading catch data.</p>
 <p>Next comes specification for indices of abundance. First is the setup for all of the fleets:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_CPUE_and_surveyabundance_observations</span></span>
@@ -410,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">7</span> <span class="dv">3</span> <span class="fl">1.69379</span> <span class="fl">0.7</span> <span class="co">#_ SURVEY2</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="co"># terminator for survey observations </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Like the catch data, a terminator line is needed to tell SS when to stop reading the indices.</p>
+<p>Like the catch data, a terminator line is needed to tell SS3 when to stop reading the indices.</p>
 <p>Next, discards and mean body size data could be specified, but they are 0 in this example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_N_fleets_with_discard</span></span>
@@ -463,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.5</span> <span class="fl">1.5</span> <span class="fl">2.5</span> <span class="fl">3.5</span> <span class="fl">4.5</span> <span class="fl">5.5</span> <span class="fl">6.5</span> <span class="fl">7.5</span> <span class="fl">8.5</span> <span class="fl">9.5</span> <span class="fl">10.5</span> <span class="fl">11.5</span> <span class="fl">12.5</span> <span class="fl">13.5</span> <span class="fl">14.5</span> <span class="fl">15.5</span> <span class="fl">16.5</span> <span class="fl">17.5</span> <span class="fl">18.5</span> <span class="fl">19.5</span> <span class="fl">20.5</span> <span class="fl">21.5</span> <span class="fl">22.5</span> <span class="fl">23.5</span> <span class="fl">24.5</span> <span class="fl">25.5</span> <span class="fl">26.5</span> <span class="fl">27.5</span> <span class="fl">28.5</span> <span class="fl">29.5</span> <span class="fl">30.5</span> <span class="fl">31.5</span> <span class="fl">32.5</span> <span class="fl">33.5</span> <span class="fl">34.5</span> <span class="fl">35.5</span> <span class="fl">36.5</span> <span class="fl">37.5</span> <span class="fl">38.5</span> <span class="fl">39.5</span> <span class="fl">40.5</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For the age bins, SS reads in the number (17 in this case) and then expects that number of inputs for the age bins (the 17 values below it). Next, SS reads the age error definitions. In this case, there is only 1 definition, so SS expects 2 vectors, each which contain the max number of ages + 1 values (41 values per vector in this case). The first line defines the <em>bias</em> for the aging error, while the second vector defines the <em>standard deviation</em> of the aging error. This example has no aging bias and very high aging precision (low standard deviation), so this is close to assuming no aging error.</p>
+<p>For the age bins, SS3 reads in the number (17 in this case) and then expects that number of inputs for the age bins (the 17 values below it). Next, SS reads the age error definitions. In this case, there is only 1 definition, so SS3 expects 2 vectors, each which contain the max number of ages + 1 values (41 values per vector in this case). The first line defines the <em>bias</em> for the aging error, while the second vector defines the <em>standard deviation</em> of the aging error. This example has no aging bias and very high aging precision (low standard deviation), so this is close to assuming no aging error.</p>
 <p>Next comes the age composition setup lines:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_mintailcomp addtocomp combM+F CompressBins CompError ParmSelect minsamplesize</span></span>
@@ -485,8 +485,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span></span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
-<p>SS has some additional options that we have not used here and thus set to 0:</p>
+<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
+<p>SS3 has some additional options that we have not used here and thus set to 0:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_Use_MeanSize-at-Age_obs (0/1)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
@@ -503,7 +503,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co">#  Do dataread for selectivity priors(0/1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>And finally, the data file must end in <code>999</code> to tell SS to stop reading.</p>
+<p>And finally, the data file must end in <code>999</code> to tell SS3 to stop reading.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -514,7 +514,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co"># 0 means do not read wtatage.ss; 1 means read and use wtatage.ss and also read and use growth parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this case, it is not being used, so is set to 0. If empirical weight at age were used, SS would ignore all inputs relating to growth, maturity, and fecundity that are specified later in the control file (although it does still expect inputs).</p>
+<p>In this case, it is not being used, so is set to 0. If empirical weight at age were used, SS3 would ignore all inputs relating to growth, maturity, and fecundity that are specified later in the control file (although it does still expect inputs).</p>
 <p>Next are options for number of growth patterns and platoons. These are set to 1 because we assume the whole population is the same growth pattern, and there are not platoons within the growth patterns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="co">#_N_Growth_Patterns (Growth Patterns, Morphs, Bio Patterns, GP are terms used interchangeably in SS)</span></span>
@@ -660,7 +660,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_last_yr_nobias_adj_in_MPD; begin of ramp</span></span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_first_yr_fullbias_adj_in_MPD; begin of plateau</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="co">#_last_yr_fullbias_adj_in_MPD</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2002</span> <span class="co">#_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS sets bias_adj to 0.0 for fcast yrs)</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2002</span> <span class="co">#_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS3 sets bias_adj to 0.0 for fcast yrs)</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="co">#_max_bias_adj_in_MPD (-1 to override ramp and set biasadj=1.0 for all estimated recdevs)</span></span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_period of cycles in recruitment (N parms read below)</span></span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">5</span> <span class="co">#min rec_dev</span></span>
@@ -668,7 +668,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_read_recdevs</span></span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">#_end of advanced SR options</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The advanced options allow the user to bias adjust the recruitment deviations. There is more on bias adjustment in the SS user manual, but the general idea is to account for the fact that earlier and later recruitment deviations likely have less information informing them than the ones in the middle. The bias adjustment ramp accounts for this and is typically “tuned” by looking at bias ramp in the model results after it is run, respecifying the bias ramp as needed, and rerunning the model.</p>
+<p>The advanced options allow the user to bias adjust the recruitment deviations. There is more on bias adjustment in the SS3 user manual, but the general idea is to account for the fact that earlier and later recruitment deviations likely have less information informing them than the ones in the middle. The bias adjustment ramp accounts for this and is typically “tuned” by looking at bias ramp in the model results after it is run, respecifying the bias ramp as needed, and rerunning the model.</p>
 <p>Fishing mortality info is next specified:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fishing Mortality info </span></span>
@@ -767,7 +767,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># (0/1) read specs for more stddev reporting </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Varaiance adjustment factors and/or lambdas can be used for data weighting, but in this case they have not yet been used. The control file then ends with 999 so that SS knows it can stop reading:</p>
+<p>Varaiance adjustment factors and/or lambdas can be used for data weighting, but in this case they have not yet been used. The control file then ends with 999 so that SS3 knows it can stop reading:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -775,7 +775,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="running-the-model-and-afterwards" class="level1">
 <h1>Running the model and afterwards</h1>
-<p>The model was run using Stock Synthesis 3.30.14 and no additional ADMB command line options. The model should have no issues running, but if you have issues, please see debugging sections in the <strong>Getting Started</strong> and <strong>Developing your first Stock Synthesis model</strong> guides.</p>
+<p>The model was run using Stock Synthesis v.3.30.14 and no additional ADMB command line options. The model should have no issues running, but if you have issues, please see debugging sections in the <strong>Getting Started</strong> and <strong>Developing your first Stock Synthesis model</strong> guides.</p>
 <section id="checks-for-convergence" class="level2">
 <h2 class="anchored" data-anchor-id="checks-for-convergence">Checks for convergence</h2>
 <p>After running the model, open the warning.sso file to check for any warnings from Stock Synthesis. This file shows no warnings:</p>
@@ -783,7 +783,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a> N warnings<span class="sc">:</span> <span class="dv">0</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Number_of_active_parameters_on_or_near_bounds<span class="sc">:</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which suggests that the model is not misspecified in a way that SS knows to warn about.</p>
+<p>which suggests that the model is not misspecified in a way that SS3 knows to warn about.</p>
 <p>Next, we want to quickly check for any evidence that the model did not converge. In Report.sso, underneath information about the data file and control file names is information about the convergence level:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Convergence_Level<span class="sc">:</span> <span class="fl">2.14568e-005</span> is_final_gradient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -825,7 +825,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_RunJitter</span>(<span class="at">mydir =</span> <span class="st">"simpler"</span>, <span class="at">model =</span> <span class="st">"ss"</span>, <span class="at">Njitter =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The previous code assumes that the model directory <code>mydir</code> is called “simpler”, which is a folder within the working directory. The <code>model</code> argument specifies the name of the ss executable, so in this case, it assumes that the SS executable is within the “simpler” folder and called “ss.exe”. Finally, <code>Njitter</code> tells the function how many times to run the function. For west coast stock assessment jitters, 100 runs is a common value to use, but note that the run time is not trivial (it depends on the model, but may take an hour or more to run).</p>
+<p>The previous code assumes that the model directory <code>mydir</code> is called “simpler”, which is a folder within the working directory. The <code>model</code> argument specifies the name of the ss3 executable, so in this case, it assumes that the SS3 executable is within the “simpler” folder and called “ss.exe”. Finally, <code>Njitter</code> tells the function how many times to run the function. For west coast stock assessment jitters, 100 runs is a common value to use, but note that the run time is not trivial (it depends on the model, but may take an hour or more to run).</p>
 <p>After the jitter is run, the final likelihood values are the most important part of the results to look at. If the original model run has found a global minimum, you would expect all likelihood values from the jitter to be the same or higher than the original model run. If there are any likehood values that are lower than the original model run, this indicates that the model run did not find a global minimum. Investigating the run or runs with lower likelihood values would be the next step in figuring out what the “final” model run will be.</p>
 <p>To check on the results of the jitter, code similar to this example code from r4ss can be used:</p>
 <div class="cell">
