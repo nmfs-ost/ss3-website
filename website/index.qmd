@@ -8,53 +8,53 @@ format:
 Welcome to the Stock Synthesis (SS3) Website!
 
 ```{r, echo = FALSE, message = FALSE, out.width="30%", evaluate = FALSE}
-install.packages("httr")
-library(httr)
-library(fishualize)
-library(grid)
-library(stringr)
-
-pal <- "#5EB6D9"
-family = "Acanthuridae"
-option = "Acanthurus.nigricauda"
-url <- paste0(
-    "https://raw.githubusercontent.com/simonjbrandl/fishape/master/shapes/",
-    family, "_", gsub("_", ".", option), ".png")
-
-get_url <- httr::GET(url = url)
-
-wrap.url <- function(file,fun)
-{
-  is.url <- grepl("^(http|ftp)s?://", file)
-  if (is.url)
-  {
-    url <- file
-    ext <- stringr::str_extract_all(url,"\\.([A-Za-z0-9]+$)")[[1]]
-    if (length(ext) > 0) file <- tempfile(fileext=ext) else file <- tempfile()
-    downloader::download(url,file,mode="wb")
-    out <- fun(file)
-    unlink(file)
-    out
-  }
-  else
-  {
-    if (!utils::file_test("-f",file))
-    {
-      stop("File not found")
-    }
-    else
-    {
-      fun(file)
-    }
-  }
-
-}
-
-img <- wrap.url(url, png::readPNG)
-img.r <- as.raster(img, interpolate = TRUE)
-img.r[img.r != "#FFFFFF00"]<- pal
-plot.new()
-raster_fish <- grid::grid.raster(img.r)
+# install.packages("httr")
+# library(httr)
+# library(fishualize)
+# library(grid)
+# library(stringr)
+# 
+# pal <- "#5EB6D9"
+# family = "Acanthuridae"
+# option = "Acanthurus.nigricauda"
+# url <- paste0(
+#     "https://raw.githubusercontent.com/simonjbrandl/fishape/master/shapes/",
+#     family, "_", gsub("_", ".", option), ".png")
+# 
+# get_url <- httr::GET(url = url)
+# 
+# wrap.url <- function(file,fun)
+# {
+#   is.url <- grepl("^(http|ftp)s?://", file)
+#   if (is.url)
+#   {
+#     url <- file
+#     ext <- stringr::str_extract_all(url,"\\.([A-Za-z0-9]+$)")[[1]]
+#     if (length(ext) > 0) file <- tempfile(fileext=ext) else file <- tempfile()
+#     downloader::download(url,file,mode="wb")
+#     out <- fun(file)
+#     unlink(file)
+#     out
+#   }
+#   else
+#   {
+#     if (!utils::file_test("-f",file))
+#     {
+#       stop("File not found")
+#     }
+#     else
+#     {
+#       fun(file)
+#     }
+#   }
+# 
+# }
+# 
+# img <- wrap.url(url, png::readPNG)
+# img.r <- as.raster(img, interpolate = TRUE)
+# img.r[img.r != "#FFFFFF00"]<- pal
+# plot.new()
+# raster_fish <- grid::grid.raster(img.r)
 ```
 
 ## Introduction
