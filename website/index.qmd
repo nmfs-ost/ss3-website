@@ -1,14 +1,85 @@
 ---
-title: "Stock Synthesis Documentation"
+title: "Stock Synthesis (SS3) Website"
+format: 
+  html: 
+    linestretch: 1.2
 ---
 
-Welcome to the Stock Synthesis documentation page! This is the website to get to the Stock Synthesis User Manual as well as tutorials and other helpful materials.
+Welcome to the Stock Synthesis (SS3) Website!
+```{r, echo = FALSE, message = FALSE, out.width="30%"}
+pal <- "#5EB6D9"
+family = "Acanthuridae"
+option = "Acanthurus.nigricauda"
+url <- paste0(
+    "https://raw.githubusercontent.com/simonjbrandl/fishape/master/shapes/",
+    family, "_", gsub("_", ".", option), ".png")
+
+get_url <- httr::GET(url = url)
+
+wrap.url <- function(file,fun)
+{
+  is.url <- grepl("^(http|ftp)s?://", file)
+  if (is.url)
+  {
+    url <- file
+    ext <- stringr::str_extract_all(url,"\\.([A-Za-z0-9]+$)")[[1]]
+    if (length(ext) > 0) file <- tempfile(fileext=ext) else file <- tempfile()
+    downloader::download(url,file,mode="wb")
+    out <- fun(file)
+    unlink(file)
+    out
+  }
+  else
+  {
+    if (!utils::file_test("-f",file))
+    {
+      stop("File not found")
+    }
+    else
+    {
+      fun(file)
+    }
+  }
+
+}
+
+img <- wrap.url(url, png::readPNG)
+img.r <- as.raster(img, interpolate = TRUE)
+img.r[img.r != "#FFFFFF00"]<- pal
+plot.new()
+raster_fish <- grid::grid.raster(img.r)
+```
+
+## Introduction
+
+Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis models. Stock Synthesis has evolved over time to be able to model a wide range of fish populations and dynamics. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder [ADMB](https://www.admb-project.org/).
+
+SS3 is made up of:
+
+-   A population sub-model that simulates a stock's:
+    -   growth,
+    -   maturity,
+    -   fecundity,
+    -   recruitment,
+    -   movement, and
+    -   mortality processes,
+-   An observation sub-model that estimates expected values for various types of data,
+-   A statistical sub-model characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance, and
+-   A forecast sub-model projects needed management quantities.
+
+## Getting Started with Stock Synthesis
+
+To getting started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
+
+```{r, echo = FALSE, out.width = "85%", out.height= "400px"}
+knitr::include_graphics("SS3_Getting_Started.pdf")
+```
 
 ## How to Cite Stock Synthesis
 
 Please cite Stock Synthesis as:
 
-```
+```         
 Methot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical
 framework for fish stock assessment and fishery management. Fisheries Research, 
 142: 86-99. https://doi.org/10.1016/j.fishres.2012.10.012
@@ -16,7 +87,7 @@ framework for fish stock assessment and fishery management. Fisheries Research,
 
 The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a .bib file:
 
-```
+```         
 @article{methotwetzel2013,
   title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},
   author={Methot, Richard Donald and Wetzel, Chantel R},
@@ -30,7 +101,6 @@ The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a
 
 To see how to cite the Stock Synthesis User Manual, please refer to the [SS3 User Manual tab](user_manual.qmd).
 
-<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries">
+<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
-[U.S. Department of Commerce](https://www.commerce.gov/) | [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) | [NOAA Fisheries](https://www.fisheries.noaa.gov/)
-
+[U.S. Department of Commerce](https://www.commerce.gov/) \| [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) \| [NOAA Fisheries](https://www.fisheries.noaa.gov/)

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.449">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Stock Synthesis (SS3) - Settlement Timing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Stock Synthesis (SS3)</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ss3-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-journal-code" role="img">
+</i> 
+ <span class="menu-text">SS3 User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ss3-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="../qmds/user_manual.html">
+ <span class="dropdown-text">Citing the SS3 User Manual</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html">
+ <span class="dropdown-text">HTML Version</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf">
+ <span class="dropdown-text">PDF Version (downloads on click)</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-workspace" role="img">
+</i> 
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../qmds/getting_started_ss3.html">
+ <span class="dropdown-text">Getting Started with Stock Synthesis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_model_tips.html">
+ <span class="dropdown-text">Developing your first Stock Synthesis model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_setup_decisions.html">
+ <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/predator.html">
+ <span class="dropdown-text">Predator Vignette</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/start_year_considerations.html">
+ <span class="dropdown-text">Start Year Considerations</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-github" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Report an Issue</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#spawning-and-settlement" id="toc-spawning-and-settlement" class="nav-link active" data-scroll-target="#spawning-and-settlement">Spawning and Settlement</a>
+  <ul class="collapse">
+  <li><a href="#spawning" id="toc-spawning" class="nav-link" data-scroll-target="#spawning">Spawning</a></li>
+  <li><a href="#settlement" id="toc-settlement" class="nav-link" data-scroll-target="#settlement">Settlement</a></li>
+  </ul></li>
+  <li><a href="#example-scenarios" id="toc-example-scenarios" class="nav-link" data-scroll-target="#example-scenarios">Example Scenarios</a>
+  <ul class="collapse">
+  <li><a href="#example-1-december-spawning-january-settlement" id="toc-example-1-december-spawning-january-settlement" class="nav-link" data-scroll-target="#example-1-december-spawning-january-settlement">Example 1: December spawning, January settlement</a></li>
+  <li><a href="#example-2-january-spawning-january-settlement" id="toc-example-2-january-spawning-january-settlement" class="nav-link" data-scroll-target="#example-2-january-spawning-january-settlement">Example 2: January spawning, January settlement</a></li>
+  <li><a href="#example-3-january-spawning-march-settlement" id="toc-example-3-january-spawning-march-settlement" class="nav-link" data-scroll-target="#example-3-january-spawning-march-settlement">Example 3: January spawning, March settlement</a></li>
+  <li><a href="#example-4-march-spawning" id="toc-example-4-march-spawning" class="nav-link" data-scroll-target="#example-4-march-spawning">Example 4: March spawning</a></li>
+  <li><a href="#example-5-february-spawning-may-settlement-ok-if-split-across-seasons" id="toc-example-5-february-spawning-may-settlement-ok-if-split-across-seasons" class="nav-link" data-scroll-target="#example-5-february-spawning-may-settlement-ok-if-split-across-seasons">Example 5: February spawning, May settlement (OK if split across seasons)</a></li>
+  <li><a href="#example-6-february-spawn-january-settle-of-following-year-at-age-1" id="toc-example-6-february-spawn-january-settle-of-following-year-at-age-1" class="nav-link" data-scroll-target="#example-6-february-spawn-january-settle-of-following-year-at-age-1">Example 6: February spawn, January settle of following year at age 1</a></li>
+  </ul></li>
+  <li><a href="#example-set-ups" id="toc-example-set-ups" class="nav-link" data-scroll-target="#example-set-ups">Example Set-ups</a>
+  <ul class="collapse">
+  <li><a href="#example-set-up-1" id="toc-example-set-up-1" class="nav-link" data-scroll-target="#example-set-up-1">Example set-up 1</a></li>
+  <li><a href="#example-set-up-2" id="toc-example-set-up-2" class="nav-link" data-scroll-target="#example-set-up-2">Example set-up 2</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Settlement Timing</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Settlement timing in SS3 can be used simply, but there is a rich range of options to provide a high degree of flexibility to cover edge cases.</p>
+<section id="spawning-and-settlement" class="level2">
+<h2 class="anchored" data-anchor-id="spawning-and-settlement">Spawning and Settlement</h2>
+<section id="spawning" class="level3">
+<h3 class="anchored" data-anchor-id="spawning">Spawning</h3>
+<p>There is one and only one spawning event in each year. It is assigned a real valued spawn_month and the numbers-at-age (NAA) at the time of spawning are decayed to that date according to <span class="math inline">\(exp(-(M+F))\)</span> from the start date of the season this date occurs in.</p>
+</section>
+<section id="settlement" class="level3">
+<h3 class="anchored" data-anchor-id="settlement">Settlement</h3>
+<p>There can be one to many settlement events and the total recruits (<span class="math inline">\(exp(ln(R0))\)</span>) are distributed among these events according to the recruitment distribution pattern and associated distribution parameters. Each settlement event is characterized by:</p>
+<ul>
+<li>Growth pattern - which set of biological parameters apply to this partition of the total recruits</li>
+<li>Settlement month - in real months, so 1.0 means Jan 1 and 4.5 means settlement on April 15.<br>
+</li>
+<li>Settlement area - in which area is this settlement occurring</li>
+<li>Settlement age - SS3 expects that settlement age is 0 if in the same year as spawning and 1 if in the following year.</li>
+</ul>
+<p>The settlement age entry allows this to be overridden by the user. The calendar age of the recruits is a real number which equals “settlement age” on January 1 of the spawning year (even if spawning happens later in the year).</p>
+<p>::: {. callout-note} If settlement age is greater than 0, then settlement month needs to be adjusted in 12 month increments to align with that advanced age at settlement. Instructions in the SS3 manual need updating as a result of this discovery. :::</p>
+</section>
+</section>
+<section id="example-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="example-scenarios">Example Scenarios</h2>
+<p>Below are a set of examples with a strong recruitment (recdev = 2.0) resulting from the 1977 spawning, hence named Main_RecrDev_1977.</p>
+<p>The various examples will show how this interacts with the settlement event setup.</p>
+<section id="example-1-december-spawning-january-settlement" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-december-spawning-january-settlement">Example 1: December spawning, January settlement</h3>
+<p>A common setup will have spawning late in one year (here December 1, or month 12.0) and one settlement event at age 0 the following year (here January 1, or month 1.0).</p>
+<pre><code>12 #_spawn_month
+#GPattern month  area  age (for each settlement assignment)
+ 1 1 1 0</code></pre>
+<p>In the spawn_recruitment output table, this results in 61154.1 thousand recruits from the 1977 spawning.</p>
+<pre><code>Yr SpawnBio exp_recr with_regime bias_adjusted pred_recr dev
+1977 75541.9  9908.54 9908.54 8276.31 61154.1 2.0</code></pre>
+<p>In the NAA table, these recruits are split to be <code>30577.1 NAA 0</code> in 1978 for each of females and males. They appear in 1978 as age 0 fish because their settlement month (1.0) is earlier than their spawning month (12.0), so settlement must be in the year following spawning.</p>
+<p>SS3 produces this note in warnings.sso:</p>
+<pre><code>Note 3 Information: settle_month is less than spawn_month, so logical age at settlement calculated to be: 1 for settle_time 1 does not match read value of 0 are you sure?</code></pre>
+<p>Switching settlement age to 1 resolves the warning and now the fish first appear in the NAA table as age 1 fish in 1978. Age 0 fish never appear in the NAA table with this configuration.</p>
+<p><strong>Picture of NAA table here</strong></p>
+</section>
+<section id="example-2-january-spawning-january-settlement" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-january-spawning-january-settlement">Example 2: January spawning, January settlement</h3>
+<p>Shift spawning to occur on January 1 and virtual recruitment at the same time, 1.0. Spawning biomass is higher on January 1 of 1977 than December 1 of 1977, as a result the recruitment is higher (note that the model was not re-estimated to allow for <span class="math inline">\(ln(R0)\)</span> to come into alignment with the spawn month).</p>
+<pre><code>Yr SpawnBio exp_recr with_regime bias_adjusted pred_recr dev
+1977 80997  9935.39 9935.39 8298.73 61319.8 2.0 </code></pre>
+<p>These fish appear in the NAA table in 1977, not 1978 because the settlement date (1.0) is not smaller than the spawning date (also 1.0).</p>
+</section>
+<section id="example-3-january-spawning-march-settlement" class="level3">
+<h3 class="anchored" data-anchor-id="example-3-january-spawning-march-settlement">Example 3: January spawning, March settlement</h3>
+<p>Spawning on January 1 and settlement on March 1 (month 3.0).</p>
+<p>Spawn_recr table shows recruits in 1977 as 61328.1. Which will be 30664.05 per sex.</p>
+<p>These fish appear in the NAA table in 1977 at age 0. They have elevated numbers (31179.4) because the table contains their numbers at the beginning of the season inflated by <span class="math inline">\(exp(M*deltaT)\)</span>, whereas <span class="math inline">\(ln(R0)\)</span> references their numbers at the time of settlement, which is 2 months later.</p>
+</section>
+<section id="example-4-march-spawning" class="level3">
+<h3 class="anchored" data-anchor-id="example-4-march-spawning">Example 4: March spawning</h3>
+<p>Spawning on March 1 and settlement on March 15 at age 0.</p>
+<p>This is an non-allowed configuration because the recruits must be backed up to the beginning of the season (January 1) where they potentially could be part of the spawning biomass of March 1 that produced them.</p>
+<p>SS3 produces this warning:</p>
+<pre><code>Warning 1 Fatal Error! Cannot have spawn_time_seas after beginning of a season and settlements in the same season.  Put spawning at beginning of the season, or move settlements to next season
+Spawning on Mar 1 and settlement on Feb 1  at age 0.  
+Note 3 Information: settle_month is less than spawn_month, so logical age at settlement calculated to be: 1  for settle_time 1.  Does not match read value of 0 are you sure? 
+Spawning on Mar 1 and settlement on Feb 1  at age 1.  No warning is produced.  The big yearclass shows up in NAA at age 1 in 1978.</code></pre>
+</section>
+<section id="example-5-february-spawning-may-settlement-ok-if-split-across-seasons" class="level3">
+<h3 class="anchored" data-anchor-id="example-5-february-spawning-may-settlement-ok-if-split-across-seasons">Example 5: February spawning, May settlement (OK if split across seasons)</h3>
+<p>Spawning on February 1 and settlement on May 1 at age 0, with 2 seasons (January-March, April-December). This is legal because the May 1 settlement now is just backed up to April 1 which is after the spawning event that occurred in the previous season.</p>
+</section>
+<section id="example-6-february-spawn-january-settle-of-following-year-at-age-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-6-february-spawn-january-settle-of-following-year-at-age-1">Example 6: February spawn, January settle of following year at age 1</h3>
+<p>Here, the big 1977 recruitment will show up in the NAA table at age 1 in the following year, 1978.</p>
+<p>If spawning had been set to month 1.0, then SS3 would allow the Jan 1 settlement at age 1 to occur in 1977 also. This is a year off and illogical.</p>
+<p>However, with spawning at month 1.0, settlement at month 13.0, and settlement age at 1.0, then the big recruitment correctly shows up in 1978 at age 1. So, it is critical to think about the timing of spawning relative to settlement and to check results in the NAA table.</p>
+</section>
+</section>
+<section id="example-set-ups" class="level2">
+<h2 class="anchored" data-anchor-id="example-set-ups">Example Set-ups</h2>
+<section id="example-set-up-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-set-up-1">Example set-up 1</h3>
+<p>A single recruitment event is now split among 3 events happening in April, May and June; all with the same growth parameters. Previously, the data indicated that the CV of length-at-age for young fish was rather larger. But that conclusion was linked to the assumption that all the recruits were exactly the same age. In the revised setup, the recruits now have a spread of age since settlement, so at a point in time they will have a spread of lengths. Consequently, it is expected that the CV parameter for young fish can be less when recruits are distributed among a spread of temporal settlement events.</p>
+</section>
+<section id="example-set-up-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-set-up-2">Example set-up 2</h3>
+<p>Spawning is in October and recruitment occurs with two settlement events. One settlement is in December and the settlement age is 0. The other settlement is in February and the settlement age is 1. The first settlement will graduate to age 1 on January 1, so by February when the second settlement occurs, they both will appear as the same integer age.</p>
+<p>The total number of recruits is scaled by the parameter <span class="math inline">\(ln(R0)\)</span>. Even when this total is divided among morphs, sexes, and settlement events at different times, the total of all those settlement events will be equal to <span class="math inline">\(exp(ln(R0))\)</span>. However, settlers are always added at the beginning of a season because they will experience mortality throughout the season. This means that when a settlement event happens not at the beginning of a season, its initial numbers are adjusted upwards such that after in-season mortality occurs its numbers at the assigned time of settlement will be correct. This is a benign process if only natural mortality is acting on the pre-settlement fish. However, if fishing mortality is also active, then it would be better to create more seasons such that the settlement event could then occur at the beginning of a season and have its fishing mortality more explicitly under control.</p>
+<p>For the purpose of growth calculation, fish have a real_age of 0.0 at the time of settlement, so each settlement timing has a unique starting point for real_age, unlike calendar_age which is relative to January 1 of the spawn year. All fish graduate to the next integer age on January 1. Real_age is used as the basis for growth, and for some types of age-specific natural mortality. This means that when fish of the same growth pattern are distributed among more than one settlement timing, the early born fish have a head start in the growth process, but since they are all growing towards the same maximum size, they gradually converge in growth. Conceptually, the time between spawning and settlement is a larval phase that is post spawner-recruitment and pre-settlement. They are in a planktonic limbo until settling. Where, when, and what growth type they have upon settlement is controlled by the recruitment distribution. Then upon settling, the juvenile fish begin growing according to adult growth parameters and enter exposure to explicit natural and fishing mortality.</p>
+<p>Growth - Fish begin growing according to the growth curve when they reach the real_age equal to the user-assigned quantity, Amin. At the <span class="math inline">\(real\_age = Amin\)</span>, fish have the mean body length of Lmin. Amin is in terms of real_age post-settlement, not calendar_age post January 1 of the spawning year. Amin can have a value of 0.0, especially if the time of settlement is several months post-spawning. If Amin is &gt;0.0, then size-at-age of fish is assigned according to a linearly interpolated fraction of Lmin. If you are using age-specific K, then the integer age measured starting from the spawn year is used to select an age-specific K change.</p>
+<p>Growth parameters - If you have growth parameters calculated externally to SS, they probably are relative to age being measured in terms of calendar age, not real-age post settlement. The growth K and Lmax parameters will be unaffected, but Lmin very much depends on the shifting along the age axis.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -3,14 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "Stock Synthesis (SS3) Documentation"
+  title: "Stock Synthesis (SS3)"
   # issue-url: "https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"
   # repo-actions: [issue]
   navbar:
     left:
-      - text: "Home"
-        href: index.qmd
-        icon: house
+      # - text: "Home"
+      #   href: index.qmd
+      #   icon: house
       - text: "SS3 User Manuals"
         icon: journal-code
         menu:
@@ -18,13 +18,13 @@ website:
             text: "Citing the SS3 User Manual"
           - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
             text: "HTML Version"
-          - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf
+          - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf
             text: "PDF Version (downloads on click)"
       - text: "Tutorials"
         icon: person-workspace
         menu:
-          - qmds/getting_started_ss.qmd
-          - qmds/ss_model_tips.qmd
+          - qmds/getting_started_ss3.qmd
+          - qmds/ss3_model_tips.qmd
           - qmds/ss3_setup_decisions.qmd
           - qmds/predator.qmd
           - qmds/start_year_considerations.qmd
@@ -49,7 +49,8 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: [sandstone, custom.scss]
+    css: styles.css
     toc: true
 
 execute:

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.449">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="SS Development Team">
+<meta name="author" content="SS3 Development Team">
 <meta name="dcterms.date" content="2019-10-23">
 
-<title>Stock Synthesis (SS3) Documentation - Model building tutorial</title>
+<title>Stock Synthesis (SS3) - Model building tutorial</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -120,61 +97,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Stock Synthesis (SS3) Documentation</span>
+    <span class="navbar-title">Stock Synthesis (SS3)</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../qmds/index.html">
- <span class="menu-text">Home</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ss3-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-journal-code" role="img">
+</i> 
+ <span class="menu-text">SS3 User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ss3-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="../qmds/user_manual.html">
+ <span class="dropdown-text">Citing the SS3 User Manual</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Tutorials</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
-        <li class="dropdown-header">getting_started_ss.qmd</li>
-        <li class="dropdown-header">model_tutorial.qmd</li>
-        <li class="dropdown-header">ss_model_tips.qmd</li>
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">User Manuals</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-user-manuals">    
         <li>
     <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html">
  <span class="dropdown-text">HTML Version</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf">
- <span class="dropdown-text">PDF Version</span></a>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf">
+ <span class="dropdown-text">PDF Version (downloads on click)</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-workspace" role="img">
+</i> 
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../qmds/getting_started_ss3.html">
+ <span class="dropdown-text">Getting Started with Stock Synthesis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_model_tips.html">
+ <span class="dropdown-text">Developing your first Stock Synthesis model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_setup_decisions.html">
+ <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/predator.html">
+ <span class="dropdown-text">Predator Vignette</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/start_year_considerations.html">
+ <span class="dropdown-text">Start Year Considerations</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-github" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Report an Issue</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -233,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>SS Development Team </p>
+             <p>SS3 Development Team </p>
           </div>
   </div>
     
@@ -248,13 +281,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="scope" class="level1">
 <h1>Scope</h1>
 <!-- Note that this guide is not yet complete! -->
-<p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS model.</p>
-<p>If you are a new SS user who is not yet comfortable running an SS model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
+<p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.</p>
+<p>If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
 <p>Throughout this example, we use an even simpler version of the Stock Synthesis example model “Simple”. To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package <a href="github.com/r4ss/r4ss">r4ss</a>.</p>
 </section>
 <section id="model-description" class="level1">
@@ -316,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="data-file">Data file</h2>
 <p>This is where the data inputs are specified. At the top, general information about the model is specified: the model years, number of seasons, number of sexes, maximum age, number of areas, number of fleets:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stock Synthesis (SS3) is a work of the U.S. Government and is not subject to copyright protection in the United States.</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Foreign copyrights may apply. See copyright.txt for more information.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1971</span> <span class="co">#_StartYr</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="co">#_EndYr</span></span>
@@ -324,7 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span> <span class="co">#_months/season</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Nsubseasons (even number, minimum is 2)</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_spawn_month</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="co">#_Nsexes: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="co">#_Nages=accumulator age, first age is always age 0</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="co">#_Nareas</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="co">#_Nfleets (including surveys)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -359,7 +394,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">3000</span> <span class="fl">0.01</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The first line of the above code chunk shows the column headers for the catch data. Note that all catch comes from the fishery. The line <code>-999 1 1 0 0.01</code> specifies equilibirum catch for years before the model starts - in this case, there is no equilibrium catch because the catch column is 0. To terminate this catch data section the line <code>-9999 0 0 0 0</code> is needed. This tells SS that it can stop reading catch data.</p>
+<p>The first line of the above code chunk shows the column headers for the catch data. Note that all catch comes from the fishery. The line <code>-999 1 1 0 0.01</code> specifies equilibirum catch for years before the model starts - in this case, there is no equilibrium catch because the catch column is 0. To terminate this catch data section the line <code>-9999 0 0 0 0</code> is needed. This tells SS3 that it can stop reading catch data.</p>
 <p>Next comes specification for indices of abundance. First is the setup for all of the fleets:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_CPUE_and_surveyabundance_observations</span></span>
@@ -385,7 +420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2001</span> <span class="dv">7</span> <span class="dv">3</span> <span class="fl">1.69379</span> <span class="fl">0.7</span> <span class="co">#_ SURVEY2</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="co"># terminator for survey observations </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Like the catch data, a terminator line is needed to tell SS when to stop reading the indices.</p>
+<p>Like the catch data, a terminator line is needed to tell SS3 when to stop reading the indices.</p>
 <p>Next, discards and mean body size data could be specified, but they are 0 in this example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_N_fleets_with_discard</span></span>
@@ -438,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.5</span> <span class="fl">1.5</span> <span class="fl">2.5</span> <span class="fl">3.5</span> <span class="fl">4.5</span> <span class="fl">5.5</span> <span class="fl">6.5</span> <span class="fl">7.5</span> <span class="fl">8.5</span> <span class="fl">9.5</span> <span class="fl">10.5</span> <span class="fl">11.5</span> <span class="fl">12.5</span> <span class="fl">13.5</span> <span class="fl">14.5</span> <span class="fl">15.5</span> <span class="fl">16.5</span> <span class="fl">17.5</span> <span class="fl">18.5</span> <span class="fl">19.5</span> <span class="fl">20.5</span> <span class="fl">21.5</span> <span class="fl">22.5</span> <span class="fl">23.5</span> <span class="fl">24.5</span> <span class="fl">25.5</span> <span class="fl">26.5</span> <span class="fl">27.5</span> <span class="fl">28.5</span> <span class="fl">29.5</span> <span class="fl">30.5</span> <span class="fl">31.5</span> <span class="fl">32.5</span> <span class="fl">33.5</span> <span class="fl">34.5</span> <span class="fl">35.5</span> <span class="fl">36.5</span> <span class="fl">37.5</span> <span class="fl">38.5</span> <span class="fl">39.5</span> <span class="fl">40.5</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span> <span class="fl">0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For the age bins, SS reads in the number (17 in this case) and then expects that number of inputs for the age bins (the 17 values below it). Next, SS reads the age error definitions. In this case, there is only 1 definition, so SS expects 2 vectors, each which contain the max number of ages + 1 values (41 values per vector in this case). The first line defines the <em>bias</em> for the aging error, while the second vector defines the <em>standard deviation</em> of the aging error. This example has no aging bias and very high aging precision (low standard deviation), so this is close to assuming no aging error.</p>
+<p>For the age bins, SS3 reads in the number (17 in this case) and then expects that number of inputs for the age bins (the 17 values below it). Next, SS reads the age error definitions. In this case, there is only 1 definition, so SS3 expects 2 vectors, each which contain the max number of ages + 1 values (41 values per vector in this case). The first line defines the <em>bias</em> for the aging error, while the second vector defines the <em>standard deviation</em> of the aging error. This example has no aging bias and very high aging precision (low standard deviation), so this is close to assuming no aging error.</p>
 <p>Next comes the age composition setup lines:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_mintailcomp addtocomp combM+F CompressBins CompError ParmSelect minsamplesize</span></span>
@@ -460,8 +495,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span></span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
-<p>SS has some additional options that we have not used here and thus set to 0:</p>
+<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
+<p>SS3 has some additional options that we have not used here and thus set to 0:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_Use_MeanSize-at-Age_obs (0/1)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
@@ -478,7 +513,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co">#  Do dataread for selectivity priors(0/1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>And finally, the data file must end in <code>999</code> to tell SS to stop reading.</p>
+<p>And finally, the data file must end in <code>999</code> to tell SS3 to stop reading.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -489,7 +524,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span>  <span class="co"># 0 means do not read wtatage.ss; 1 means read and use wtatage.ss and also read and use growth parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this case, it is not being used, so is set to 0. If empirical weight at age were used, SS would ignore all inputs relating to growth, maturity, and fecundity that are specified later in the control file (although it does still expect inputs).</p>
+<p>In this case, it is not being used, so is set to 0. If empirical weight at age were used, SS3 would ignore all inputs relating to growth, maturity, and fecundity that are specified later in the control file (although it does still expect inputs).</p>
 <p>Next are options for number of growth patterns and platoons. These are set to 1 because we assume the whole population is the same growth pattern, and there are not platoons within the growth patterns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="co">#_N_Growth_Patterns (Growth Patterns, Morphs, Bio Patterns, GP are terms used interchangeably in SS)</span></span>
@@ -588,7 +623,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  fraction female, by GP</span></span>
 <span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a> <span class="fl">1e-006</span> <span class="fl">0.999999</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="fl">0.5</span> <span class="dv">0</span> <span class="sc">-</span><span class="dv">99</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># FracFemale_GP_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that the first line in the block of SS input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:</p>
+<p>Note that the first line in the block of SS3 input above shows the column headers. All sections with long parameter lines within the control file have these same headings. There are a lot of specifications in these long parameter lines, but a few of particular note are:</p>
 <ul>
 <li>Anything with negative phase (7th value in a long parameter line) is not estimated and is set at the initial value (3rd value in the line), while positivie phases are estimated.</li>
 <li>Natural mortality for both males and females is specified at 0.1.</li>
@@ -635,7 +670,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_last_yr_nobias_adj_in_MPD; begin of ramp</span></span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">1900</span> <span class="co">#_first_yr_fullbias_adj_in_MPD; begin of plateau</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="co">#_last_yr_fullbias_adj_in_MPD</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2002</span> <span class="co">#_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS sets bias_adj to 0.0 for fcast yrs)</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2002</span> <span class="co">#_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS3 sets bias_adj to 0.0 for fcast yrs)</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="co">#_max_bias_adj_in_MPD (-1 to override ramp and set biasadj=1.0 for all estimated recdevs)</span></span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_period of cycles in recruitment (N parms read below)</span></span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">5</span> <span class="co">#min rec_dev</span></span>
@@ -643,7 +678,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">0</span> <span class="co">#_read_recdevs</span></span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">#_end of advanced SR options</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The advanced options allow the user to bias adjust the recruitment deviations. There is more on bias adjustment in the SS user manual, but the general idea is to account for the fact that earlier and later recruitment deviations likely have less information informing them than the ones in the middle. The bias adjustment ramp accounts for this and is typically “tuned” by looking at bias ramp in the model results after it is run, respecifying the bias ramp as needed, and rerunning the model.</p>
+<p>The advanced options allow the user to bias adjust the recruitment deviations. There is more on bias adjustment in the SS3 user manual, but the general idea is to account for the fact that earlier and later recruitment deviations likely have less information informing them than the ones in the middle. The bias adjustment ramp accounts for this and is typically “tuned” by looking at bias ramp in the model results after it is run, respecifying the bias ramp as needed, and rerunning the model.</p>
 <p>Fishing mortality info is next specified:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fishing Mortality info </span></span>
@@ -742,7 +777,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># (0/1) read specs for more stddev reporting </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Varaiance adjustment factors and/or lambdas can be used for data weighting, but in this case they have not yet been used. The control file then ends with 999 so that SS knows it can stop reading:</p>
+<p>Varaiance adjustment factors and/or lambdas can be used for data weighting, but in this case they have not yet been used. The control file then ends with 999 so that SS3 knows it can stop reading:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dv">999</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -750,7 +785,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="running-the-model-and-afterwards" class="level1">
 <h1>Running the model and afterwards</h1>
-<p>The model was run using Stock Synthesis 3.30.14 and no additional ADMB command line options. The model should have no issues running, but if you have issues, please see debugging sections in the <strong>Getting Started</strong> and <strong>Developing your first Stock Synthesis model</strong> guides.</p>
+<p>The model was run using Stock Synthesis v.3.30.14 and no additional ADMB command line options. The model should have no issues running, but if you have issues, please see debugging sections in the <strong>Getting Started</strong> and <strong>Developing your first Stock Synthesis model</strong> guides.</p>
 <section id="checks-for-convergence" class="level2">
 <h2 class="anchored" data-anchor-id="checks-for-convergence">Checks for convergence</h2>
 <p>After running the model, open the warning.sso file to check for any warnings from Stock Synthesis. This file shows no warnings:</p>
@@ -758,7 +793,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a> N warnings<span class="sc">:</span> <span class="dv">0</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Number_of_active_parameters_on_or_near_bounds<span class="sc">:</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>which suggests that the model is not misspecified in a way that SS knows to warn about.</p>
+<p>which suggests that the model is not misspecified in a way that SS3 knows to warn about.</p>
 <p>Next, we want to quickly check for any evidence that the model did not converge. In Report.sso, underneath information about the data file and control file names is information about the convergence level:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Convergence_Level<span class="sc">:</span> <span class="fl">2.14568e-005</span> is_final_gradient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -800,7 +835,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SS_RunJitter</span>(<span class="at">mydir =</span> <span class="st">"simpler"</span>, <span class="at">model =</span> <span class="st">"ss"</span>, <span class="at">Njitter =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The previous code assumes that the model directory <code>mydir</code> is called “simpler”, which is a folder within the working directory. The <code>model</code> argument specifies the name of the ss executable, so in this case, it assumes that the SS executable is within the “simpler” folder and called “ss.exe”. Finally, <code>Njitter</code> tells the function how many times to run the function. For west coast stock assessment jitters, 100 runs is a common value to use, but note that the run time is not trivial (it depends on the model, but may take an hour or more to run).</p>
+<p>The previous code assumes that the model directory <code>mydir</code> is called “simpler”, which is a folder within the working directory. The <code>model</code> argument specifies the name of the ss3 executable, so in this case, it assumes that the SS3 executable is within the “simpler” folder and called “ss.exe”. Finally, <code>Njitter</code> tells the function how many times to run the function. For west coast stock assessment jitters, 100 runs is a common value to use, but note that the run time is not trivial (it depends on the model, but may take an hour or more to run).</p>
 <p>After the jitter is run, the final likelihood values are the most important part of the results to look at. If the original model run has found a global minimum, you would expect all likelihood values from the jitter to be the same or higher than the original model run. If there are any likehood values that are lower than the original model run, this indicates that the model run did not find a global minimum. Investigating the run or runs with lower likelihood values would be the next step in figuring out what the “final” model run will be.</p>
 <p>To check on the results of the jitter, code similar to this example code from r4ss can be used:</p>
 <div class="cell">
@@ -853,9 +888,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -891,10 +940,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -904,8 +952,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -920,6 +977,241 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -960,6 +1252,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

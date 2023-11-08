@@ -19,5 +19,26 @@
   },
   "qmds/ss_model_tips.qmd": {
     "ss_model_tips.html": "9eb00f66"
+  },
+  "qmds/getting_started_ss3.qmd": {
+    "getting_started_ss3.html": "5ea4e71e"
+  },
+  "qmds/predator.qmd": {
+    "predator.html": "94848051"
+  },
+  "qmds/settlement_timing.qmd": {
+    "settlement_timing.html": "694632f8"
+  },
+  "qmds/ss3_model_tips.qmd": {
+    "ss3_model_tips.html": "fc44db0e"
+  },
+  "qmds/ss3_setup_decisions.qmd": {
+    "ss3_setup_decisions.html": "fda00dfe"
+  },
+  "qmds/start_year_considerations.qmd": {
+    "start_year_considerations.html": "a213c9a2"
+  },
+  "qmds/user_manual.qmd": {
+    "user_manual.html": "06b9b10e"
   }
 }

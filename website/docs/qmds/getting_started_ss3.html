@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.449">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SS3 Development Team">
-<meta name="dcterms.date" content="2023-08-31">
+<meta name="dcterms.date" content="2023-11-08">
 
-<title>Stock Synthesis (SS3) Documentation - Getting Started with Stock Synthesis (SS3)</title>
+<title>Stock Synthesis (SS3) - Getting Started with Stock Synthesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -120,61 +97,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Stock Synthesis (SS3) Documentation</span>
+    <span class="navbar-title">Stock Synthesis (SS3)</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../qmds/index.html">
- <span class="menu-text">Home</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ss3-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-journal-code" role="img">
+</i> 
+ <span class="menu-text">SS3 User Manuals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ss3-user-manuals">    
+        <li>
+    <a class="dropdown-item" href="../qmds/user_manual.html">
+ <span class="dropdown-text">Citing the SS3 User Manual</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Tutorials</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
-        <li class="dropdown-header">getting_started_ss.qmd</li>
-        <li class="dropdown-header">model_tutorial.qmd</li>
-        <li class="dropdown-header">ss_model_tips.qmd</li>
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">User Manuals</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-user-manuals">    
         <li>
     <a class="dropdown-item" href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html">
  <span class="dropdown-text">HTML Version</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf">
- <span class="dropdown-text">PDF Version</span></a>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf">
+ <span class="dropdown-text">PDF Version (downloads on click)</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-workspace" role="img">
+</i> 
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../qmds/getting_started_ss3.html">
+ <span class="dropdown-text">Getting Started with Stock Synthesis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_model_tips.html">
+ <span class="dropdown-text">Developing your first Stock Synthesis model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/ss3_setup_decisions.html">
+ <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/predator.html">
+ <span class="dropdown-text">Predator Vignette</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/start_year_considerations.html">
+ <span class="dropdown-text">Start Year Considerations</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-github" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc"><i class="bi bi-code" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Source Code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
+</i> 
+ <span class="dropdown-text">User Manual Report an Issue</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -225,7 +258,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started with Stock Synthesis (SS3)</h1>
+<h1 class="title">Getting Started with Stock Synthesis</h1>
 </div>
 
 
@@ -242,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2023</p>
+      <p class="date">November 8, 2023</p>
     </div>
   </div>
   
@@ -250,7 +283,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="scope" class="level1">
 <h1>Scope</h1>
@@ -269,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/SS_tools_files.png" class="img-fluid figure-img" width="450"></p>
-<p></p><figcaption class="figure-caption">Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.</figcaption><p></p>
+<figcaption>Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.</figcaption>
 </figure>
 </div>
 </div>
@@ -280,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>SS3 uses text input files and produces text output files. In this section, the SS3 input and output files are described, as are tools that can be used with these files. See how they relate in Figure 1.</p>
 <section id="ss3-files-required-inputs" class="level2">
 <h2 class="anchored" data-anchor-id="ss3-files-required-inputs">SS3 files: Required inputs</h2>
-<p>Four required input files are read by the SS3 executable. Throughout this document, we will refer to the SS3 executable as ss.exe. Keep in mind that the Linux and Mac versions of SS3 have no file extension (e.g., ss), and the executable can be renamed by the user as desired (e.g., ss_win.exe, ss_3.30.18.exe). These input files are:</p>
+<p>Four required input files are read by the SS3 executable. Throughout this document, we will refer to the SS3 executable as ss3.exe. Keep in mind that the Linux and Mac versions of SS3 have no file extension (e.g., ss3), and the executable can be renamed by the user as desired (e.g.,ss3.exe, ss_win.exe, ss_3.30.18.exe). These input files are:</p>
 <ol type="1">
 <li><strong>starter.ss:</strong> Required file containing file names of the data file and the control file plus other run controls. Must be named starter.ss.</li>
 <li><strong>data file:</strong> File containing model dimensions and the data. The data file can have any name, as specified in the starter file, but typically ends in .ss or .dat.</li>
@@ -310,13 +345,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p><strong>Any text editor</strong> can be used to view and edit SS3 input and output files. Defining a custom syntax highlighting scheme for SS3 files may improve SS3 file readability. Some commonly used text editors include Atom, Emacs, Notepad++, and Sublime Text.</p></li>
 <li><p><strong>r4ss</strong>: An R package to plot SS3 model results and manipulate SS3 input and output files. Available at: https://github.com/r4ss/r4ss</p></li>
-<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-stock-synthesis/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs.</p></li>
+<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-stock-synthesis/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.</p></li>
+<li><p><strong>Stock Assessment Continuum Tool</strong>: Available through github at https://github.com/shcaba/SS-DL-tool, the Stock Assessment Continuum Tool (previously known as the Stock Synthesis Data-limited Tool) is a Shiny-based application that provides an interface to upload catch time-series, age composition, length composition, and abundance index data and define model options within the application, which then writes the Stock Synthesis input files.</p></li>
 </ul>
 </section>
 </section>
 <section id="running-ss3" class="level1">
 <h1>Running SS3</h1>
-<p>SS3 is typically run through the command line (although it can also be run indirctly via the commandline through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS">“Running Stock Synthesis” section of the user manual</a>.</p>
+<p>SS3 is typically run through the command line (although it can also be run indirctly via the commandline through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” section of the user manual</a>.</p>
 <section id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run" class="level2">
 <h2 class="anchored" data-anchor-id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run">The one folder approach and demonstration of an SS3 model run</h2>
 <p>The one folder approach is so named because the model input files and SS3 executable are in the same folder. The one folder approach is the simplest way to run SS3 via the command line, so we will walk through an example run using this approach.</p>
@@ -327,7 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Control File (Must match name in starter.ss)</li>
 <li>Data File (Must match name in starter.ss)</li>
 <li>forecast.ss</li>
-<li>ss.exe</li>
+<li>ss3.exe</li>
 <li>starter.ss</li>
 <li>Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss.par (to continue from a previous run)</li>
 </ul>
@@ -337,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="run-ss3" class="level3">
 <h3 class="anchored" data-anchor-id="run-ss3">Run SS3</h3>
 <p>Once all of the model files and the SS3 executable are in the same folder, you can open your command window of choice at the location of the model files.</p>
-<p>To do this, you can typically click to highlight the folder the model files are in, then shift + right click on the same folder and select the option from the menu to open the command line of choice (e.g., Windows Powershell). This should bring up a command window. Then, type <code>ss</code> (or other name of the ss exe) into the command prompt and hit enter. Note that if you are using Windows Powershell, you will need to type <code>./ss</code>.</p>
+<p>To do this, you can typically click to highlight the folder the model files are in, then shift + right click on the same folder and select the option from the menu to open the command line of choice (e.g., Windows Powershell). This should bring up a command window. Then, type <code>ss3</code> (or other name of the ss3 exe) into the command prompt and hit enter. Note that if you are using Windows Powershell, you will need to type <code>./ss3</code>.</p>
 <p>The exact instructions for running SS3 can differ depending on the command window used. If you have trouble, search for resources that describe running an executable for your specific command line.</p>
 <p>If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type <code>ss_win</code> to run an executable called <code>ss_win.exe</code>.) and that the command line has the correct directory.</p>
 <p>After starting the run, you should see output to the command line similar to:</p>
@@ -362,9 +398,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Options for running SS3</h1>
 <section id="options" class="level2">
 <h2 class="anchored" data-anchor-id="options">Command line options</h2>
-<p>ADMB options can be added to the run when calling the SS3 executable from the command line. The most commonly used option is <code>ss -nohess</code> to skip standard errors (for quicker results or to get Report.sso if the hessian does not invert).</p>
-<p>To list all command line options, use one of these calls: <code>SS -?</code> or <code>SS -help</code>. More info about the ADMB command line options is available in the <a href="http://www.admb-project.org/docs/manuals/">ADMB Manual</a> (Chapter 12: Command line options).</p>
-<p>To run SS3 without estimation use: <code>ss -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in SS3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
+<p>ADMB options can be added to the run when calling the SS3 executable from the command line. The most commonly used option is <code>ss3 -nohess</code> to skip standard errors (for quicker results or to get Report.sso if the hessian does not invert).</p>
+<p>To list all command line options, use one of these calls: <code>SS3-?</code> or <code>SS3 -help</code>. More info about the ADMB command line options is available in the <a href="http://www.admb-project.org/docs/manuals/">ADMB Manual</a> (Chapter 12: Command line options).</p>
+<p>To run SS3 without estimation use: <code>ss3 -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in v.3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
 </section>
 <section id="using-ss.par-for-initial-values" class="level2">
 <h2 class="anchored" data-anchor-id="using-ss.par-for-initial-values">Using ss.par for initial values</h2>
@@ -398,13 +434,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Check that starter.ss references the correct names of the control and data files.</li>
 <li>If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read corectly or not.</li>
 </ul>
-<p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
+<p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
 </section>
 </section>
 <section id="where-to-get-additional-help" class="level1">
 <h1>Where to get additional help</h1>
 <ul>
-<li>The <a href="https://vlab.noaa.gov/web/stock-synthesis">SS3 vlab website</a> resources, including the SS3 user manual and the SSI user guide</li>
+<li>Post to the Stock Synthesis <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/discussions">discussion boards on GitHub</a></li>
+<li>The <a href="https://vlab.noaa.gov/web/stock-synthesis">SS3 vlab website</a> resources, including the SS3 user manual</li>
 <li>Post questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a></li>
 <li>Email questions to nmfs.stock.synthesis@noaa.gov</li>
 <li>Report bugs or request features using the <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues">Stock Synthesis issue tracker</a></li>
@@ -452,9 +489,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -490,10 +541,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -503,8 +553,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -519,6 +578,241 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -559,6 +853,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
