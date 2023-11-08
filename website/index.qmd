@@ -6,7 +6,10 @@ format:
 ---
 
 Welcome to the Stock Synthesis (SS3) Website!
+
 ```{r, echo = FALSE, message = FALSE, out.width="30%"}
+library(httr)
+library(fishualize)
 pal <- "#5EB6D9"
 family = "Acanthuridae"
 option = "Acanthurus.nigricauda"
