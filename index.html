@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Stock Synthesis (SS3) Documentation - Stock Synthesis Documentation</title>
+<title>Stock Synthesis (SS3) - Stock Synthesis (SS3) Website</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -71,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Stock Synthesis (SS3) Documentation</span>
+    <span class="navbar-title">Stock Synthesis (SS3)</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -80,11 +81,6 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page"><i class="bi bi-house" role="img">
-</i> 
- <span class="menu-text">Home</span></a>
-  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ss3-user-manuals" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
       <i class="bi bi-journal-code" role="img">
@@ -101,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">HTML Version</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/download/v3.30.21/SS330_User_Manual.pdf" rel="" target="">
+    <a class="dropdown-item" href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf" rel="" target="">
  <span class="dropdown-text">PDF Version (downloads on click)</span></a>
   </li>  
     </ul>
@@ -113,8 +109,14 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Tutorials</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
-        <li class="dropdown-header">qmds/getting_started_ss.qmd</li>
-        <li class="dropdown-header">qmds/ss_model_tips.qmd</li>
+        <li>
+    <a class="dropdown-item" href="./qmds/getting_started_ss3.html" rel="" target="">
+ <span class="dropdown-text">Getting Started with Stock Synthesis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./qmds/ss3_model_tips.html" rel="" target="">
+ <span class="dropdown-text">Developing your first Stock Synthesis model</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="./qmds/ss3_setup_decisions.html" rel="" target="">
  <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
@@ -176,7 +178,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-cite-stock-synthesis" id="toc-how-to-cite-stock-synthesis" class="nav-link active" data-scroll-target="#how-to-cite-stock-synthesis">How to Cite Stock Synthesis</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#getting-started-with-stock-synthesis" id="toc-getting-started-with-stock-synthesis" class="nav-link" data-scroll-target="#getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</a></li>
+  <li><a href="#how-to-cite-stock-synthesis" id="toc-how-to-cite-stock-synthesis" class="nav-link" data-scroll-target="#how-to-cite-stock-synthesis">How to Cite Stock Synthesis</a></li>
   </ul>
 </nav>
     </div>
@@ -185,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Stock Synthesis Documentation</h1>
+<h1 class="title">Stock Synthesis (SS3) Website</h1>
 </div>
 
 
@@ -200,7 +204,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Welcome to the Stock Synthesis documentation page! This is the website to get to the Stock Synthesis User Manual as well as tutorials and other helpful materials.</p>
+<p>Welcome to the Stock Synthesis (SS3) Website!</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis models. Stock Synthesis has evolved over time to be able to model a wide range of fish populations and dynamics. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
+<p>SS3 is made up of:</p>
+<ul>
+<li>A population sub-model that simulates a stock’s:
+<ul>
+<li>growth,</li>
+<li>maturity,</li>
+<li>fecundity,</li>
+<li>recruitment,</li>
+<li>movement, and</li>
+<li>mortality processes,</li>
+</ul></li>
+<li>An observation sub-model that estimates expected values for various types of data,</li>
+<li>A statistical sub-model characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance, and</li>
+<li>A forecast sub-model projects needed management quantities.</li>
+</ul>
+</section>
+<section id="getting-started-with-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</h2>
+<p>To getting started with Stock Synthesis, please see the presentation below and the <a href="./qmds/getting_started_ss3.html">Getting Started with Stock Synthesis Tutorial</a>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><embed src="SS3_Getting_Started.pdf" style="width:85.0%" height="400"></p>
+</div>
+</div>
+</section>
 <section id="how-to-cite-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-cite-stock-synthesis">How to Cite Stock Synthesis</h2>
 <p>Please cite Stock Synthesis as:</p>
@@ -218,7 +250,7 @@ framework for fish stock assessment and fishery management. Fisheries Research,
   doi={10.1016/j.fishres.2012.10.012},
 }</code></pre>
 <p>To see how to cite the Stock Synthesis User Manual, please refer to the <a href="user_manual.qmd">SS3 User Manual tab</a>.</p>
-<p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"></p>
+<p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"></p>
 <p><a href="https://www.commerce.gov/">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/">NOAA Fisheries</a></p>
 
 
