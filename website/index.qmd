@@ -8,8 +8,12 @@ format:
 Welcome to the Stock Synthesis (SS3) Website!
 
 ```{r, echo = FALSE, message = FALSE, out.width="30%"}
+install.packages("httr")
 library(httr)
 library(fishualize)
+library(grid)
+library(stringr)
+
 pal <- "#5EB6D9"
 family = "Acanthuridae"
 option = "Acanthurus.nigricauda"
