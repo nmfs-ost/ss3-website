@@ -29,11 +29,11 @@ $link-color: $blue-green !default;
 $code-block-bg: $light-gray !default;
 
 // Mermaid diagram colors
-$mermaid-bg-color: $lightblue;
-$mermaid-fg-color: $blue-green;
+$mermaid-bg-color: $lightblue; // color of boxes
+$mermaid-fg-color: $blue-green; // words in boxes
 $mermaid-edge-color: $light-gray;
-$mermaid-node-bg-color: $lightblue;
-$mermaid-label-bg-color: $light-gray;
+$mermaid-node-fg-color: $lightblue;
+$mermaid-label-fg-color: $light-gray;
 
 /* -- scss:mixins --*/
 
