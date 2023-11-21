@@ -179,7 +179,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#installing-stock-synthesis" id="toc-installing-stock-synthesis" class="nav-link" data-scroll-target="#installing-stock-synthesis">Installing Stock Synthesis</a></li>
   <li><a href="#getting-started-with-stock-synthesis" id="toc-getting-started-with-stock-synthesis" class="nav-link" data-scroll-target="#getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</a></li>
+  <li><a href="#user-example-models" id="toc-user-example-models" class="nav-link" data-scroll-target="#user-example-models">User Example Models</a></li>
+  <li><a href="#asking-questions-about-stock-synthesis" id="toc-asking-questions-about-stock-synthesis" class="nav-link" data-scroll-target="#asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</a></li>
+  <li><a href="#contributing-to-stock-synthesis" id="toc-contributing-to-stock-synthesis" class="nav-link" data-scroll-target="#contributing-to-stock-synthesis">Contributing to Stock Synthesis</a></li>
+  <li><a href="#tools-for-working-with-stock-synthesis" id="toc-tools-for-working-with-stock-synthesis" class="nav-link" data-scroll-target="#tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</a></li>
   <li><a href="#how-to-cite-stock-synthesis" id="toc-how-to-cite-stock-synthesis" class="nav-link" data-scroll-target="#how-to-cite-stock-synthesis">How to Cite Stock Synthesis</a></li>
   </ul>
 </nav>
@@ -207,22 +212,26 @@ ul.task-list li input[type="checkbox"] {
 <p>Welcome to the Stock Synthesis (SS3) Website!</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis models. Stock Synthesis has evolved over time to be able to model a wide range of fish populations and dynamics. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
+<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
 <p>SS3 is made up of:</p>
 <ul>
 <li>A population sub-model that simulates a stock’s:
 <ul>
-<li>growth,</li>
-<li>maturity,</li>
-<li>fecundity,</li>
-<li>recruitment,</li>
-<li>movement, and</li>
-<li>mortality processes,</li>
+<li>Biology (growth, maturity, fecundity),</li>
+<li>Recruitment,</li>
+<li>Movement,</li>
+<li>Fishery selectivity</li>
+<li>Natural and fishing mortality, and</li>
+<li>Responsiveness to environmental and predation factors.</li>
 </ul></li>
 <li>An observation sub-model that estimates expected values for various types of data,</li>
 <li>A statistical sub-model characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance, and</li>
 <li>A forecast sub-model projects needed management quantities.</li>
 </ul>
+</section>
+<section id="installing-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="installing-stock-synthesis">Installing Stock Synthesis</h2>
+<p>Click <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest">here</a> to download the latest release of the Stock Synthesis executable.</p>
 </section>
 <section id="getting-started-with-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</h2>
@@ -232,6 +241,35 @@ ul.task-list li input[type="checkbox"] {
 <p><embed src="SS3_Getting_Started.pdf" style="width:85.0%" height="400"></p>
 </div>
 </div>
+<p>To learn how to build your own models in Stock Synthesis, see the <a href="https://nmfs-stock-synthesis.github.io/doc/ss3_model_tips.html">Develop a Stock Synthesis model guide</a></p>
+</section>
+<section id="user-example-models" class="level2">
+<h2 class="anchored" data-anchor-id="user-example-models">User Example Models</h2>
+<p>We maintain a GitHub repository of <a href="https://github.com/nmfs-stock-synthesis/user-examples">example stock synthesis models</a> for users. Information on what the key features of the user example models and how to download can be found <a href="https://github.com/nmfs-stock-synthesis/user-examples#readme">here</a>.</p>
+</section>
+<section id="asking-questions-about-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</h2>
+<p>Questions can be asked by opening an <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues">issue</a> or contributing to a <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/discussions">discussion</a> in the stock synthesis repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">Stock Synthesis forums</a>. Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.</p>
+</section>
+<section id="contributing-to-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="contributing-to-stock-synthesis">Contributing to Stock Synthesis</h2>
+<p>Have feature requests or bug reports? Want to contribute code? Please open an <a href="https://github.com/nmfs-stock-synthesis/stock-synthesis/issues">issue</a> or submit a pull request. For complete details, please see <a href="CONTRIBUTING.md">CONTRIBUTING.md</a></p>
+<p>This project and everyone participating in it is governed by the <a href="https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md">NMFS Fisheries Toolbox Code of Conduct</a>. By participating, you are expected to uphold this code.</p>
+</section>
+<section id="tools-for-working-with-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</h2>
+<p>As Stock Synthesis usage has grown, so has the number of tools to work with it. These include <a href="https://github.com/topics/stock-synthesis">repositories on github with the stock-synthesis topic</a> as well as:</p>
+<ul>
+<li><a href="https://github.com/r4ss/r4ss">r4ss</a>: Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.</li>
+<li><a href="https://github.com/PIFSCstockassessments/ss3diags">ss3diags</a>: Run advanced diagnostics for Stock Synthesis models.</li>
+<li><a href="https://github.com/ss3sim/ss3sim">ss3sim</a>: Conduct simulation studies using Stock Synthesis.</li>
+<li><a href="https://vlab.noaa.gov/web/stock-synthesis/document-library/-/document_library/0LmuycloZeIt/view/5042951">SSI</a>: Stock Synthesis Interface, a GUI for developing models and running Stock Synthesis. Links to r4ss.</li>
+<li><a href="https://connect.fisheries.noaa.gov/ss3-helper/">SS3 Shiny helper app</a>: Visualize common selectivity pattern options available within Stock Synthesis.</li>
+<li><a href="https://github.com/nmfs-fish-tools/SSMSE">SSMSE</a>: Use Stock Synthesis operating models in Management Strategy Evaluation.</li>
+<li><a href="https://github.com/nwfsc-assess/sa4ss">sa4ss</a>: Create accessible R markdown stock assessment documents with results from Stock Synthesis models. Note this tool is intended for use by analysts within the Northwest and Southwest Fisheries Science Centers currently.</li>
+<li>Data limited tools - Options included Simple Stock Synthesis (<a href="https://github.com/shcaba/SSS">SSS</a>) and Extended Simple Stock Synthesis (<a href="https://github.com/chantelwetzel-noaa/XSSS">XSSS</a>), as well as <a href="https://github.com/shcaba/SS-DL-tool">SS-DL-tool</a>, a shiny app that includes XSSS and SSS in its functionality.</li>
+</ul>
+<p>Have a tool to work with Stock Synthesis that should be mentioned here? Open an issue or pull request to let us know!</p>
 </section>
 <section id="how-to-cite-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-cite-stock-synthesis">How to Cite Stock Synthesis</h2>
