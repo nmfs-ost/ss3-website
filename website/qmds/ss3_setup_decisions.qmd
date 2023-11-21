@@ -1,8 +1,5 @@
 ---
 title: "Important SS3 Set-up Decisions"
-format: 
-  html:
-    mermaid: 
 ---
 
 ## Model dimensions to figure out before adding data
