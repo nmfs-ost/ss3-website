@@ -180,8 +180,13 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#installing-stock-synthesis" id="toc-installing-stock-synthesis" class="nav-link" data-scroll-target="#installing-stock-synthesis">Installing Stock Synthesis</a></li>
-  <li><a href="#getting-started-with-stock-synthesis" id="toc-getting-started-with-stock-synthesis" class="nav-link" data-scroll-target="#getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</a></li>
+  <li><a href="#getting-started-with-stock-synthesis" id="toc-getting-started-with-stock-synthesis" class="nav-link" data-scroll-target="#getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</a>
+  <ul class="collapse">
+  <li><a href="#getting-started-using-the-stock-assessment-continuum-tool" id="toc-getting-started-using-the-stock-assessment-continuum-tool" class="nav-link" data-scroll-target="#getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</a></li>
+  <li><a href="#getting-started-using-the-input-files" id="toc-getting-started-using-the-input-files" class="nav-link" data-scroll-target="#getting-started-using-the-input-files">Getting Started Using the Input Files</a></li>
+  <li><a href="#viewing-stock-synthesis-output-with-r4ss" id="toc-viewing-stock-synthesis-output-with-r4ss" class="nav-link" data-scroll-target="#viewing-stock-synthesis-output-with-r4ss">Viewing Stock Synthesis Output with {r4ss}</a></li>
   <li><a href="#user-example-models" id="toc-user-example-models" class="nav-link" data-scroll-target="#user-example-models">User Example Models</a></li>
+  </ul></li>
   <li><a href="#asking-questions-about-stock-synthesis" id="toc-asking-questions-about-stock-synthesis" class="nav-link" data-scroll-target="#asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</a></li>
   <li><a href="#contributing-to-stock-synthesis" id="toc-contributing-to-stock-synthesis" class="nav-link" data-scroll-target="#contributing-to-stock-synthesis">Contributing to Stock Synthesis</a></li>
   <li><a href="#tools-for-working-with-stock-synthesis" id="toc-tools-for-working-with-stock-synthesis" class="nav-link" data-scroll-target="#tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</a></li>
@@ -241,11 +246,22 @@ ul.task-list li input[type="checkbox"] {
 <p><embed src="SS3_Getting_Started.pdf" style="width:85.0%" height="400"></p>
 </div>
 </div>
-<p>To learn how to build your own models in Stock Synthesis, see the <a href="https://nmfs-stock-synthesis.github.io/doc/ss3_model_tips.html">Develop a Stock Synthesis model guide</a>.</p>
+<section id="getting-started-using-the-stock-assessment-continuum-tool" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</h3>
+<p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package.</p>
 </section>
-<section id="user-example-models" class="level2">
-<h2 class="anchored" data-anchor-id="user-example-models">User Example Models</h2>
+<section id="getting-started-using-the-input-files" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-using-the-input-files">Getting Started Using the Input Files</h3>
+<p>To learn more about how to build your own models in Stock Synthesis with the input files, see the <a href="https://nmfs-stock-synthesis.github.io/doc/ss3_model_tips.html">Develop a Stock Synthesis model guide</a>.</p>
+</section>
+<section id="viewing-stock-synthesis-output-with-r4ss" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-stock-synthesis-output-with-r4ss">Viewing Stock Synthesis Output with {r4ss}</h3>
+<p>The <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the <a href="https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html">“Introduction to r4ss”</a> vignette as well as <a href="https://r4ss.github.io/r4ss/BigSkate">example plots</a> created with {r4ss} (these plots were created usingthe Big Skate model found in the <a href="https://github.com/nmfs-stock-synthesis/test-models">test-models</a> repository).</p>
+</section>
+<section id="user-example-models" class="level3">
+<h3 class="anchored" data-anchor-id="user-example-models">User Example Models</h3>
 <p>We maintain a GitHub repository of <a href="https://github.com/nmfs-stock-synthesis/user-examples">example stock synthesis models</a> for users. Information on what the key features of the user example models and how to download can be found <a href="https://github.com/nmfs-stock-synthesis/user-examples#readme">here</a>.</p>
+</section>
 </section>
 <section id="asking-questions-about-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</h2>
