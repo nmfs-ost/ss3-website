@@ -28,6 +28,11 @@ $link-color: $blue-green !default;
 // Code blocks
 $code-block-bg: $light-gray !default;
 
+// Mermaid diagram colors
+$mermaid-bg-color: $lightblue;
+$mermaid-edge-color: $mid-gray;
+$mermaid-node-bg-color: $mid-blue;
+
 /* -- scss:mixins --*/
 
 /*-- scss:rules --*/
@@ -49,3 +54,5 @@ $code-block-bg: $light-gray !default;
 .blockquote {
   color: $mid-gray;
 }
+
+

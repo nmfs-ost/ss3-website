@@ -15,6 +15,7 @@ Welcome to the Stock Synthesis (SS3) Website!
 # library(stringr)
 # 
 # pal <- "#5EB6D9"
+# # pal <- "#90DFE3"
 # family = "Acanthuridae"
 # option = "Acanthurus.nigricauda"
 # url <- paste0(
@@ -78,14 +79,13 @@ SS3 is made up of:
 Click [here](https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest) to download the latest release of the Stock Synthesis executable. 
 
 ## Getting Started with Stock Synthesis
-
 To getting started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
 
 ```{r, echo = FALSE, out.width = "85%", out.height= "400px"}
 knitr::include_graphics("SS3_Getting_Started.pdf")
 ```
 
-To learn how to build your own models in Stock Synthesis, see the [Develop a Stock Synthesis model guide](https://nmfs-stock-synthesis.github.io/doc/ss3_model_tips.html)
+To learn how to build your own models in Stock Synthesis, see the [Develop a Stock Synthesis model guide](https://nmfs-stock-synthesis.github.io/doc/ss3_model_tips.html).
 
 ## User Example Models
 We maintain a GitHub repository of [example stock synthesis models](https://github.com/nmfs-stock-synthesis/user-examples) for users. Information on what the key features of the user example models and how to download can be found [here](https://github.com/nmfs-stock-synthesis/user-examples#readme).
@@ -99,8 +99,7 @@ Have feature requests or bug reports? Want to contribute code? Please open an [i
 This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## Tools for working with Stock Synthesis
-
-As Stock Synthesis usage has grown, so has the number of tools to work with it. These include [repositories on github with the stock-synthesis topic](https://github.com/topics/stock-synthesis) as well as:
+As Stock Synthesis usage has grown, so has the number of tools to work with it. These include [repositories on GitHub with the stock-synthesis topic](https://github.com/topics/stock-synthesis) as well as:
 
 - [r4ss](https://github.com/r4ss/r4ss): Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.
 - [ss3diags](https://github.com/PIFSCstockassessments/ss3diags): Run advanced diagnostics for Stock Synthesis models.
@@ -114,7 +113,6 @@ As Stock Synthesis usage has grown, so has the number of tools to work with it. 
 Have a tool to work with Stock Synthesis that should be mentioned here? Open an issue or pull request to let us know!
 
 ## How to Cite Stock Synthesis
-
 Please cite Stock Synthesis as:
 
 ```         
