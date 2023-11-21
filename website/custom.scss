@@ -30,8 +30,10 @@ $code-block-bg: $light-gray !default;
 
 // Mermaid diagram colors
 $mermaid-bg-color: $lightblue;
-$mermaid-edge-color: $mid-gray;
-$mermaid-node-bg-color: $mid-blue;
+$mermaid-fg-color: $blue-green;
+$mermaid-edge-color: $light-gray;
+$mermaid-node-bg-color: $lightblue;
+$mermaid-label-bg-color: $light-gray;
 
 /* -- scss:mixins --*/
 
