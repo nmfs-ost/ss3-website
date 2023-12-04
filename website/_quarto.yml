@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Stock Synthesis (SS3)"
-  # issue-url: "https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose"
+  # issue-url: "https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"
   # repo-actions: [issue]
   navbar:
     left:
@@ -16,9 +16,9 @@ website:
         menu:
           - href: qmds/user_manual.qmd
             text: "Citing the SS3 User Manual"
-          - href: https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual_release.html
+          - href: https://nmfs-ost.github.io/doc/SS330_User_Manual_release.html
             text: "HTML Version"
-          - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/releases/latest/download/SS330_User_Manual.pdf
+          - href: https://github.com/nmfs-ost/ss3-source-code/releases/latest/download/SS330_User_Manual.pdf
             text: "PDF Version (downloads on click)"
       - text: "Tutorials"
         icon: person-workspace
@@ -32,16 +32,20 @@ website:
     right:
        - icon: github
          menu:
-           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis
+           - href: https://github.com/nmfs-ost/ss3-source-code
+           - href: https://github.com/nmfs-ost/ss3-source-code
              text: "Stock Synthesis Source Code"
              icon: "code"
-           - href: https://github.com/nmfs-stock-synthesis/stock-synthesis/issues/new/choose
+           - href: https://github.com/nmfs-ost/ss3-source-code/issues/new/choose
+           - href: https://github.com/nmfs-ost/ss3-source-code/issues/new/choose
              text: "Stock Synthesis Report an Issue"
              icon: "exclamation-circle"
-           - href: https://github.com/nmfs-stock-synthesis/doc
+           - href: https://github.com/nmfs-ost/ss3-doc
+           - href: https://github.com/nmfs-ost/ss3-doc
              text: "User Manual Source Code"
              icon: "code"
-           - href: https://github.com/nmfs-stock-synthesis/doc/issues/new
+           - href: https://github.com/nmfs-ost/ss3-doc/issues/new
+           - href: https://github.com/nmfs-ost/ss3-doc/issues/new
              text: "User Manual Report an Issue"
              icon: "exclamation-circle"
        
