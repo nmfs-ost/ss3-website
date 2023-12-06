@@ -129,6 +129,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../qmds/start_year_considerations.html" rel="" target="">
  <span class="dropdown-text">Start Year Considerations</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../qmds/settlement_timing.html" rel="" target="">
+ <span class="dropdown-text">Settlement Timing</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -256,7 +260,19 @@ ul.task-list li input[type="checkbox"] {
 <li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.</li>
 <li>The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.</li>
 </ul>
-<p>::: {.callout-tip title = “Think of it as:”} How much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0? :::</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Think of it as">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Think of it as
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?</p>
+</div>
+</div>
 
 
 </section>
