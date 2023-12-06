@@ -28,6 +28,7 @@ website:
           - qmds/ss3_setup_decisions.qmd
           - qmds/predator.qmd
           - qmds/start_year_considerations.qmd
+          - qmds/settlement_timing.qmd
           
     right:
        - icon: github
