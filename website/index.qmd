@@ -7,57 +7,6 @@ format:
 
 Welcome to the Stock Synthesis (SS3) Website!
 
-```{r, echo = FALSE, message = FALSE, out.width="30%", evaluate = FALSE}
-# install.packages("httr")
-# library(httr)
-# library(fishualize)
-# library(grid)
-# library(stringr)
-# 
-# pal <- "#5EB6D9"
-# # pal <- "#90DFE3"
-# family = "Acanthuridae"
-# option = "Acanthurus.nigricauda"
-# url <- paste0(
-#     "https://raw.githubusercontent.com/simonjbrandl/fishape/master/shapes/",
-#     family, "_", gsub("_", ".", option), ".png")
-# 
-# get_url <- httr::GET(url = url)
-# 
-# wrap.url <- function(file,fun)
-# {
-#   is.url <- grepl("^(http|ftp)s?://", file)
-#   if (is.url)
-#   {
-#     url <- file
-#     ext <- stringr::str_extract_all(url,"\\.([A-Za-z0-9]+$)")[[1]]
-#     if (length(ext) > 0) file <- tempfile(fileext=ext) else file <- tempfile()
-#     downloader::download(url,file,mode="wb")
-#     out <- fun(file)
-#     unlink(file)
-#     out
-#   }
-#   else
-#   {
-#     if (!utils::file_test("-f",file))
-#     {
-#       stop("File not found")
-#     }
-#     else
-#     {
-#       fun(file)
-#     }
-#   }
-# 
-# }
-# 
-# img <- wrap.url(url, png::readPNG)
-# img.r <- as.raster(img, interpolate = TRUE)
-# img.r[img.r != "#FFFFFF00"]<- pal
-# plot.new()
-# raster_fish <- grid::grid.raster(img.r)
-```
-
 ## Introduction
 
 Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder [ADMB](https://www.admb-project.org/).
@@ -92,6 +41,7 @@ If you are just getting started with Stock Synthesis, we highly recommend downlo
 To learn more about how to build your own models in Stock Synthesis using the input files directly, see the [Develop a Stock Synthesis model guide](https://nmfs-ost.github.io/ss3-doc/ss3_model_tips.html).
 
 ### Viewing Stock Synthesis Output with {r4ss}
+![](https://github.com/r4ss/r4ss/blob/main/man/figures/logo.svg){style="float: right;" fig-alt="Hex logo that says \"r4ss\"" fig-align="right" width="250"}
 The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette as well as [example plots](https://r4ss.github.io/r4ss/BigSkate) created with {r4ss} (these plots were created usingthe Big Skate model found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository).
 
 ### User Example Models

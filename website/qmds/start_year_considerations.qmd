@@ -25,7 +25,9 @@ The estimated population age composition in the first year of composition data i
 
 ## First year with recdevs
   - By starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.
+  
 **[Need picture here]**
+
   - The first year with rec_devs (main or early) can be Nages before start year.
   - Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.
   - The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.

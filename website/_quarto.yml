@@ -20,14 +20,16 @@ website:
             text: "HTML Version"
           - href: https://github.com/nmfs-ost/ss3-source-code/releases/latest/download/SS330_User_Manual.pdf
             text: "PDF Version (downloads on click)"
-      - text: "Tutorials"
-        icon: person-workspace
+      - text: "Tutorials for Getting Started"
+        icon: terminal
         menu:
           - qmds/getting_started_ss3.qmd
           - qmds/ss3_model_tips.qmd
           - qmds/ss3_setup_decisions.qmd
-          - qmds/predator.qmd
+      - text: "Vignettes for Model Features"
+        icon: person-workspace
           - qmds/start_year_considerations.qmd
+          - qmds/predator.qmd
           - qmds/settlement_timing.qmd
           
     right:
