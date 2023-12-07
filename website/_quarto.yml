@@ -28,6 +28,7 @@ website:
           - qmds/ss3_setup_decisions.qmd
       - text: "Vignettes for Model Features"
         icon: person-workspace
+        menu:
           - qmds/start_year_considerations.qmd
           - qmds/predator.qmd
           - qmds/settlement_timing.qmd
