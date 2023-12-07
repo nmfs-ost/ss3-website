@@ -103,12 +103,12 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
-      <i class="bi bi-person-workspace" role="img">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials-for-getting-started" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+      <i class="bi bi-terminal" role="img">
 </i> 
- <span class="menu-text">Tutorials</span>
+ <span class="menu-text">Tutorials for Getting Started</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials-for-getting-started">    
         <li>
     <a class="dropdown-item" href="../qmds/getting_started_ss3.html" rel="" target="">
  <span class="dropdown-text">Getting Started with Stock Synthesis</span></a>
@@ -121,20 +121,11 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../qmds/ss3_setup_decisions.html" rel="" target="">
  <span class="dropdown-text">Important SS3 Set-up Decisions</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../qmds/predator.html" rel="" target="">
- <span class="dropdown-text">Predator Vignette</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../qmds/start_year_considerations.html" rel="" target="">
- <span class="dropdown-text">Start Year Considerations</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../qmds/settlement_timing.html" rel="" target="">
- <span class="dropdown-text">Settlement Timing</span></a>
-  </li>  
     </ul>
   </li>
+  <li class="dropdown-header"><i class="bi bi-person-workspace - qmds/start_year_considerations.qmd - qmds/predator.qmd - qmds/settlement_timing.qmd" role="img">
+</i> 
+ <span class="menu-text">Vignettes for Model Features</span></li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
@@ -255,7 +246,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="first-year-with-recdevs" class="level2">
 <h2 class="anchored" data-anchor-id="first-year-with-recdevs">First year with recdevs</h2>
 <ul>
-<li>By starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass. <strong>[Need picture here]</strong></li>
+<li>By starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.</li>
+</ul>
+<p><strong>[Need picture here]</strong></p>
+<ul>
 <li>The first year with rec_devs (main or early) can be Nages before start year.</li>
 <li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.</li>
 <li>The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.</li>

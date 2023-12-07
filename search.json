@@ -270,7 +270,7 @@
     "href": "index.html#getting-started-with-stock-synthesis",
     "title": "Stock Synthesis (SS3) Website",
     "section": "Getting Started with Stock Synthesis",
-    "text": "Getting Started with Stock Synthesis\nTo getting started with Stock Synthesis, please see the presentation below and the Getting Started with Stock Synthesis Tutorial:\n\n\n\n\n\n\nGetting Started Using the Stock Assessment Continuum Tool\nIf you are just getting started with Stock Synthesis, we highly recommend downloading the Stock Assessment Continuum Tool, a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the {r4ss} package.\n\n\nGetting Started Using the Input Files\nTo learn more about how to build your own models in Stock Synthesis using the input files directly, see the Develop a Stock Synthesis model guide.\n\n\nViewing Stock Synthesis Output with {r4ss}\nThe {r4ss} package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the “Introduction to r4ss” vignette as well as example plots created with {r4ss} (these plots were created usingthe Big Skate model found in the ss3-test-models repository).\n\n\nUser Example Models\nWe maintain a GitHub repository of example stock synthesis models for users. Information on what the key features of the user example models and how to download can be found here."
+    "text": "Getting Started with Stock Synthesis\nTo getting started with Stock Synthesis, please see the presentation below and the Getting Started with Stock Synthesis Tutorial:\n\n\n\n\n\n\nGetting Started Using the Stock Assessment Continuum Tool\nIf you are just getting started with Stock Synthesis, we highly recommend downloading the Stock Assessment Continuum Tool, a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the {r4ss} package.\n\n\nGetting Started Using the Input Files\nTo learn more about how to build your own models in Stock Synthesis using the input files directly, see the Develop a Stock Synthesis model guide.\n\n\nViewing Stock Synthesis Output with {r4ss}\n The {r4ss} package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the “Introduction to r4ss” vignette as well as example plots created with {r4ss} (these plots were created usingthe Big Skate model found in the ss3-test-models repository).\n\n\nUser Example Models\nWe maintain a GitHub repository of example stock synthesis models for users. Information on what the key features of the user example models and how to download can be found here."
   },
   {
     "objectID": "index.html#asking-questions-about-stock-synthesis",
@@ -345,70 +345,70 @@
   {
     "objectID": "qmds/predator.html",
     "href": "qmds/predator.html",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "",
     "text": "Model the overall natural morality (M) to include explicit mortality (M2) caused by each major predator.\n\nM = M1 + sum(M2)\nThe M1 is the base and is modeled with the existing M options to allow various approaches to age-specific M1\nM2 is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\nM1 should be less than the total M value you were using previously such that M1 plus the time-varying M2 will be similar to what previously was a constant overall M."
   },
   {
     "objectID": "qmds/predator.html#goal",
     "href": "qmds/predator.html#goal",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "",
     "text": "Model the overall natural morality (M) to include explicit mortality (M2) caused by each major predator.\n\nM = M1 + sum(M2)\nThe M1 is the base and is modeled with the existing M options to allow various approaches to age-specific M1\nM2 is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\nM1 should be less than the total M value you were using previously such that M1 plus the time-varying M2 will be similar to what previously was a constant overall M."
   },
   {
     "objectID": "qmds/predator.html#predators-m2",
     "href": "qmds/predator.html#predators-m2",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Predators (M2)",
     "text": "Predators (M2)\n\nThere can be multiple predators, each adding a M2.\nThese are contained in the same arrays as fishing fleets, so M2 has available all the code characteristics as a fishing fleet.\nVery little code is specific to predators…yet.\nEach predator will kill fish. M2(f)/Z is the fraction of the total kill that is consumed by predator(f) in a given area x season.\nEach predator will have selectivity (age and/or length) just as any other fleet.\n\nMany predators tend to select smaller fish."
   },
   {
     "objectID": "qmds/predator.html#m2-is-area-specific",
     "href": "qmds/predator.html#m2-is-area-specific",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "M2 is area-specific",
     "text": "M2 is area-specific\n\nIf a predator occurs in multiple areas, they might be named “seals_A1” and “seals_A2” and would have separate data inputs and controls, just like fishing fleets.\nA “fleet” is designated as a predator at the top of the data file.\n4 #_Nfleets (including surveys)\n#_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=predator(M2) \n#_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month; (always 1 for surveys)\n#_fleet_area:  area the fleet/survey operates in\n#_units of catch:  1=bio; 2=num (ignored for surveys; their units read later)\n#_catch_mult: 0=no; 1=yes\n#_rows are fleets\n#_fleet_type fishery_timing area catch_units need_catch_mult fleetname\n1 -1 1 1 0 Fleet  # 1\n4 -1 1 1 0 Seals  # 2\n3 1 1 2 0 CPUE  # 3\n3 1 1 2 0 Acoustic  # 4\n\n\n\n\n\n\n\nNote\n\n\n\nRetained catch is not entered for predator fleets, nor is there a need to enter placeholder values."
   },
   {
     "objectID": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
     "href": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Consumption by predators is stored in discard arrays",
     "text": "Consumption by predators is stored in discard arrays\n\nData on the amount of consumption can be entered as discard data, where SS3 will include it in the estimation of M2 values.\n1 #_N_fleets_with_discard\n#_discard_units (1=same_as_catchunits(bio/num); 2=fraction; 3=numbers)\n#_discard_errtype: &gt;0 for DF of T-dist(read CV below); 0 for normal with CV; -1 for normal with se; -2 for lognormal; -3 for trunc normal with CV\n# note: only enter units and errtype for fleets with discard \n# note: discard data is the total for an entire season, so input of month here must be to a month in that season\n#_Fleet units errtype\n2 1 -2 # Seals\n#_yr month fleet obs stderr\n1980 2.5 2 76 0.2 #_ Seals\n1980 5.5 2 76 0.2 #_ Seals"
   },
   {
     "objectID": "qmds/predator.html#predator-abundance",
     "href": "qmds/predator.html#predator-abundance",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Predator abundance",
     "text": "Predator abundance\n\nThe abundance of the predator is the “fishing effort” this is correlated with the level of M2.\nIf the predator abundance is available, it can be entered as a survey of “F”.\nThe format looks like:\n#_Units:  0=numbers; 1=biomass; 2=F; 30=spawnbio; ……\n#_Errtype:  -1=normal; 0=lognormal; &gt;0=T\n#_SD_Report: 0=no sdreport; 1=enable sdreport\n#_Fleet Units Errtype SD_Report\n1 1 0 0 # fishing_fleet\n2 2 0 0 # pred\nThis triggers the need to specify a catchability for this fleet in the control file.\nNeither consumption data nor predator abundance data is necessary, but they are both helpful in tuning the level and time-variation of M2."
   },
   {
     "objectID": "qmds/predator.html#future-predator-options",
     "href": "qmds/predator.html#future-predator-options",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Future predator options",
     "text": "Future predator options\n\nAdd a new option that is specific to predators\nDevelop specific catchability (e.g. Type 1 vs. Type 2 response for consumption/predator options)."
   },
   {
     "objectID": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
     "href": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "M2 parameter for each predator, in each season",
     "text": "M2 parameter for each predator, in each season\n\nThe recommended approach is to set up this parameter to have a mean-reverting random walk over time.\nThe time series of predator consumption (in the discard section), and the series of predator relative abundance (as effort), will inform SS3 about changes in M2 over time.\n\nControl file:\n# M2 parameter for each predator fleet\n0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1\n0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1\n0 10 0.936248 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s2\n0 10 2.71282 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s3\n0 10 2.83102 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s4\n#\n# timevary MG parameters \n#_ LO HI INIT PRIOR PR_SD PR_type  PHASE\n1e-05 2.4 1.4368 0.2 0.8 0 3 #M2_pred1_BLK1repl_1964\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_dev_autocorr\n0.0001 2 1.7 0.5 0.5 6 -5 #M2_pred1_s2_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s2_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s3_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 # M2_pred1_s3_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s4_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s4_dev_autocorr"
   },
   {
     "objectID": "qmds/predator.html#diet-data",
     "href": "qmds/predator.html#diet-data",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Diet data",
     "text": "Diet data\n\nIf diet data with size or age composition of the prey is available, it can be entered in the composition data section where it will inform the estimation of the age/length selectivity of the predator for it’s prey.\nIt should have a retained code of 0 for total kill, not 1 for discard."
   },
   {
     "objectID": "qmds/predator.html#predator-example",
     "href": "qmds/predator.html#predator-example",
-    "title": "Predator Vignette",
+    "title": "Predators",
     "section": "Predator example",
     "text": "Predator example\n\n\n Download predator SS3 input files\n\n\n\nExample Info: 4 seasons, and M2 can vary by season\n\nM2 has a random dev over time to allow time-varying flexibility.\nThen we add data to inform those devs.\nIn this example, those data are consumption entered as discard data.\nAn alternative is to enter an indicator (e.g. survey or other indicator of predator abundance) of the level of M2 itself.\n\nThis is not done here but would be a survey of Type 2.\nHopefully we can create more meaningful linkages between preators and M2 in the future.\n\n\n\n\nData file:\n\nOne fleet is Type 4 and labeled as Pred\nThe section of discard data is used as a place to enter the amount of consumption. This is not necessary, but it does help calibrate the M2 levels.\nThe fact that at least one fleet is a predator triggers the need to include M2 internal to the SS3 calculations.\n\n\n\nControl file:\n\nThis example has somewhat complex M1 pattern by age. This is independent of M2 so need not be maintained in your work.\nThe M2 parameter setup begins at line 106.\nThe M2 parameter has a block to shift it’s value in 1964 and annual devs.\nIt also is set up to have annual devs in the seasonal values of M2. There are a lot of parameters. In this case, it works because there is a discard observation for each one. It should still work without all that consumption data because it is a random effect, but let’s talk if you have challenges.\nSS3 also needs to setup the size & age selectivity of the predator\n#_Pattern Discard Male Special\n24 0 0 0 # 1 Fleet\n24 3 0 0 # 2 Pred\n\n\n\n\n\n\n\nNote\n\n\n\nNotice that the discard flag is “3”. This means that for the predator fleet the data file contains no relevant “retained catch”, so the M2 level will only be informing the amount of “discard” which is the predator consumption.\n\n\n\nIn this example, the selectivity of the predator was setup using double normal (Type = 24), but parameters set to essentially be logistic. You can change this as needed.\n\n\n\nM2 in Report.sso\n\nIf you search through the Report.sso file for “M2”, you will find the parameter values near the top.\nThe consumption output is in the “Discard” section.\nThe time-series of M2 is further down.\n\n\n\nPredator Data\n\n\n\n\n\nFigure 1. {r4ss} data output with predator data.\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe discard label will appear in the plot because predator consumption is stored internally in the same place as discards."
   },
@@ -438,6 +438,6 @@
     "href": "qmds/start_year_considerations.html#first-year-with-recdevs",
     "title": "Start Year Considerations",
     "section": "First year with recdevs",
-    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass. [Need picture here]\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
+    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.\n\n[Need picture here]\n\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
   }
 ]
