@@ -9,7 +9,7 @@ Welcome to the Stock Synthesis (SS3) Website!
 
 ## Introduction
 
-Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder [ADMB](https://www.admb-project.org/).
+Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder [ADMB](https://www.admb-project.org/).
 
 SS3 is made up of:
 
@@ -36,11 +36,12 @@ knitr::include_graphics("SS3_Getting_Started.pdf")
 
 ### Getting Started Using the Stock Assessment Continuum Tool
 If you are just getting started with Stock Synthesis, we highly recommend downloading the [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool), a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the [{r4ss}](https://github.com/r4ss/r4ss) package.
+![](qmds/images/stock_assess_cont_tool.png)
 
 ### Getting Started Using the Input Files
 To learn more about how to build your own models in Stock Synthesis using the input files directly, see the [Develop a Stock Synthesis model](https://nmfs-ost.github.io/ss3-doc/ss3_model_tips.html) guide.
 
-### Viewing Stock Synthesis Output with {r4ss}
+### Interacting with Stock Synthesis and Viewing Output Using {r4ss}
 ![](qmds/images/r4ss_logo.png){style="float: right;" fig-align="right" width="210"}
 
 The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette as well as [example plots](https://r4ss.github.io/r4ss/BigSkate) created with {r4ss} (these plots were created usingthe Big Skate model found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository).
@@ -57,10 +58,6 @@ Have feature requests or bug reports? Want to contribute code? Please open an [i
 This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## Tools for working with Stock Synthesis
-
-::: rstudio-cloud
-this is a test
-:::
 
 As Stock Synthesis usage has grown, so has the number of tools to work with it. These include [repositories on GitHub with the stock-synthesis topic](https://github.com/topics/stock-synthesis) as well as:
 
