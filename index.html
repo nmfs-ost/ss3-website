@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#getting-started-using-the-stock-assessment-continuum-tool" id="toc-getting-started-using-the-stock-assessment-continuum-tool" class="nav-link" data-scroll-target="#getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</a></li>
   <li><a href="#getting-started-using-the-input-files" id="toc-getting-started-using-the-input-files" class="nav-link" data-scroll-target="#getting-started-using-the-input-files">Getting Started Using the Input Files</a></li>
-  <li><a href="#viewing-stock-synthesis-output-with-r4ss" id="toc-viewing-stock-synthesis-output-with-r4ss" class="nav-link" data-scroll-target="#viewing-stock-synthesis-output-with-r4ss">Viewing Stock Synthesis Output with {r4ss}</a></li>
+  <li><a href="#interacting-with-stock-synthesis-and-viewing-output-using-r4ss" id="toc-interacting-with-stock-synthesis-and-viewing-output-using-r4ss" class="nav-link" data-scroll-target="#interacting-with-stock-synthesis-and-viewing-output-using-r4ss">Interacting with Stock Synthesis and Viewing Output Using {r4ss}</a></li>
   <li><a href="#user-example-models" id="toc-user-example-models" class="nav-link" data-scroll-target="#user-example-models">User Example Models</a></li>
   </ul></li>
   <li><a href="#asking-questions-about-stock-synthesis" id="toc-asking-questions-about-stock-synthesis" class="nav-link" data-scroll-target="#asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</a></li>
@@ -246,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Welcome to the Stock Synthesis (SS3) Website!</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differention though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
+<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
 <p>SS3 is made up of:</p>
 <ul>
 <li>A population sub-model that simulates a stock’s:
@@ -277,14 +277,14 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="getting-started-using-the-stock-assessment-continuum-tool" class="level3">
 <h3 class="anchored" data-anchor-id="getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</h3>
-<p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package.</p>
+<p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app interface where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package. <img src="qmds/images/stock_assess_cont_tool.png" class="img-fluid"></p>
 </section>
 <section id="getting-started-using-the-input-files" class="level3">
 <h3 class="anchored" data-anchor-id="getting-started-using-the-input-files">Getting Started Using the Input Files</h3>
 <p>To learn more about how to build your own models in Stock Synthesis using the input files directly, see the <a href="https://nmfs-ost.github.io/ss3-doc/ss3_model_tips.html">Develop a Stock Synthesis model</a> guide.</p>
 </section>
-<section id="viewing-stock-synthesis-output-with-r4ss" class="level3">
-<h3 class="anchored" data-anchor-id="viewing-stock-synthesis-output-with-r4ss">Viewing Stock Synthesis Output with {r4ss}</h3>
+<section id="interacting-with-stock-synthesis-and-viewing-output-using-r4ss" class="level3">
+<h3 class="anchored" data-anchor-id="interacting-with-stock-synthesis-and-viewing-output-using-r4ss">Interacting with Stock Synthesis and Viewing Output Using {r4ss}</h3>
 <div class="quarto-figure quarto-figure-right" style="float: right;">
 <figure class="figure">
 <p><img src="qmds/images/r4ss_logo.png" class="img-fluid figure-img" width="210"></p>
@@ -308,9 +308,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="tools-for-working-with-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</h2>
-<div class="rstudio-cloud">
-<p>this is a test</p>
-</div>
 <p>As Stock Synthesis usage has grown, so has the number of tools to work with it. These include <a href="https://github.com/topics/stock-synthesis">repositories on GitHub with the stock-synthesis topic</a> as well as:</p>
 <ul>
 <li><a href="https://github.com/r4ss/r4ss">r4ss</a>: Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.</li>
