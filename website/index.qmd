@@ -41,7 +41,8 @@ If you are just getting started with Stock Synthesis, we highly recommend downlo
 To learn more about how to build your own models in Stock Synthesis using the input files directly, see the [Develop a Stock Synthesis model](https://nmfs-ost.github.io/ss3-doc/ss3_model_tips.html) guide.
 
 ### Viewing Stock Synthesis Output with {r4ss}
-![](qmds/images/r4ss_logo.png){fig-align="right" width="210"}
+![](qmds/images/r4ss_logo.png){style="float: right;" fig-align="right" width="210"}
+
 The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette as well as [example plots](https://r4ss.github.io/r4ss/BigSkate) created with {r4ss} (these plots were created usingthe Big Skate model found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository).
 
 ### User Example Models
@@ -56,6 +57,11 @@ Have feature requests or bug reports? Want to contribute code? Please open an [i
 This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## Tools for working with Stock Synthesis
+
+::: rstudio-cloud
+this is a test
+:::
+
 As Stock Synthesis usage has grown, so has the number of tools to work with it. These include [repositories on GitHub with the stock-synthesis topic](https://github.com/topics/stock-synthesis) as well as:
 
 - [r4ss](https://github.com/r4ss/r4ss): Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.
