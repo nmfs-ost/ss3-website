@@ -32,8 +32,8 @@ flowchart TB
     F -- Yes --> D
     F -- No --> E
     linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
-    style D fill:steelblue
-    style E fill:steelblue
+    style D fill:#5EB6D9
+    style E fill:#5EB6D9
 ```
 
 ### Empirical weight-at-age vs. parametric growth
@@ -46,8 +46,8 @@ flowchart TB
     B -- No --> E("Use parametric growth")
     C -- No --> E
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style D fill:steelblue
-    style E fill:steelblue
+    style D fill:#5EB6D9
+    style E fill:#5EB6D9
 ```
 
 
@@ -63,8 +63,8 @@ flowchart TB
     D -- Yes --> C
     D -- No --> E("Group all catch as one fleet")
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style C fill:steelblue
-    style E fill:steelblue
+    style C fill:#5EB6D9
+    style E fill:#5EB6D9
 ```
 
 ### One sex or two
@@ -79,8 +79,8 @@ flowchart TB
     C -- No --> F
     E -- No --> F
     linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black
-    style D fill:steelblue
-    style F fill:steelblue
+    style D fill:#5EB6D9
+    style F fill:#5EB6D9
 ```
 
 
@@ -102,8 +102,8 @@ flowchart TB
                   higher than data age bins")
     D -- No --> E
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style C fill:steelblue
-    style E fill:steelblue
+    style C fill:#5EB6D9
+    style E fill:#5EB6D9
 ```
 
 In models with growth, the plus group should be old enough so that fish nearly achieve Linf by the time they are in the plus group.

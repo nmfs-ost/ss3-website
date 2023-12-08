@@ -68,7 +68,7 @@ As Stock Synthesis usage has grown, so has the number of tools to work with it. 
 - [SS3 Shiny helper app](https://connect.fisheries.noaa.gov/ss3-helper/): Visualize common selectivity pattern options available within Stock Synthesis.
 - [SSMSE](https://github.com/nmfs-fish-tools/SSMSE): Use Stock Synthesis operating models in Management Strategy Evaluation.
 - [sa4ss](https://github.com/nwfsc-assess/sa4ss): Create accessible R markdown stock assessment documents with results from Stock Synthesis models. Note this tool is intended for use by analysts within the Northwest and Southwest Fisheries Science Centers currently.
-- Data limited tools - Options included Simple Stock Synthesis ([SSS](https://github.com/shcaba/SSS)) and Extended Simple Stock Synthesis ([XSSS](https://github.com/chantelwetzel-noaa/XSSS)), as well as [SS-DL-tool](https://github.com/shcaba/SS-DL-tool), a shiny app that includes XSSS and SSS in its functionality.
+- Data limited tools - Options included Simple Stock Synthesis ([SSS](https://github.com/shcaba/SSS)) and Extended Simple Stock Synthesis ([XSSS](https://github.com/chantelwetzel-noaa/XSSS)), as well as [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool)(previously the SS-DL-tool), a shiny app that includes XSSS and SSS in its functionality.
 
 Have a tool to work with Stock Synthesis that should be mentioned here? Open an issue or pull request to let us know!
 
