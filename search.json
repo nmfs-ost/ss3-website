@@ -192,7 +192,7 @@
     "objectID": "index.html#installing-stock-synthesis",
     "href": "index.html#installing-stock-synthesis",
     "title": "Stock Synthesis (SS3) Website",
-    "section": "Installing Stock Synthesis",
+    "section": " Installing Stock Synthesis",
     "text": "Installing Stock Synthesis\nClick here to download the latest release of the Stock Synthesis executable."
   },
   {
@@ -207,7 +207,7 @@
     "href": "index.html#asking-questions-about-stock-synthesis",
     "title": "Stock Synthesis (SS3) Website",
     "section": "Asking questions about Stock Synthesis",
-    "text": "Asking questions about Stock Synthesis\nQuestions can be asked by opening an issue or contributing to a discussion in the stock synthesis repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the Stock Synthesis forums. Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first."
+    "text": "Asking questions about Stock Synthesis\nQuestions can be asked by opening an issue or contributing to a discussion in the stock synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the Stock Synthesis forums. Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first."
   },
   {
     "objectID": "index.html#contributing-to-stock-synthesis",
