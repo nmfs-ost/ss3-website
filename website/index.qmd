@@ -24,7 +24,7 @@ SS3 is made up of:
 -   A statistical sub-model characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance, and
 -   A forecast sub-model projects needed management quantities.
 
-## Installing Stock Synthesis 
+## ![](qmds/images/r4ss_logo.png){height="40%"} Installing Stock Synthesis 
 Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
 
 ## Getting Started with Stock Synthesis
@@ -50,10 +50,10 @@ The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R function
 We maintain a GitHub repository of [example stock synthesis models](https://github.com/nmfs-ost/ss3-user-examples) for users. Information on what the key features of the user example models and how to download can be found [here](https://github.com/nmfs-ost/ss3-user-examples#readme).
 
 ## Asking questions about Stock Synthesis
-Questions can be asked by opening an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or contributing to a [discussion](https://github.com/nmfs-ost/ss3-source-code/discussions) in the stock synthesis repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the [Stock Synthesis forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums). Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.
+Questions can be asked by opening an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or contributing to a [discussion](https://github.com/nmfs-ost/ss3-source-code/discussions) in the stock synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the [Stock Synthesis forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums). Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.
 
 ## Contributing to Stock Synthesis
-Have feature requests or bug reports? Want to contribute code? Please open an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or submit a pull request. For complete details, please see [CONTRIBUTING.md](CONTRIBUTING.md)
+Have feature requests or bug reports? Want to contribute code? Please open an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or submit a [pull request](https://github.com/nmfs-ost/ss3-source-code/compare). For complete details, please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
