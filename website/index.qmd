@@ -26,7 +26,7 @@ SS3 is made up of:
 
 ## Installing Stock Synthesis 
 ![](qmds/images/icon-download.png){style="float: left;" fig-align="left" height="05%" width="05%"} 
-Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
+  Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
 
 ## Getting Started with Stock Synthesis
 To getting started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
