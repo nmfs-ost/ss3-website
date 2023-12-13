@@ -25,7 +25,7 @@ SS3 is made up of:
 -   A forecast sub-model projects needed management quantities.
 
 ## Installing Stock Synthesis 
-![](qmds/images/icon-download.png){style="float: right;" fig-align="right" height="10%"}
+![](qmds/images/icon-download.png){style="float: right;" fig-align="right" height="10%" width="10%"}
 Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
 
 ## Getting Started with Stock Synthesis
