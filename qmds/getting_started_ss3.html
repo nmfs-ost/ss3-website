@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SS3 Development Team">
-<meta name="dcterms.date" content="2023-12-13">
+<meta name="dcterms.date" content="2024-01-04">
 
 <title>Stock Synthesis (SS3) - Getting Started with Stock Synthesis</title>
 <style>
@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#options-for-running-ss3" id="toc-options-for-running-ss3" class="nav-link" data-scroll-target="#options-for-running-ss3">Options for running SS3</a>
   <ul class="collapse">
   <li><a href="#options" id="toc-options" class="nav-link" data-scroll-target="#options">Command line options</a></li>
-  <li><a href="#using-ss.par-for-initial-values" id="toc-using-ss.par-for-initial-values" class="nav-link" data-scroll-target="#using-ss.par-for-initial-values">Using ss.par for initial values</a></li>
+  <li><a href="#using-ss3.par-previously-ss.par-for-initial-values" id="toc-using-ss3.par-previously-ss.par-for-initial-values" class="nav-link" data-scroll-target="#using-ss3.par-previously-ss.par-for-initial-values">Using ss3.par (previously ss.par) for initial values</a></li>
   <li><a href="#using-wtatage.ss" id="toc-using-wtatage.ss" class="nav-link" data-scroll-target="#using-wtatage.ss">Using wtatage.ss</a></li>
   </ul></li>
   <li><a href="#plotting-results-and-basic-troubleshooting" id="toc-plotting-results-and-basic-troubleshooting" class="nav-link" data-scroll-target="#plotting-results-and-basic-troubleshooting">Plotting results and basic troubleshooting</a>
@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 13, 2023</p>
+      <p class="date">January 4, 2024</p>
     </div>
   </div>
   
@@ -348,7 +348,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="ss3-files-optional-inputs">SS3 files: Optional inputs</h2>
 <p>The two optional input files for SS3 are:</p>
 <ol type="1">
-<li><strong>ss.par:</strong> A text file with one line per parameter where order matters. Usually created from a previous model run. This file can provide initial parameter values instead of using the initial values in the control file. The option to use the ss.par file or the control file for initial parameter values is selected in starter.ss.</li>
+<li><strong>ss3.par: (previously ss.par)</strong> A text file with one line per parameter where order matters. Usually created from a previous model run. This file can provide initial parameter values instead of using the initial values in the control file. The option to use the ss3.par file or the control file for initial parameter values is selected in starter.ss.</li>
 <li><strong>wtatage.ss:</strong> File containing empirical input of body weight by fleet and population and empirical fecundity-at-age. The option to use the wtatage.ss file is selected in a line of the control file.</li>
 </ol>
 </section>
@@ -386,7 +386,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>forecast.ss</li>
 <li>ss3.exe</li>
 <li>starter.ss</li>
-<li>Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss.par (to continue from a previous run)</li>
+<li>Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss3.par (to continue from a previous run)</li>
 </ul>
 <p>For example, here is what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):</p>
 <p><img src="images/SS_input_files_folder.png" class="img-fluid"></p>
@@ -400,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After starting the run, you should see output to the command line similar to:</p>
 <p><img src="images/SS_start_run.png" class="img-fluid"></p>
 <p>If the output gets past <code>Estimating…please wait…</code>, then the structure of the SS3 inputs is correct. The volume of information displayed during the run within the command window is controlled in starter.ss file on the line with the comment <code># run display detail (0,1,2)</code>. The 0 setting is the least verbose option, while the 2 setting is the most verbose.</p>
-<p>SS3 always opens and reads files in the same order (starter.ss, data file, forecast.ss, control, then wtatage.ss if using, and finally ss.par if using), writing to echoinput.sso (a file for debugging runs) and warnings.sso (a file which collects warnings from SS3) as it reads. SS3 inputs are read in order by value, without reference to comments (i.e., anything after <code>#</code> on a line). Linebreaks and whitespace are both treated as separators. Depending on which options are selected, SS3 will expect a particular number of values in a certain order, so failing to provide them will result in errors or at least a different model specification than intended.</p>
+<p>SS3 always opens and reads files in the same order (starter.ss, data file, forecast.ss, control, then wtatage.ss if using, and finally ss3.par if using), writing to echoinput.sso (a file for debugging runs) and warnings.sso (a file which collects warnings from SS3) as it reads. SS3 inputs are read in order by value, without reference to comments (i.e., anything after <code>#</code> on a line). Linebreaks and whitespace are both treated as separators. Depending on which options are selected, SS3 will expect a particular number of values in a certain order, so failing to provide them will result in errors or at least a different model specification than intended.</p>
 <p>After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.</p>
 <p>SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless <code>–nohess</code> option is specified; See <a href="#options">command line options</a>). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#optional-output-subfolders">this special subfolder option</a>).</p>
 <p>When the run completes, SS3 shows <code>!! Run has completed !!</code> and the number of warnings:</p>
@@ -423,11 +423,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To list all command line options, use one of these calls: <code>SS3-?</code> or <code>SS3 -help</code>. More info about the ADMB command line options is available in the <a href="http://www.admb-project.org/docs/manuals/">ADMB Manual</a> (Chapter 12: Command line options).</p>
 <p>To run SS3 without estimation use: <code>ss3 -stopph 0</code>. This will speed up your run by not optimizing. Often <code>-stopph 0</code> is used with the <code>-nohess</code> option to speed up the run even more. To run SS3 with no estimation in v.3.30.15 and earlier, change the max phase in the starter.ss file to 0 and run the exe with the <code>–nohess</code> option.</p>
 </section>
-<section id="using-ss.par-for-initial-values" class="level2">
-<h2 class="anchored" data-anchor-id="using-ss.par-for-initial-values">Using ss.par for initial values</h2>
-<p>Typically, SS3 uses initial parameter values as specified in the parameter lines of the control file. However, initial values can be read from the ss.par file instead. To use ss.par, in starter.ss below the names of the data and control files, set the value to 1 rather than 0 on the line with comment:</p>
-<p><code># 0=use init values in control file; 1=use ss.par</code>.</p>
-<p>Using the ss.par file is helpful when you want to use different initial values without modifying the control file. An ss.par file is an output file created during each model run and contains the ending parameter values. Using this ss.par file from a previous model run with a similar model (that still has the same parameters) will speed up run time because the initial values are likely closer to the maximum likelihood estimation (MLE) parameter estimates.</p>
+<section id="using-ss3.par-previously-ss.par-for-initial-values" class="level2">
+<h2 class="anchored" data-anchor-id="using-ss3.par-previously-ss.par-for-initial-values">Using ss3.par (previously ss.par) for initial values</h2>
+<p>Typically, SS3 uses initial parameter values as specified in the parameter lines of the control file. However, initial values can be read from the ss3.par file (prior to v.3.30.22.1 this was the ss.par file) instead. To use ss3.par, in starter.ss below the names of the data and control files, set the value to 1 rather than 0 on the line with comment:</p>
+<p><code># 0=use init values in control file; 1=use ss3.par</code>.</p>
+<p>Using the ss3.par file is helpful when you want to use different initial values without modifying the control file. An ss3.par file is an output file created during each model run and contains the ending parameter values. Using this ss3.par file from a previous model run with a similar model (that still has the same parameters) will speed up run time because the initial values are likely closer to the maximum likelihood estimation (MLE) parameter estimates.</p>
 </section>
 <section id="using-wtatage.ss" class="level2">
 <h2 class="anchored" data-anchor-id="using-wtatage.ss">Using wtatage.ss</h2>
