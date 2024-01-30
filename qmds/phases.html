@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Stock Synthesis (SS3) - Start Year Considerations</title>
+<title>Stock Synthesis (SS3) - Guidance on Phases</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -218,9 +218,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#population-age-composition-in-the-start-year-is-composed-of" id="toc-population-age-composition-in-the-start-year-is-composed-of" class="nav-link active" data-scroll-target="#population-age-composition-in-the-start-year-is-composed-of">Population age composition in the start year is composed of:</a></li>
-  <li><a href="#start-year-considerations" id="toc-start-year-considerations" class="nav-link" data-scroll-target="#start-year-considerations">Start year considerations</a></li>
-  <li><a href="#first-year-with-recdevs" id="toc-first-year-with-recdevs" class="nav-link" data-scroll-target="#first-year-with-recdevs">First year with recdevs</a></li>
+  <li><a href="#phases-basics" id="toc-phases-basics" class="nav-link active" data-scroll-target="#phases-basics">Phases Basics</a></li>
+  <li><a href="#a-note-about-phases" id="toc-a-note-about-phases" class="nav-link" data-scroll-target="#a-note-about-phases">A Note about Phases</a></li>
+  <li><a href="#a-guide-to-parameter-phasing-in-stock-synthesis" id="toc-a-guide-to-parameter-phasing-in-stock-synthesis" class="nav-link" data-scroll-target="#a-guide-to-parameter-phasing-in-stock-synthesis">A Guide to Parameter Phasing in Stock Synthesis</a></li>
   </ul>
 </nav>
     </div>
@@ -229,7 +229,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Start Year Considerations</h1>
+<h1 class="title">Guidance on Phases</h1>
 </div>
 
 
@@ -246,60 +246,52 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, R0, initial_F, and domed selectivity must be considered together.</p>
-<section id="population-age-composition-in-the-start-year-is-composed-of" class="level2">
-<h2 class="anchored" data-anchor-id="population-age-composition-in-the-start-year-is-composed-of">Population age composition in the start year is composed of:</h2>
+<section id="phases-basics" class="level2">
+<h2 class="anchored" data-anchor-id="phases-basics">Phases Basics</h2>
 <ul>
-<li>An equilibrium age composition using Z = M + initial_F</li>
-<li>Age-specific deviation from that vector for none, to all, of the ages.
-<ul>
-<li>These age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.</li>
-<li>Because the devs are centered around the equilibrium age composition, it is important that the initial_F be approximately correct, otherwise a pattern can be introduced in the devs.</li>
-<li>SS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs).</li>
-</ul></li>
-</ul>
-<p><strong>[Need a picture here]</strong></p>
-</section>
-<section id="start-year-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="start-year-considerations">Start year considerations</h2>
-<ul>
-<li>Long historical period of relatively stable catch
-<ul>
-<li>This is the ideal situation for use of initial equilibrium catch with initial_F estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if M is low.</li>
-<li>If that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make R0 big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below BMSY, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create F’s greater than FMSY. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.</li>
-</ul></li>
-<li>Substantial changes in historical catch levels have occurred within a lifespan before start year
-<ul>
-<li>In this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific F.</li>
-</ul></li>
+<li><p>Phases are a way of switching on and off the estimation of parameters. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter.</p></li>
+<li><p>You can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.</p></li>
+<li><p>How you spread it out is up to you. Below is some general guidance on assigning phases.</p></li>
 </ul>
 </section>
-<section id="first-year-with-recdevs" class="level2">
-<h2 class="anchored" data-anchor-id="first-year-with-recdevs">First year with recdevs</h2>
+<section id="a-note-about-phases" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-about-phases">A Note about Phases</h2>
+<p>There is really no <strong><em>one</em></strong> way or even <strong><em>best</em></strong> general way of assigning phases.</p>
+<p>The general guidance provided here may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.</p>
+<p>If you are an experienced SS3 user with additional suggestions for phasing, please let us know by submitting an issue in this repository. We will gladly review and incorporate those into this guidance.</p>
+</section>
+<section id="a-guide-to-parameter-phasing-in-stock-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="a-guide-to-parameter-phasing-in-stock-synthesis">A Guide to Parameter Phasing in Stock Synthesis</h2>
+<p><em>This guide is largely taken from the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a> as provided by André Punt</em></p>
+<section id="general" class="level4">
+<h4 class="anchored" data-anchor-id="general">General</h4>
 <ul>
-<li>By starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.</li>
+<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS model (R0 - expected recruitment in an unfished state) then refine the model fit by adding parameters.</li>
+<li>The parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 PLUS those designated as to be estimated in phase 3.</li>
+<li>The phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.</li>
+<li>The schema below is based on eight phases but, sometimes I will “skip a phase”, e.g.&nbsp;place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.</li>
 </ul>
-<p><strong>[Need picture here]</strong></p>
+<p><strong>Andre’s preferred order:</strong></p>
+<ol type="1">
+<li><p>Start with an “Age-structured Production Model”, estimating R0 and catchability, q.</p></li>
+<li><p>Add recruitment deviations (as these can pick up signals from the age and length data on cohort size) (at this point your model is analogous to JABBA)</p></li>
+<li><p>Now estimate the base selectivity [and retention] parameters (enabling this to be refined)</p></li>
+<li><p>Now estimate growth</p></li>
+<li><p>Now estimate natural mortality, M (if feeling brave!)</p></li>
+<li><p>Now estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2 or 1 - if the data are in conflict so be wary)</p></li>
+<li><p>Now estimate the other annual deviations (e.g., annual deviations on kappa or age-year deviations on selectivity).</p></li>
+<li><p>Finally environmental linkages, e.g., between recruitment and an environmental variable such as temperature.</p></li>
+</ol>
+</section>
+<section id="other-ways-of-tackling-phases-per-jason-cope" class="level4">
+<h4 class="anchored" data-anchor-id="other-ways-of-tackling-phases-per-jason-cope">Other ways of tackling phases (per Jason Cope)</h4>
 <ul>
-<li>The first year with rec_devs (main or early) can be Nages before start year.</li>
-<li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.</li>
-<li>The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.</li>
+<li>Start growth and sometimes mortality estimation in phase 3 or even phase 2</li>
+<li>Leave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Think of it as">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Think of it as
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>How much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?</p>
-</div>
-</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
