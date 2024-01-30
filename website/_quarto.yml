@@ -32,6 +32,7 @@ website:
           - qmds/start_year_considerations.qmd
           - qmds/predator.qmd
           - qmds/settlement_timing.qmd
+          - qmds/phases.qmd
           
     right:
        - icon: github
