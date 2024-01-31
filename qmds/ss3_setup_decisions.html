@@ -396,19 +396,20 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-    A["Can population age bins go 
-      higher than data age bins?"] --&gt; B["Is growth asymptotic within 
-                                          observed ages?"]
-    A --&gt; D["Is unfished equilibrium estimated to 
-             have older fish than has been observed?"]                                     
-    B -- Yes --&gt; C("Population age bins can go 
+    A["Can population age bins go  --&gt; B["Is growth asymptotic within
+      higher than data age bins?"]       observed ages?"]
+
+    B -- No --&gt; C["Is unfished equilibrium estimated to 
+             have older fish than has been observed?"]                                      
+    
+             
+    B -- Yes --&gt; D("Population age bins can go 
                     higher than data age bins")
       
-    D -- Yes --&gt; C
-      
-    B -- No --&gt; E("Population age bins can't go 
+    D -- Yes --&gt; D
+                  
+    D -- No --&gt; E("Population age bins can't go 
                   higher than data age bins")
-    D -- No --&gt; E
     linkStyle 1,2,3,4 stroke-width:2px,color:black
     style C fill:#5EB6D9
     style E fill:#5EB6D9
