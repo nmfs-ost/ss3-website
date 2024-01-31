@@ -36,8 +36,8 @@ $mermaid-node-fg-color: $blue-green !default; // box outline color
 $mermaid-node-bg-color: $lightblue !default; // color of boxes
 $mermaid-fg-color--lighter: purple !default;
 $mermaid-fg-color--lightest: lavender !default;
-$mermaid-label-fg-color: pink !default;
-$mermaid-label-bg-color: magenta !default;
+$mermaid-label-fg-color: $blue-green !default;
+$mermaid-label-bg-color: white !default;
 
 /* -- scss:mixins --*/
 
