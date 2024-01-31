@@ -94,10 +94,13 @@ flowchart TB
     A["Can population age bins go 
       higher than data age bins?"] --> B["Is growth asymptotic within 
                                           observed ages?"]
+    A --> D["Is unfished equilibrium estimated to 
+             have older fish than has been observed?"]                                     
     B -- Yes --> C("Population age bins can go 
                     higher than data age bins")
-    D["Is unfished equilibrium estimated to 
-      have older fish than has been observed?"] -- Yes --> C
+      
+    D -- Yes --> C
+      
     B -- No --> E("Population age bins can't go 
                   higher than data age bins")
     D -- No --> E
