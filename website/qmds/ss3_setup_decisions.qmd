@@ -92,7 +92,7 @@ The first age is always 0, but recruitment can occur at age 1.
 ```{mermaid}
 flowchart TB
     A["Can population age bins go 
-      higher than data age bins?"] -- Yes --> B["Is growth asymptotic within
+      higher than data age bins?"] --> B["Is growth asymptotic within
                                                 observed ages?"]
     B -- No --> C["Is unfished equilibrium estimated to 
                   have older fish than has been observed?"]                                    
