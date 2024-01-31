@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -396,19 +425,14 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-    A["Can population age bins go  --&gt; B["Is growth asymptotic within
-      higher than data age bins?"]       observed ages?"]
-
+    A["Can population age bins go  -- Yes --&gt; B["Is growth asymptotic within
+      higher than data age bins?"]              observed ages?"]
     B -- No --&gt; C["Is unfished equilibrium estimated to 
-             have older fish than has been observed?"]                                      
-    
-             
+                  have older fish than has been observed?"]                                    
     B -- Yes --&gt; D("Population age bins can go 
-                    higher than data age bins")
-      
-    D -- Yes --&gt; D
-                  
-    D -- No --&gt; E("Population age bins can't go 
+                   higher than data age bins")
+    C -- Yes --&gt; D
+    C -- No --&gt; E("Population age bins can't go 
                   higher than data age bins")
     linkStyle 1,2,3,4 stroke-width:2px,color:black
     style C fill:#5EB6D9
@@ -419,7 +443,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>In models with growth, the plus group should be old enough so that fish nearly achieve Linf by the time they are in the plus group.</p>
+<p>In models with growth, the plus group should be old enough so that fish nearly achieve <span class="math inline">\(L_{inf}\)</span> by the time they are in the plus group.</p>
 
 
 </section>
