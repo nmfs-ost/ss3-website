@@ -425,8 +425,9 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-    A["Can population age bins go  -- Yes --&gt; B["Is growth asymptotic within
-      higher than data age bins?"]              observed ages?"]
+    A["Can population age bins go 
+      higher than data age bins?"] -- Yes --&gt; B["Is growth asymptotic within
+                                                observed ages?"]
     B -- No --&gt; C["Is unfished equilibrium estimated to 
                   have older fish than has been observed?"]                                    
     B -- Yes --&gt; D("Population age bins can go 
