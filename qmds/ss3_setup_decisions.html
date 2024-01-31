@@ -399,10 +399,13 @@ ul.task-list li input[type="checkbox"] {
     A["Can population age bins go 
       higher than data age bins?"] --&gt; B["Is growth asymptotic within 
                                           observed ages?"]
+    A --&gt; D["Is unfished equilibrium estimated to 
+             have older fish than has been observed?"]                                     
     B -- Yes --&gt; C("Population age bins can go 
                     higher than data age bins")
-    D["Is unfished equilibrium estimated to 
-      have older fish than has been observed?"] -- Yes --&gt; C
+      
+    D -- Yes --&gt; C
+      
     B -- No --&gt; E("Population age bins can't go 
                   higher than data age bins")
     D -- No --&gt; E
