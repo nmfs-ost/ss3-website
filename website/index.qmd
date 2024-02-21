@@ -24,6 +24,10 @@ SS3 is made up of:
 -   A statistical sub-model characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance, and
 -   A forecast sub-model projects needed management quantities.
 
+There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums.
+![](qmds/images/ss3_map.png){width="90%"}
+
+
 ## Installing Stock Synthesis 
 ![](qmds/images/icon-download.png){fig-align="left" height="05%" width="05%"} 
 Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
