@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -218,12 +218,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#draft" id="toc-draft" class="nav-link active" data-scroll-target="#draft"><em>Draft</em></a>
-  <ul class="collapse">
-  <li><a href="#phases-basics" id="toc-phases-basics" class="nav-link" data-scroll-target="#phases-basics">Phases Basics</a></li>
+  <li><a href="#phases-basics" id="toc-phases-basics" class="nav-link active" data-scroll-target="#phases-basics">Phases Basics</a></li>
   <li><a href="#a-note-about-phases" id="toc-a-note-about-phases" class="nav-link" data-scroll-target="#a-note-about-phases">A Note about Phases</a></li>
   <li><a href="#a-guide-to-parameter-phasing-in-stock-synthesis" id="toc-a-guide-to-parameter-phasing-in-stock-synthesis" class="nav-link" data-scroll-target="#a-guide-to-parameter-phasing-in-stock-synthesis">A Guide to Parameter Phasing in Stock Synthesis</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -249,12 +246,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="draft" class="level1">
-<h1><em>Draft</em></h1>
 <section id="phases-basics" class="level2">
 <h2 class="anchored" data-anchor-id="phases-basics">Phases Basics</h2>
 <ul>
-<li><p>Phases are a way of switching on and off the estimation of parameters. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter.</p></li>
+<li><p>Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.</p></li>
 <li><p>You can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.</p></li>
 <li><p>How you spread it out is up to you. Below is some general guidance on assigning phases.</p></li>
 </ul>
@@ -271,8 +266,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="general" class="level4">
 <h4 class="anchored" data-anchor-id="general">General</h4>
 <ul>
-<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS model (R0 - expected recruitment in an unfished state) then refine the model fit by adding parameters.</li>
-<li>The parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 PLUS those designated as to be estimated in phase 3.</li>
+<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (R0 - expected recruitment in an unfished state) then refine the model fit by adding parameters.</li>
+<li>The parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 <strong><em>plus</em></strong> those designated as to be estimated in phase 3.</li>
 <li>The phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.</li>
 <li>The schema below is based on eight phases but, sometimes I will “skip a phase”, e.g.&nbsp;place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.</li>
 </ul>
@@ -294,9 +289,16 @@ ul.task-list li input[type="checkbox"] {
 <li>Start growth and sometimes mortality estimation in phase 3 or even phase 2</li>
 <li>Leave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already</li>
 </ul>
-
-
 </section>
+<section id="some-additional-notes-per-rick-methot" class="level4">
+<h4 class="anchored" data-anchor-id="some-additional-notes-per-rick-methot">Some additional notes (per Rick Methot)</h4>
+<ul>
+<li><p>Be careful with many phases unless you have good initial values for the un-estimated parameters.</p></li>
+<li><p>Parameters with high correlation usually should be estimated in the same phase, so ADMB can change them in sync.</p></li>
+<li><p>Examine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first.</p></li>
+</ul>
+
+
 </section>
 </section>
 
