@@ -10,10 +10,11 @@ editor:
 
 ## Phases Basics
 
--   Phases are a way of switching on and off the estimation of
-    parameters. A negative phase means that you are fixing a parameter
+-   Phases are a way of switching on the estimation of
+    parameters in a specified order. A negative phase means that you are fixing a parameter
     and it is not estimated, a positive phase means that you want the
-    model to estimate the parameter.
+    model to estimate the parameter.  Most models use 3 to 5 phases.  
+    Parameters that enter in an early stage remain active as other parameters become active.
 
 -   You can spread out when you estimate parameters using phases which,
     in some cases, can help speed up your model.
@@ -89,3 +90,13 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
     phase 2
 -   Leave selectivity until phases 3 or 4 (after life history) IF you
     have decent starting values for selectivity already
+
+#### Some additional notes (Rick Methot)
+1.  Be careful with many phases unless you have good initial values for the un-estimated parameters.
+2.  parameters with high correlation usually should be estimated in the same phase, 
+    so ADMB can change them in sync.
+3.  Examine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first.
+
+
+
+

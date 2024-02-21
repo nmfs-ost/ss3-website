@@ -56,7 +56,7 @@ We maintain a GitHub repository of [example stock synthesis models](https://gith
 Questions can be asked by opening an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or contributing to a [discussion](https://github.com/nmfs-ost/ss3-source-code/discussions) in the stock synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the [Stock Synthesis forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums). Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.
 
 ## Contributing to Stock Synthesis
-Have feature requests or bug reports? Want to contribute code? Please open an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or submit a [pull request](https://github.com/nmfs-ost/ss3-source-code/compare). For complete details, please see [CONTRIBUTING.md](https://github.com/nmfs-ost/ss3-source-code/CONTRIBUTING.md)
+Have feature requests or bug reports? Want to contribute code? Please open an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or submit a [pull request](https://github.com/nmfs-ost/ss3-source-code/compare) to be reviewed by the SS3 Team; even Team members cannot directly contribute to the main code. For complete details, please see [CONTRIBUTING.md](https://github.com/nmfs-ost/ss3-source-code/CONTRIBUTING.md)
 
 This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
