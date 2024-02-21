@@ -6,14 +6,14 @@ editor:
     wrap: 72
 ---
 
-# *Draft*
-
 ## Phases Basics
 
--   Phases are a way of switching on and off the estimation of
-    parameters. A negative phase means that you are fixing a parameter
-    and it is not estimated, a positive phase means that you want the
-    model to estimate the parameter.
+-   Phases are a way of switching on the estimation of parameters in a
+    specified order. A negative phase means that you are fixing a
+    parameter and it is not estimated, a positive phase means that you
+    want the model to estimate the parameter. Most models use 3 to 5
+    phases. Parameters that enter in an early stage remain active as
+    other parameters become active.
 
 -   You can spread out when you estimate parameters using phases which,
     in some cases, can help speed up your model.
@@ -42,12 +42,12 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 #### General
 
 -   Get the scale of the population right first. First estimate the
-    parameter that determines scale in an SS model (R0 - expected
+    parameter that determines scale in an SS3 model (R0 - expected
     recruitment in an unfished state) then refine the model fit by
     adding parameters.
 -   The parameters are added at each phase so, for example, the
     parameters that are estimated in phase 3 are those estimated in
-    phase 2 PLUS those designated as to be estimated in phase 3.
+    phase 2 ***plus*** those designated as to be estimated in phase 3.
 -   The phasing sequence should not matter but (a) good phasing can
     speed things up, (b) bad phasing can lead to the estimation being
     trapped in a local minimum, and (c) jittering™ can help to assess
@@ -89,3 +89,14 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
     phase 2
 -   Leave selectivity until phases 3 or 4 (after life history) IF you
     have decent starting values for selectivity already
+
+#### Some additional notes (per Rick Methot)
+
+-   Be careful with many phases unless you have good initial values for
+    the un-estimated parameters.
+
+-   Parameters with high correlation usually should be estimated in the
+    same phase, so ADMB can change them in sync.
+
+-   Examine your composition data patterns before deciding to estimate
+    recruitment deviations or time-varying selectivity first.
