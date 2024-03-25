@@ -5,24 +5,24 @@ format:
     linestretch: 1.2
 ---
 
-Welcome to the Stock Synthesis (SS3) Website!
+Welcome to the Stock Synthesis website!
 
 ## Introduction
 
-Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder [ADMB](https://www.admb-project.org/).
+Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder [ADMB](https://www.admb-project.org/).
 
-SS3 is made up of:
+SS3 is made up of
 
--   A population sub-model that simulates a stock's:
-    -   Biology (growth, maturity, fecundity),
-    -   Recruitment,
-    -   Movement, 
-    -   Fishery selectivity
-    -   Natural and fishing mortality, and
-    -   Responsiveness to environmental and predation factors.
--   An observation sub-model that estimates expected values for various types of data,
--   A statistical sub-model characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance, and
--   A forecast sub-model projects needed management quantities.
+-   A population sub-model that simulates the following population processes:
+    -   biology (growth, maturity, fecundity),
+    -   recruitment,
+    -   movement, 
+    -   fishery selectivity
+    -   natural and fishing mortality, and
+    -   responsiveness to environmental and predation factors.
+-   An observation sub-model that estimates expected values for various types of data.
+-   A statistical sub-model that characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance.
+-   A forecast sub-model that projects management quantities.
 
 There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums.
 ![](qmds/images/ss3_map.png){width="90%"}
@@ -32,17 +32,17 @@ There are 100+ stocks in the US and throughout the world that use SS3 for which 
 ![](qmds/images/icon-download.png){fig-align="left" height="05%" width="05%"} 
 Click [here](https://github.com/nmfs-ost/ss3-source-code/releases/latest) to download the latest release of the Stock Synthesis executable. 
 
-To see the changes made in the latest release of SS3, please see the [change log on GitHub](https://github.com/orgs/nmfs-ost/projects/11) which shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please click [here](https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true) to download the Excel spreadsheet.
+To see the changes made in the latest release of Stock Synthesis, please see the [change log on GitHub](https://github.com/orgs/nmfs-ost/projects/11) that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download [this Excel spreadsheet](https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true).
 
 ## Getting Started with Stock Synthesis
-To getting started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
+To get started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
 
 ```{r, echo = FALSE, out.width = "85%", out.height= "400px"}
 knitr::include_graphics("SS3_Getting_Started.pdf")
 ```
 
 ### Getting Started Using the Stock Assessment Continuum Tool
-If you are just getting started with Stock Synthesis, we highly recommend downloading the [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool), a shiny app interface (pictured below) where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the [{r4ss}](https://github.com/r4ss/r4ss) package.
+If you are just getting started with Stock Synthesis, we highly recommend downloading the [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool), a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the [{r4ss}](https://github.com/r4ss/r4ss) package.
 ![](qmds/images/stock_assess_cont_tool.PNG){width="90%"}
 
 ### Getting Started Using the Input Files
@@ -51,24 +51,24 @@ To learn more about how to build your own models in Stock Synthesis using the in
 ### Interacting with Stock Synthesis and Viewing Output Using {r4ss}
 ![](qmds/images/r4ss_logo.png){style="float: right;" fig-align="right" width="120" height="140"}
 
-The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette as well as [example plots](https://r4ss.github.io/r4ss/BigSkate) created with {r4ss} (these plots were created usingthe Big Skate model found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository).
+The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of plots and tables. More information about using [{r4ss}](https://github.com/r4ss/r4ss) is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette. Furthermore, you can navigate to these [example plots](https://r4ss.github.io/r4ss/BigSkate) that were created using [{r4ss}](https://github.com/r4ss/r4ss) for the Big Skate model, which can be found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository.
 
 ### User Example Models
-We maintain a GitHub repository of [example stock synthesis models](https://github.com/nmfs-ost/ss3-user-examples) for users. Information on what the key features of the user example models and how to download can be found [here](https://github.com/nmfs-ost/ss3-user-examples#readme).
+We maintain a GitHub repository of [example stock synthesis models](https://github.com/nmfs-ost/ss3-user-examples) for users. Information on what the key features of the user example models are and how to download them can be found in the [SS3 user examples repository](https://github.com/nmfs-ost/ss3-user-examples#readme).
 
 ## Asking questions about Stock Synthesis
-Questions can be asked by opening an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or contributing to a [discussion](https://github.com/nmfs-ost/ss3-source-code/discussions) in the stock synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the [Stock Synthesis forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums). Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.
+Questions can be asked by opening an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or contributing to a [discussion](https://github.com/nmfs-ost/ss3-source-code/discussions) in the Stock Synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the [Stock Synthesis forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums). Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.
 
 ## Contributing to Stock Synthesis
 Have feature requests or bug reports? Want to contribute code? Please open an [issue](https://github.com/nmfs-ost/ss3-source-code/issues) or submit a [pull request](https://github.com/nmfs-ost/ss3-source-code/compare) to be reviewed by the SS3 Team; even Team members cannot directly contribute to the main code. For complete details, please see [CONTRIBUTING.md](https://github.com/nmfs-ost/ss3-source-code/CONTRIBUTING.md)
 
-This project and everyone participating in it is governed by the [NMFS Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [National Marine Fisheries Service (NMFS) Fisheries Toolbox Code of Conduct](https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## Tools for working with Stock Synthesis
 
-As Stock Synthesis usage has grown, so has the number of tools to work with it. These include [repositories on GitHub with the stock-synthesis topic](https://github.com/topics/stock-synthesis) as well as:
+As Stock Synthesis usage has grown so has the number of tools to work with it. These include [repositories on GitHub with the stock-synthesis topic](https://github.com/topics/stock-synthesis), some of which are listed below, as well as some of the following tools found in other locations:
 
-- [r4ss](https://github.com/r4ss/r4ss): Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.
+- [r4ss](https://github.com/r4ss/r4ss): Create plots and tables of Stock Synthesis output and functions to work with Stock Synthesis in R.
 - [ss3diags](https://github.com/PIFSCstockassessments/ss3diags): Run advanced diagnostics for Stock Synthesis models.
 - [ss3sim](https://github.com/ss3sim/ss3sim): Conduct simulation studies using Stock Synthesis.
 - [SSMSE](https://github.com/nmfs-fish-tools/SSMSE): Use Stock Synthesis operating models in Management Strategy Evaluation.
@@ -93,7 +93,7 @@ The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a
 ```         
 @article{methotwetzel2013,
   title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},
-  author={Methot, Richard Donald and Wetzel, Chantel R},
+  author={Richard Donald {Methot, Jr.} and Chantell R. Wetzel},
   year={2013}, 
   journal={Fisheries Research},
   volume={142},
@@ -102,7 +102,7 @@ The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a
 }
 ```
 
-To see how to cite the Stock Synthesis User Manual, please refer to the [SS3 User Manual tab](qmds/user_manual.qmd).
+To see how to cite the Stock Synthesis User Manual, please refer to the [SS3 User Manual guidance](qmds/user_manual.qmd).
 
 <img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
