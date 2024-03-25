@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -256,35 +256,35 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to the Stock Synthesis (SS3) Website!</p>
+<p>Welcome to the Stock Synthesis website!</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and body growth, and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
-<p>SS3 is made up of:</p>
+<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
+<p>SS3 is made up of</p>
 <ul>
-<li>A population sub-model that simulates a stock’s:
+<li>A population sub-model that simulates the following population processes:
 <ul>
-<li>Biology (growth, maturity, fecundity),</li>
-<li>Recruitment,</li>
-<li>Movement,</li>
-<li>Fishery selectivity</li>
-<li>Natural and fishing mortality, and</li>
-<li>Responsiveness to environmental and predation factors.</li>
+<li>biology (growth, maturity, fecundity),</li>
+<li>recruitment,</li>
+<li>movement,</li>
+<li>fishery selectivity</li>
+<li>natural and fishing mortality, and</li>
+<li>responsiveness to environmental and predation factors.</li>
 </ul></li>
-<li>An observation sub-model that estimates expected values for various types of data,</li>
-<li>A statistical sub-model characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance, and</li>
-<li>A forecast sub-model projects needed management quantities.</li>
+<li>An observation sub-model that estimates expected values for various types of data.</li>
+<li>A statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.</li>
+<li>A forecast sub-model that projects management quantities.</li>
 </ul>
 <p>There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums. <img src="qmds/images/ss3_map.png" class="img-fluid" style="width:90.0%"></p>
 </section>
 <section id="installing-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="installing-stock-synthesis">Installing Stock Synthesis</h2>
 <p><img src="qmds/images/icon-download.png" class="quarto-figure quarto-figure-left" style="width:5.0%;height:5.0%"> Click <a href="https://github.com/nmfs-ost/ss3-source-code/releases/latest">here</a> to download the latest release of the Stock Synthesis executable.</p>
-<p>To see the changes made in the latest release of SS3, please see the <a href="https://github.com/orgs/nmfs-ost/projects/11">change log on GitHub</a> which shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please click <a href="https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true">here</a> to download the Excel spreadsheet.</p>
+<p>To see the changes made in the latest release of Stock Synthesis, please see the <a href="https://github.com/orgs/nmfs-ost/projects/11">change log on GitHub</a> that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download <a href="https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true">this Excel spreadsheet</a>.</p>
 </section>
 <section id="getting-started-with-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</h2>
-<p>To getting started with Stock Synthesis, please see the presentation below and the <a href="./qmds/getting_started_ss3.html">Getting Started with Stock Synthesis Tutorial</a>:</p>
+<p>To get started with Stock Synthesis, please see the presentation below and the <a href="./qmds/getting_started_ss3.html">Getting Started with Stock Synthesis Tutorial</a>:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -296,7 +296,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="getting-started-using-the-stock-assessment-continuum-tool" class="level3">
 <h3 class="anchored" data-anchor-id="getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</h3>
-<p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app interface (pictured below) where users can provide data and life history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package. <img src="qmds/images/stock_assess_cont_tool.PNG" class="img-fluid" style="width:90.0%"></p>
+<p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package. <img src="qmds/images/stock_assess_cont_tool.PNG" class="img-fluid" style="width:90.0%"></p>
 </section>
 <section id="getting-started-using-the-input-files" class="level3">
 <h3 class="anchored" data-anchor-id="getting-started-using-the-input-files">Getting Started Using the Input Files</h3>
@@ -309,27 +309,27 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="qmds/images/r4ss_logo.png" class="quarto-figure quarto-figure-right figure-img" style="float: right;" width="120" height="140"></p>
 </figure>
 </div>
-<p>The <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of model plots and tables. More information about using r4ss is available in the <a href="https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html">“Introduction to r4ss”</a> vignette as well as <a href="https://r4ss.github.io/r4ss/BigSkate">example plots</a> created with {r4ss} (these plots were created usingthe Big Skate model found in the <a href="https://github.com/nmfs-ost/ss3-test-models">ss3-test-models</a> repository).</p>
+<p>The <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of plots and tables. More information about using <a href="https://github.com/r4ss/r4ss">{r4ss}</a> is available in the <a href="https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html">“Introduction to r4ss”</a> vignette. Furthermore, you can navigate to these <a href="https://r4ss.github.io/r4ss/BigSkate">example plots</a> that were created using <a href="https://github.com/r4ss/r4ss">{r4ss}</a> for the Big Skate model, which can be found in the <a href="https://github.com/nmfs-ost/ss3-test-models">ss3-test-models</a> repository.</p>
 </section>
 <section id="user-example-models" class="level3">
 <h3 class="anchored" data-anchor-id="user-example-models">User Example Models</h3>
-<p>We maintain a GitHub repository of <a href="https://github.com/nmfs-ost/ss3-user-examples">example stock synthesis models</a> for users. Information on what the key features of the user example models and how to download can be found <a href="https://github.com/nmfs-ost/ss3-user-examples#readme">here</a>.</p>
+<p>We maintain a GitHub repository of <a href="https://github.com/nmfs-ost/ss3-user-examples">example stock synthesis models</a> for users. Information on what the key features of the user example models are and how to download them can be found in the <a href="https://github.com/nmfs-ost/ss3-user-examples#readme">SS3 user examples repository</a>.</p>
 </section>
 </section>
 <section id="asking-questions-about-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="asking-questions-about-stock-synthesis">Asking questions about Stock Synthesis</h2>
-<p>Questions can be asked by opening an <a href="https://github.com/nmfs-ost/ss3-source-code/issues">issue</a> or contributing to a <a href="https://github.com/nmfs-ost/ss3-source-code/discussions">discussion</a> in the stock synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">Stock Synthesis forums</a>. Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.</p>
+<p>Questions can be asked by opening an <a href="https://github.com/nmfs-ost/ss3-source-code/issues">issue</a> or contributing to a <a href="https://github.com/nmfs-ost/ss3-source-code/discussions">discussion</a> in the Stock Synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov. You can also look for answers or submit questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">Stock Synthesis forums</a>. Note that an account is required to ask questions on the forums and that we are moving to GitHub for most of our communications, so we generally suggest starting with GitHub first.</p>
 </section>
 <section id="contributing-to-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="contributing-to-stock-synthesis">Contributing to Stock Synthesis</h2>
 <p>Have feature requests or bug reports? Want to contribute code? Please open an <a href="https://github.com/nmfs-ost/ss3-source-code/issues">issue</a> or submit a <a href="https://github.com/nmfs-ost/ss3-source-code/compare">pull request</a> to be reviewed by the SS3 Team; even Team members cannot directly contribute to the main code. For complete details, please see <a href="https://github.com/nmfs-ost/ss3-source-code/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
-<p>This project and everyone participating in it is governed by the <a href="https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md">NMFS Fisheries Toolbox Code of Conduct</a>. By participating, you are expected to uphold this code.</p>
+<p>This project and everyone participating in it is governed by the <a href="https://github.com/nmfs-fish-tools/Resources/blob/master/CODE_OF_CONDUCT.md">National Marine Fisheries Service (NMFS) Fisheries Toolbox Code of Conduct</a>. By participating, you are expected to uphold this code.</p>
 </section>
 <section id="tools-for-working-with-stock-synthesis" class="level2">
 <h2 class="anchored" data-anchor-id="tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</h2>
-<p>As Stock Synthesis usage has grown, so has the number of tools to work with it. These include <a href="https://github.com/topics/stock-synthesis">repositories on GitHub with the stock-synthesis topic</a> as well as:</p>
+<p>As Stock Synthesis usage has grown so has the number of tools to work with it. These include <a href="https://github.com/topics/stock-synthesis">repositories on GitHub with the stock-synthesis topic</a>, some of which are listed below, as well as some of the following tools found in other locations:</p>
 <ul>
-<li><a href="https://github.com/r4ss/r4ss">r4ss</a>: Create plots of Stock Synthesis output and functions to work with Stock Synthesis in R.</li>
+<li><a href="https://github.com/r4ss/r4ss">r4ss</a>: Create plots and tables of Stock Synthesis output and functions to work with Stock Synthesis in R.</li>
 <li><a href="https://github.com/PIFSCstockassessments/ss3diags">ss3diags</a>: Run advanced diagnostics for Stock Synthesis models.</li>
 <li><a href="https://github.com/ss3sim/ss3sim">ss3sim</a>: Conduct simulation studies using Stock Synthesis.</li>
 <li><a href="https://github.com/nmfs-fish-tools/SSMSE">SSMSE</a>: Use Stock Synthesis operating models in Management Strategy Evaluation.</li>
@@ -349,14 +349,14 @@ framework for fish stock assessment and fishery management. Fisheries Research,
 <p>The following <a href="http://www.bibtex.org/">BibTeX</a> entry can be copied and used in a .bib file:</p>
 <pre><code>@article{methotwetzel2013,
   title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},
-  author={Methot, Richard Donald and Wetzel, Chantel R},
+  author={Richard Donald {Methot, Jr.} and Chantell R. Wetzel},
   year={2013}, 
   journal={Fisheries Research},
   volume={142},
   pages={86--99},
   doi={10.1016/j.fishres.2012.10.012},
 }</code></pre>
-<p>To see how to cite the Stock Synthesis User Manual, please refer to the <a href="./qmds/user_manual.html">SS3 User Manual tab</a>.</p>
+<p>To see how to cite the Stock Synthesis User Manual, please refer to the <a href="./qmds/user_manual.html">SS3 User Manual guidance</a>.</p>
 <p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"></p>
 <p><a href="https://www.commerce.gov/">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/">NOAA Fisheries</a></p>
 
@@ -443,6 +443,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -477,7 +495,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
