@@ -29,7 +29,7 @@ There are 100+ stocks in the US and throughout the world that use SS3 for which 
 
 
 ## Installing Stock Synthesis 
-![](qmds/images/icon-download.png){fig-align="left" height="04%" width="04%" fig-alt="download icon"} 
+![](qmds/images/icon-download.png){fig-align="left" height="03%" width="03%" fig-alt="download icon"} 
 Download the [latest release](https://github.com/nmfs-ost/ss3-source-code/releases/latest) of the Stock Synthesis executable. 
 
 To see the changes made in the latest release of Stock Synthesis, please see the [change log on GitHub](https://github.com/orgs/nmfs-ost/projects/11) that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download [this Excel spreadsheet](https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true).
@@ -43,7 +43,7 @@ knitr::include_graphics("SS3_Getting_Started.pdf")
 
 ### Getting Started Using the Stock Assessment Continuum Tool
 If you are just getting started with Stock Synthesis, we highly recommend downloading the [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool), a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the [{r4ss}](https://github.com/r4ss/r4ss) package.
-![](qmds/images/stock_assess_cont_tool.PNG){width="90%" fig-alt="Stock Synthesis Around the World. Picture of a world map with comment boxes of one or more examples of stocks that use Stock Synthesis placed near the area of that stock assessment region."}
+![](qmds/images/stock_assess_continuation_tool.PNG){width="90%" fig-alt="Stock Synthesis Around the World. Picture of a world map with comment boxes of one or more examples of stocks that use Stock Synthesis placed near the area of that stock assessment region."}
 
 ### Getting Started Using the Input Files
 To learn more about how to build your own models in Stock Synthesis using the input files directly, see the [Develop a Stock Synthesis model](qmds/ss3_model_tips.qmd) guide.
