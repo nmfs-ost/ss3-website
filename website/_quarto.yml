@@ -50,6 +50,7 @@ website:
 
 format:
   html:
+    link-external-newwindow: true
     theme: [sandstone, custom.scss]
     css: styles.css
     toc: true
