@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Scope</h1>
 <p>Stock Synthesis (SS3) is a statistical fisheries population dynamics modeling framework built in <a href="http://www.admb-project.org/">AD Model Builder</a>. This Getting Started Guide introduces users to running SS3. We assume some experience with population dynamics models and a basic understanding of how to use the command line.</p>
 <p>If you have never used the command line, please see the resources in <a href="#app1">Appendix 1</a>.</p>
-<p>To follow along, we recommend downloading the <a href="https://github.com/nmfs-stock-synthesis/ss3-user-examples/tree/main/model_files/simple">simple example</a> (<a href="https://github.com/nmfs-stock-synthesis/ss3-user-examples#how-to-download">Instructions for downloading</a>) and the <a href="https://github.com/nmfs-stock-synthesis/ss3-source-code/releases/latest">latest release of SS3</a>. Simple is a working SS3 model that runs in less than three minutes and should allow you to experiment with SS3 workflows without having to worry about the model’s contents.</p>
+<p>To follow along, we recommend downloading the <a href="https://github.com/nmfs-ost/ss3-user-examples/tree/main/model_files/simple">simple example</a> (<a href="https://github.com/nmfs-ost/ss3-user-examples#how-to-download">Instructions for downloading</a>) and the <a href="https://github.com/nmfs-ost/ss3-source-code/releases/latest">latest release of SS3</a>. Simple is a working SS3 model that runs in less than three minutes and should allow you to experiment with SS3 workflows without having to worry about the model’s contents.</p>
 <p>By the end of using this guide, you should:</p>
 <ol type="1">
 <li>Understand the input and output file structure for SS3</li>
@@ -359,14 +359,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p><strong>Any text editor</strong> can be used to view and edit SS3 input and output files. Defining a custom syntax highlighting scheme for SS3 files may improve SS3 file readability. Some commonly used text editors include Atom, Emacs, Notepad++, and Sublime Text.</p></li>
 <li><p><strong>r4ss</strong>: An R package to plot SS3 model results and manipulate SS3 input and output files. Available at: https://github.com/r4ss/r4ss</p></li>
-<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-stock-synthesis/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.</p></li>
+<li><p><strong>SSI</strong>: Stock Synthesis Interface (i.e., the SS3 GUI). The <a href="https://github.com/nmfs-ost/ssi/releases/latest">latest version of SSI</a> can be downloaded from GitHub. SSI can be used to edit, save, run, and visualize model inputs and outputs. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.</p></li>
 <li><p><strong>Stock Assessment Continuum Tool</strong>: Available through github at https://github.com/shcaba/SS-DL-tool, the Stock Assessment Continuum Tool (previously known as the Stock Synthesis Data-limited Tool) is a Shiny-based application that provides an interface to upload catch time-series, age composition, length composition, and abundance index data and define model options within the application, which then writes the Stock Synthesis input files.</p></li>
 </ul>
 </section>
 </section>
 <section id="running-ss3" class="level1">
 <h1>Running SS3</h1>
-<p>SS3 is typically run through the command line (although it can also be run indirctly via the commandline through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” section of the user manual</a>.</p>
+<p>SS3 is typically run through the command line (although it can also be run indirectly via the command line through an R console). We will introduce the one folder approach, where SS3 is in the same folder as the model files. Other possible approaches to running SS3 include, which are detailed in the <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” section of the user manual</a>.</p>
 <section id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run" class="level2">
 <h2 class="anchored" data-anchor-id="the-one-folder-approach-and-demonstration-of-an-ss3-model-run">The one folder approach and demonstration of an SS3 model run</h2>
 <p>The one folder approach is so named because the model input files and SS3 executable are in the same folder. The one folder approach is the simplest way to run SS3 via the command line, so we will walk through an example run using this approach.</p>
@@ -391,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The exact instructions for running SS3 can differ depending on the command window used. If you have trouble, search for resources that describe running an executable for your specific command line.</p>
 <p>If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type <code>ss3_win</code> to run an executable called <code>ss3_win.exe</code>.) and that the command line has the correct directory.</p>
 <p>After starting the run, you should see output to the command line similar to:</p>
-<p><img src="images/SS_start_run.png" class="img-fluid" alt="Image of command line output showing the model running including the successful read of the input files and moving past the Estimating...please wait... line"></p>
+<p><img src="images/SS_start_run.png" class="img-fluid" alt="Image of command line output showing the model running including the successful read of the input files and moving past the 'Estimating...please wait...' line"></p>
 <p>If the output gets past <code>Estimating…please wait…</code>, then the structure of the SS3 inputs is correct. The volume of information displayed during the run within the command window is controlled in starter.ss file on the line with the comment <code># run display detail (0,1,2)</code>. The 0 setting is the least verbose option, while the 2 setting is the most verbose.</p>
 <p>SS3 always opens and reads files in the same order (starter.ss, data file, forecast.ss, control, then wtatage.ss if using, and finally ss3.par if using), writing to echoinput.sso (a file for debugging runs) and warnings.sso (a file which collects warnings from SS3) as it reads. SS3 inputs are read in order by value, without reference to comments (i.e., anything after <code>#</code> on a line). Linebreaks and whitespace are both treated as separators. Depending on which options are selected, SS3 will expect a particular number of values in a certain order, so failing to provide them will result in errors or at least a different model specification than intended.</p>
 <p>After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.</p>
@@ -402,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examine-the-output" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-output">Examine the output</h3>
-<p><strong>.ss_new files</strong> are generated if a model run completes. For more information on the .ss_new files, see the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#output-files">“Output Files” section of the SS3 user manual</a>.</p>
+<p><strong>.ss_new files</strong> are generated if a model run completes. For more information on the .ss_new files, see the <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#output-files">“Output Files” section of the SS3 user manual</a>.</p>
 <p><strong>ss_summary.sso</strong> files are included with the examples on vlab so that you can compare it with the <code>ss_summary.sso</code> file generated by your model run. You should see similar if not exactly the same values for the likelihood and parameter values if using the same version of SS3.</p>
 <p>Output from SS3 can be read into <a href="https://github.com/r4ss/r4ss">{r4ss}</a> or the excel viewer.</p>
 </section>
@@ -424,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="using-wtatage.ss" class="level2">
 <h2 class="anchored" data-anchor-id="using-wtatage.ss">Using wtatage.ss</h2>
-<p>As stated in the manual, SS3 has the capability to read empirical body weight at age for the population and each fleet, in lieu of generating these weights internally from the growth parameters, weight-at-length, and size-selectivity. Please see the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#WAA">Empirical Weight-at-Age (wtatage.ss) section of the SS3 user manual</a> for more information on using wtatage.ss with a model. There is also a <a href="https://github.com/nmfs-stock-synthesis/ss3-user-examples/tree/main/model_files/empirical_wtatage_and_age_selex">weight at age SS3 example model available</a> if you would like to try using this feature without having to build your own model.</p>
+<p>As stated in the manual, SS3 has the capability to read empirical body weight at age for the population and each fleet, in lieu of generating these weights internally from the growth parameters, weight-at-length, and size-selectivity. Please see the <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#WAA">Empirical Weight-at-Age (wtatage.ss) section of the SS3 user manual</a> for more information on using wtatage.ss with a model. There is also a <a href="https://github.com/nmfs-ost/ss3-user-examples/tree/main/model_files/empirical_wtatage_and_age_selex">weight at age SS3 example model available</a> if you would like to try using this feature without having to build your own model.</p>
 </section>
 </section>
 <section id="plotting-results-and-basic-troubleshooting" class="level1">
@@ -448,17 +448,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Check that starter.ss references the correct names of the control and data files.</li>
 <li>If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read correctly or not.</li>
 </ul>
-<p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
+<p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
 </section>
 </section>
 <section id="where-to-get-additional-help" class="level1">
 <h1>Where to get additional help</h1>
 <ul>
-<li>Post to the Stock Synthesis <a href="https://github.com/nmfs-stock-synthesis/ss3-source-code/discussions">discussion boards on GitHub</a></li>
+<li>Post to the Stock Synthesis <a href="https://github.com/nmfs-ost/ss3-source-code/discussions">discussion boards on GitHub</a></li>
 <li>The <a href="https://vlab.noaa.gov/web/stock-synthesis">SS3 vlab website</a> resources, including the SS3 user manual</li>
 <li>Post questions to the <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a></li>
 <li>Email questions to nmfs.stock.synthesis@noaa.gov</li>
-<li>Report bugs or request features using the <a href="https://github.com/nmfs-stock-synthesis/ss3-source-code/issues">Stock Synthesis issue tracker</a></li>
+<li>Report bugs or request features using the <a href="https://github.com/nmfs-ost/ss3-source-code/issues">Stock Synthesis issue tracker</a></li>
 <li><a href="https://www.sciencedirect.com/journal/fisheries-research/vol/142/suppl/C">Fisheries Research special issue (vol.&nbsp;142) on Stock Synthesis</a></li>
 <li><a href="http://www.capamresearch.org/">Center for the Advancement of Population Assessment Methodology (CAPAM)</a> provides information about good practices in stock assessment</li>
 </ul>
