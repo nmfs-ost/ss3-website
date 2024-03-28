@@ -35,7 +35,7 @@ The various examples will show how this interacts with the settlement event setu
 
 ### Example 1:  December spawning, January settlement
 
-A common setup will have spawning late in one year (here December 1, or month 12.0) and one settlement event at age 0 the following year (here January 1, or month 1.0). 
+A common setup will have spawning late in one year (for this example December 1, or month 12.0) and one settlement event at age 0 the following year (for this example January 1, or month 1.0). 
 
 ```
 12 #_spawn_month
@@ -101,7 +101,7 @@ Spawning on February 1 and settlement on May 1 at age 0, with 2 seasons (January
 
 ### Example 6:  February spawn, January settle of following year at age 1
 
-Here, the big 1977 recruitment will show up in the NAA table at age 1 in the following year, 1978.
+In this example, the big 1977 recruitment will show up in the NAA table at age 1 in the following year, 1978.
 
 If spawning had been set to month 1.0, then SS3 would allow the Jan 1 settlement at age 1 to occur in 1977 also. This is a year off and illogical.
 

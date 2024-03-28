@@ -12,9 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- Note that this guide is not yet complete! -->
 This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.
 
-If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the **Getting Started** document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the **Developing your first Stock Synthesis model** guide.
+If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the **Getting Started** document before attempting to develop and run your own model as outlined in this guide. You can also get more general model building advice in the **Developing your first Stock Synthesis model** guide.
 
-Throughout this example, we use an even simpler version of the Stock Synthesis example model "Simple". To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package [r4ss](github.com/r4ss/r4ss).
+Throughout this example, we use an even simpler version of the Stock Synthesis example model "Simple". To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package [{r4ss}](github.com/r4ss/r4ss).
 
 # Model description
 
@@ -65,7 +65,7 @@ However, it should be checked that the correct data and control file names are l
 
 ```{R eval = FALSE}
 #_user_info_available_at:https://vlab.ncep.noaa.gov/group/stock-synthesis
-#C starter comment here
+#C starter comment
 data.ss
 control.ss
 0 # 0=use init values in control file; 1=use ss3.par
@@ -109,7 +109,7 @@ Next, the fleet types are specified. Since we have one fishery and 2 surveys (3 
  3 1 1 2 0 SURVEY2  # 3
 
 ```
-Most notable here is that the fishery has type 1 (because it is a catch fleet) and the surveys have type 3. Units for each fleet (what is called "catch units" in the header) are also specified here, although for the surveys they are ignored. For the fishery, it has "catch-units" = 1, which means it is in units of biomass and not numbers.The names for the fleets are specified last on each line (before the comment). For example, in this case, the fishery has been named FISHERY, while the first survey has been named SURVEY1.
+Most notable in these fleet types is that the fishery has type 1 (because it is a catch fleet) and the surveys have type 3. Units for each fleet (what is called "catch units" in the header) are also specified in this part of the data file, although for the surveys they are ignored. For the fishery, it has "catch-units" = 1, which means it is in units of biomass and not numbers.The names for the fleets are specified last on each line (before the comment). For example, in this case, the fishery has been named FISHERY, while the first survey has been named SURVEY1.
 
 Next, the catch is specified:
 ```{R eval = FALSE}
@@ -143,7 +143,7 @@ Next comes specification for indices of abundance. First is the setup for all of
 3 0 0 0 # SURVEY2
 
 ```
-The column headers for this section are directly above the numbers. Note that all fleets are defined here (i.e., each fleet needs a line), including the fishery and are listed in the same order as when the fleet types were specified. Most importantly in this section, the units and error type that will be used when reading the the indices of abundance are specified. In this case, the fishery and survey 1 have units of biomass, wheras survey 2 is in numbers. Lognormal error is assumed for all 3 of the fleets.
+The column headers for this section are directly above the numbers. Note that all fleets are defined in this section (i.e., each fleet needs a line), including the fishery and are listed in the same order as when the fleet types were specified. Most importantly in this section, the units and error type that will be used when reading the the indices of abundance are specified. In this case, the fishery and survey 1 have units of biomass, whereas survey 2 is in numbers. Lognormal error is assumed for all 3 of the fleets.
 
 Directly after its header, the indices of abundance data is included: 
 
@@ -245,9 +245,9 @@ which includes the length bin method for ages. Finally, the age composition data
 -9999 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 ```
-One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)
+One important note is that using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)
 
-SS3 has some additional options that we have not used here and thus set to 0:
+SS3 has some additional options that we have not used in this setup and thus set to 0:
 ```{r eval = FALSE}
 0 #_Use_MeanSize-at-Age_obs (0/1)
 #
@@ -304,7 +304,7 @@ We are not using time blocks, but there are some specified in this model.
 # begin and end years of blocks
 1970 1970
 ```
-Note that any blocks could be specified and not used (blocks are set up here, but are not used until it is specified within a parameter line), so there could be any number of blocks specified here.
+Note that any blocks could be specified and not used (blocks are set up in this section, but are not used until it is specified within a parameter line), so there could be any number of blocks specified in this section.
 
 Likewise, timevarying parameters are not used, so it is unimportant what is specified in the time varying control parameters:
 ```{r eval = FALSE}
@@ -498,7 +498,7 @@ Selectivity comes next. First, the size and age selectivity setup lines:
  11 0 0 0 # 2 SURVEY1
  11 0 0 0 # 3 SURVEY2
 ```
-A selectivity pattern must be specified for both size and age selectivity for each fleet; however, using patterns 0 and 1 for size selectivity allow the user to specify that selectivity is the same across all sizes (within the range specified, if using pattern 1). Here, age selectivity pattern 11 (logistic) is used for all of the fleets. The selectivity setup lines are followed by the selectivity parameter lines:
+A selectivity pattern must be specified for both size and age selectivity for each fleet; however, using patterns 0 and 1 for size selectivity allow the user to specify that selectivity is the same across all sizes (within the range specified, if using pattern 1). In this setup, age selectivity pattern 11 (logistic) is used for all of the fleets. The selectivity setup lines are followed by the selectivity parameter lines:
 ```{r eval = FALSE}
 #_          LO            HI          INIT         PRIOR         PR_SD       PR_type      PHASE    env-var    use_dev   dev_mnyr   dev_mxyr     dev_PH      Block    Blk_Fxn  #  parm_name
 # 1   FISHERY LenSelex

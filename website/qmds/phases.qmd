@@ -26,7 +26,7 @@ editor:
 There is really no ***one*** way or even ***best*** general way of
 assigning phases.
 
-The general guidance provided here may not accommodate every model or
+This general guidance may not accommodate every model or
 necessarily give you the best model fit. However, it may provide a
 starting point when initially trying to assign phases to parameters.
 

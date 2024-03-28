@@ -143,7 +143,7 @@ downloadthis::download_file(
 - Then we add data to inform those devs.
 - In this example, those data are consumption entered as discard data.
 - An alternative is to enter an indicator (*e.g.* survey or other indicator of predator abundance) of the level of M2 itself.
-    - This is not done here but would be a survey of Type 2.
+    - This is not done in this example, but would be a survey of Type 2.
     - Hopefully we can create more meaningful linkages between preators and M2 in the future.
 
 ### Data file:
@@ -180,7 +180,7 @@ Notice that the discard flag is "3". This means that for the predator fleet the 
 
 ### Predator Data
 
-```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. {r4ss} data output with predator data."}
+```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. {r4ss} data plot with predator data.", fig.alt="{r4ss} data plot with predator data present in abundance indices, length compositions, and discards."}
 knitr::include_graphics("images/predators.png")
 ```
 

@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.
 
-If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the [Getting Started guide](https://nmfs-stock-synthesis.github.io/doc/Getting_Started_SS.html) before attempting to develop and run your own model as outlined here.
+If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the [Getting Started guide](qmds/getting_started_ss3.qmd) before attempting to develop and run your own model as outlined in this guide.
 
 By the end of using this guide, you should be able to:
 
@@ -25,25 +25,25 @@ By the end of using this guide, you should be able to:
 
 There are many potential workflows for developing a new SS3 model, but a common technique is to start with an existing model and change it in a piece-wise fashion. The basic technique is:
 
-1. Find an existing working model (perhaps one of the SS3 example models available in the [user-examples repository](https://github.com/nmfs-stock-synthesis/ss3-user-examples) or perhaps a model more similar in form to the model you plan to create).
+1. Find an existing working model (perhaps one of the SS3 example models available in the [user-examples repository](https://github.com/nmfs-ost/ss3-user-examples) or perhaps a model more similar in form to the model you plan to create).
 2. Edit portions of the model and try running as you go to check that your inputs can be read correctly by SS3 and make logical sense (tip: use options ```-stopph 0 -nohess``` to reduce run time with each iteration of checking inputs by not estimating anything and not inverting the hessian).
 
 Some commonly used tools for editing the SS3 input files are:
 
 1. **Your favorite text editor**.
-2. **The ```SS_read*``` and ```SS_write*``` functions in the R package [r4ss](https://github.com/r4ss/r4ss)**. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The [r4ss vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss) demonstrates how to use these functions
+2. **The ```SS_read*``` and ```SS_write*``` functions in the R package [{r4ss}](https://github.com/r4ss/r4ss)**. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The [{r4ss} vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss) demonstrates how to use these functions
 3. **Stock Assessment Continuum Tool**. Available through github at https://github.com/shcaba/SS-DL-tool.
-4. [**Stock Synthesis Interface (SSI; the SS3 GUI)**](https://github.com/nmfs-stock-synthesis/ssi). The SSI allows you to read in a model, performs some checks to ensure valid inputs, make modifications to the model, and offers visualizations of inputs. You can also run models from SSI. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.
+4. [**Stock Synthesis Interface (SSI; the SS3 GUI)**](https://github.com/nmfs-ost/ssi). The SSI allows you to read in a model, performs some checks to ensure valid inputs, make modifications to the model, and offers visualizations of inputs. You can also run models from SSI. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.
 
 # Guidance on model specification
 
 SS3 has a rich set of features. Some required inputs are conditional on other inputs, so it is important to be mindful that changing an option might result in SS3 expecting a different number of values in the input files than it did previously. Most of the time, these conditional inputs are read right after the option.
 
-The [SS3 user manual](https://github.com/nmfs-stock-synthesis/ss3-doc/releases) can be used as a guide to help you edit your model. Conditional inputs are noted in the manual.
+The [SS3 user manual](https://github.com/nmfs-ost/ss3-doc/releases) can be used as a guide to help you edit your model. Conditional inputs are noted in the manual.
 
 If you are unsure if you got the setup right (e.g., adding the correct number of parameter lines for a chosen catchability setup), try running the model with ```maxphase = 0``` in the starter file and ADMB option ```-nohess``` (or for SS3 3.30.16 and greater, run the model with command line options ```-stopph 0 -nohess```, no need to change the starter file). If the model run completes, you can compare the **control.ss_new** file and the first data set in **data.ss_new** to your SS3 input files to make sure SS3 interpreted the values as intended. If the run exits before completion, you can look at **warning.sso** and **echoinput.sso** for clues as to what was wrong with your setup.
 
-For additional help with model specification, please post your questions in the GitHub [discussions](https://github.com/nmfs-stock-synthesis/ss3-source-code/discussions) or on the vlab [forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums) (for registered SS3 users) or send an email to the SS3 team at NMFS.Stock.Synthesis@noaa.gov.
+For additional help with model specification, please post your questions in the GitHub [discussions](https://github.com/nmfs-ost/ss3-source-code/discussions) or on the vlab [forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums) (for registered SS3 users) or send an email to the SS3 team at NMFS.Stock.Synthesis@noaa.gov.
 
 # Phases in SS3 and ADMB
 
@@ -60,11 +60,11 @@ When a model is run without estimating anything, the phases are ignored; because
 
 # Basic debugging: use **echoinput.sso** and **warning.sso**
 
-The most useful tools for debugging SS3 issues are the SS3 output files **echoinput.sso** and **warning.sso**. As SS3 runs, it writes back to **echoinput.sso**. When SS3 exits without finishing, looking at the last contents written to **echoinput.sso** and comparing it with your input files can provide clues as to where (and possibly why) the run failed. Note that SS3 reads inputs in order and will read them incorrectly if the wrong number of inputs is provided.  Any warnings generated during the run are written to **warning.sso**. The **warnings.sso** file should always be examined at the end of the run, even if the run was successful, as it includes suggestions for improving the model specification and warnings about common model sepecification mistakes.
+The most useful tools for debugging SS3 issues are the SS3 output files **echoinput.sso** and **warning.sso**. As SS3 runs, it writes back to **echoinput.sso**. When SS3 exits without finishing, looking at the last contents written to **echoinput.sso** and comparing it with your input files can provide clues as to where (and possibly why) the run failed. Note that SS3 reads inputs in order and will read them incorrectly if the wrong number of inputs is provided.  Any warnings generated during the run are written to **warning.sso**. The **warnings.sso** file should always be examined at the end of the run, even if the run was successful, as it includes suggestions for improving the model specification and warnings about common model specification mistakes.
  
 # Visualizing results
 
-Visualization is helpful as you iteratively develop your model and for presentation of final model results. The output of an SS3 model can be read into [r4ss](https://github.com/r4ss/r4ss). The [r4ss vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html) has more information on how to use the r4ss R package.
+Visualization is helpful as you iteratively develop your model and for presentation of final model results. The output of an SS3 model can be read into [{r4ss}](https://github.com/r4ss/r4ss). The [{r4ss} vignette](https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html) has more information on how to use the {r4ss} R package.
 
 # Proposed workflow for arriving at a "final" model
 
@@ -89,7 +89,7 @@ Try changing max phase to be greater than 0 (perhaps 2 or 3) to estimate some bu
 
 Once all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You'll want to do multiple runs for different model refinement purposes at this time:
 
-1. Do one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the [SS3 User Manual](https://vlab.noaa.gov/web/stock-synthesis/document-library/-/document_library/0LmuycloZeIt/view/4513132) for additional details).
+1. Do one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the [SS3 user manual](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html) for additional details).
 2. Do runs with or without estimating the hessian to tune the data weightings.
 3. Run the model multiple times and jitter the starting values (option to jitter is selected in `starter.ss`). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.
 

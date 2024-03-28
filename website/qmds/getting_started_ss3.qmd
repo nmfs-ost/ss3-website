@@ -83,9 +83,9 @@ Create a folder and add:
 + starter.ss
 + Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss3.par (to continue from a previous run)
 
-For example, here is what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):
+For example, the following image shows what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):
 
-![](images/SS_input_files_folder.png)
+![](images/SS_input_files_folder.png){fig-alt="Image of file folder with the following files: control.ss, data.ss, forecast.ss, ss3.exe, starter.ss"} 
 
 ### Run SS3
 
@@ -95,11 +95,11 @@ To do this, you can typically click to highlight the folder the model files are 
 
 The exact instructions for running SS3 can differ depending on the command window used. If you have trouble, search for resources that describe running an executable for your specific command line.
 
-If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type `ss_win` to run an executable called `ss_win.exe`.) and that the command line has the correct directory.
+If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type `ss3_win` to run an executable called `ss3_win.exe`.) and that the command line has the correct directory.
 
 After starting the run, you should see output to the command line similar to:
 
-![](images/SS_start_run.png)
+![](images/SS_start_run.png){fig-alt="Image of command line output showing the model running including the successful read of the input files and moving past the Estimating...please wait... line"} 
 
 If the output gets past `Estimating…please wait…`, then the structure of the SS3 inputs is correct. The volume of information displayed during the run within the command window is controlled in starter.ss file on the line with the comment `# run display detail (0,1,2)`. The 0 setting is the least verbose option, while the 2 setting is the most verbose.
 
@@ -107,14 +107,14 @@ SS3 always opens and reads files in the same order (starter.ss,  data file, fore
 
 After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.
 
-SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless `–nohess` option is specified; See [command line options](#options)). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using [this special subfolder option](https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#optional-output-subfolders)).
+SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless `–nohess` option is specified; See [command line options](#options)). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using [this special subfolder option](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#optional-output-subfolders)).
 
 When the run completes, SS3 shows `!! Run has completed !!` and the number of warnings:
 
-![](images/SS_end_run.png)
-Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message `!! Run has completed !!`. Here is an example of a run that exited on error due to invalid inputs: 
+![](images/SS_end_run.png){fig-alt:"Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings."}
+Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message `!! Run has completed !!`. Below is an example of a run that exited on error due to invalid inputs: 
 
-![](images/SS_exit_on_error.png)
+![](images/SS_exit_on_error.png){fig-alt:"Image of command line output showing a failed run due to invalid inputs."}
 
 ### Examine the output
 
@@ -122,7 +122,7 @@ Examine warnings.sso for issues and suggestions, regardless of if the run comple
 
 **ss_summary.sso** files are included with the examples on vlab so that you can compare it with the `ss_summary.sso` file generated by your model run. You should see similar if not exactly the same values for the likelihood and parameter values if using the same version of SS3.
 
-Output from SS3 can be read into [r4ss](https://github.com/r4ss/r4ss) or the excel viewer.
+Output from SS3 can be read into [{r4ss}](https://github.com/r4ss/r4ss) or the excel viewer.
 
 # Options for running SS3
 
@@ -162,11 +162,11 @@ See https://github.com/r4ss/r4ss for {r4ss} installation instructions. r4ss incl
 
 ## What to do when SS3 doesn't run
 
-Here are some basic checks for when SS3 does not run:
+Some basic checks for when SS3 does not run are:
 
  + Make sure that all files and directories are named correctly.
  + Check that starter.ss references the correct names of the control and data files.
- + If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read corectly or not.
+ + If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read correctly or not.
 
 For further information on troubleshooting, please refer to the SS3 User Manual [“Running Stock Synthesis” subsections](https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3), especially [“Re-Starting a Run”](https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run) and  [“Debugging Tips”](https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips).
 
