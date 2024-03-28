@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -195,38 +195,18 @@ window.Quarto = {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code/issues/new/choose</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">User Manual Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc/issues/new</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">User Manual Report an Issue</span></a>
   </li>  
     </ul>
@@ -330,7 +310,7 @@ Note
 <p>The various examples will show how this interacts with the settlement event setup.</p>
 <section id="example-1-december-spawning-january-settlement" class="level3">
 <h3 class="anchored" data-anchor-id="example-1-december-spawning-january-settlement">Example 1: December spawning, January settlement</h3>
-<p>A common setup will have spawning late in one year (here December 1, or month 12.0) and one settlement event at age 0 the following year (here January 1, or month 1.0).</p>
+<p>A common setup will have spawning late in one year (for this example December 1, or month 12.0) and one settlement event at age 0 the following year (for this example January 1, or month 1.0).</p>
 <pre><code>12 #_spawn_month
 #GPattern month  area  age (for each settlement assignment)
  1 1 1 0</code></pre>
@@ -372,7 +352,7 @@ Spawning on Mar 1 and settlement on Feb 1  at age 1.  No warning is produced.  T
 </section>
 <section id="example-6-february-spawn-january-settle-of-following-year-at-age-1" class="level3">
 <h3 class="anchored" data-anchor-id="example-6-february-spawn-january-settle-of-following-year-at-age-1">Example 6: February spawn, January settle of following year at age 1</h3>
-<p>Here, the big 1977 recruitment will show up in the NAA table at age 1 in the following year, 1978.</p>
+<p>In this example, the big 1977 recruitment will show up in the NAA table at age 1 in the following year, 1978.</p>
 <p>If spawning had been set to month 1.0, then SS3 would allow the Jan 1 settlement at age 1 to occur in 1977 also. This is a year off and illogical.</p>
 <p>However, with spawning at month 1.0, settlement at month 13.0, and settlement age at 1.0, then the big recruitment correctly shows up in 1978 at age 1. So, it is critical to think about the timing of spawning relative to settlement and to check results in the NAA table.</p>
 </section>
@@ -491,6 +471,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

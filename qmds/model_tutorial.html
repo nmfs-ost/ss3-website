@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -202,38 +202,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code/issues/new/choose</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">User Manual Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc/issues/new</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">User Manual Report an Issue</span></a>
   </li>  
     </ul>
@@ -323,8 +303,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Scope</h1>
 <!-- Note that this guide is not yet complete! -->
 <p>This is a tutorial illustrating how different data and parameters familiar to stock assessment scientists can be added to Stock Synthesis input files. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.</p>
-<p>If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined here. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
-<p>Throughout this example, we use an even simpler version of the Stock Synthesis example model “Simple”. To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package <a href="github.com/r4ss/r4ss">r4ss</a>.</p>
+<p>If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run a working example model using advice in the <strong>Getting Started</strong> document before attempting to develop and run your own model as outlined in this guide. You can also get more general model building advice in the <strong>Developing your first Stock Synthesis model</strong> guide.</p>
+<p>Throughout this example, we use an even simpler version of the Stock Synthesis example model “Simple”. To get the most out of this tutorial, it is best to download the model files to look at during the tutorial. It may also be useful to run the model and plot the results using the R package <a href="github.com/r4ss/r4ss">{r4ss}</a>.</p>
 </section>
 <section id="model-description" class="level1">
 <h1>Model description</h1>
@@ -373,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Generic starter and forecast files were used. There were no need to modify them specifically for this example. However, it should be checked that the correct data and control file names are listed at the top of the starter file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_user_info_available_at:https://vlab.ncep.noaa.gov/group/stock-synthesis</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#C starter comment here</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#C starter comment</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data.ss</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>control.ss</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co"># 0=use init values in control file; 1=use ss3.par</span></span>
@@ -411,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> SURVEY1  <span class="co"># 2</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">0</span> SURVEY2  <span class="co"># 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Most notable here is that the fishery has type 1 (because it is a catch fleet) and the surveys have type 3. Units for each fleet (what is called “catch units” in the header) are also specified here, although for the surveys they are ignored. For the fishery, it has “catch-units” = 1, which means it is in units of biomass and not numbers.The names for the fleets are specified last on each line (before the comment). For example, in this case, the fishery has been named FISHERY, while the first survey has been named SURVEY1.</p>
+<p>Most notable in these fleet types is that the fishery has type 1 (because it is a catch fleet) and the surveys have type 3. Units for each fleet (what is called “catch units” in the header) are also specified in this part of the data file, although for the surveys they are ignored. For the fishery, it has “catch-units” = 1, which means it is in units of biomass and not numbers.The names for the fleets are specified last on each line (before the comment). For example, in this case, the fishery has been named FISHERY, while the first survey has been named SURVEY1.</p>
 <p>Next, the catch is specified:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_Catch data: yr, seas, fleet, catch, catch_se</span></span>
@@ -440,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">1</span> <span class="co"># SURVEY1</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># SURVEY2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The column headers for this section are directly above the numbers. Note that all fleets are defined here (i.e., each fleet needs a line), including the fishery and are listed in the same order as when the fleet types were specified. Most importantly in this section, the units and error type that will be used when reading the the indices of abundance are specified. In this case, the fishery and survey 1 have units of biomass, wheras survey 2 is in numbers. Lognormal error is assumed for all 3 of the fleets.</p>
+<p>The column headers for this section are directly above the numbers. Note that all fleets are defined in this section (i.e., each fleet needs a line), including the fishery and are listed in the same order as when the fleet types were specified. Most importantly in this section, the units and error type that will be used when reading the the indices of abundance are specified. In this case, the fishery and survey 1 have units of biomass, whereas survey 2 is in numbers. Lognormal error is assumed for all 3 of the fleets.</p>
 <p>Directly after its header, the indices of abundance data is included:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_yr month fleet obs stderr</span></span>
@@ -529,8 +509,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2001</span> <span class="dv">7</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">0</span> <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span> <span class="dv">75</span> <span class="dv">4</span> <span class="dv">0</span> <span class="dv">4</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">4</span> <span class="dv">7</span> <span class="dv">11</span> <span class="dv">5</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span></span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">9999</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>One important note here is the using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
-<p>SS3 has some additional options that we have not used here and thus set to 0:</p>
+<p>One important note is that using Lbin_lo and Lbin_hi = -1 selects the entire length bin as being used for the ages. Similar to the length composition data, SS3 expect 1 value for females in each data bin, followed by values for males in each data bin (in this case, there are 34 values in the data vector)</p>
+<p>SS3 has some additional options that we have not used in this setup and thus set to 0:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="co">#_Use_MeanSize-at-Age_obs (0/1)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
@@ -583,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># begin and end years of blocks</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1970</span> <span class="dv">1970</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that any blocks could be specified and not used (blocks are set up here, but are not used until it is specified within a parameter line), so there could be any number of blocks specified here.</p>
+<p>Note that any blocks could be specified and not used (blocks are set up in this section, but are not used until it is specified within a parameter line), so there could be any number of blocks specified in this section.</p>
 <p>Likewise, timevarying parameters are not used, so it is unimportant what is specified in the time varying control parameters:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># controls for all timevary parameters </span></span>
@@ -767,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 2 SURVEY1</span></span>
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">11</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="co"># 3 SURVEY2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>A selectivity pattern must be specified for both size and age selectivity for each fleet; however, using patterns 0 and 1 for size selectivity allow the user to specify that selectivity is the same across all sizes (within the range specified, if using pattern 1). Here, age selectivity pattern 11 (logistic) is used for all of the fleets. The selectivity setup lines are followed by the selectivity parameter lines:</p>
+<p>A selectivity pattern must be specified for both size and age selectivity for each fleet; however, using patterns 0 and 1 for size selectivity allow the user to specify that selectivity is the same across all sizes (within the range specified, if using pattern 1). In this setup, age selectivity pattern 11 (logistic) is used for all of the fleets. The selectivity setup lines are followed by the selectivity parameter lines:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#_          LO            HI          INIT         PRIOR         PR_SD       PR_type      PHASE    env-var    use_dev   dev_mnyr   dev_mxyr     dev_PH      Block    Blk_Fxn  #  parm_name</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1   FISHERY LenSelex</span></span>
@@ -990,6 +970,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

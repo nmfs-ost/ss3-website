@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="SS3 Development Team">
-<meta name="dcterms.date" content="2024-03-25">
+<meta name="dcterms.date" content="2024-03-28">
 
 <title>Stock Synthesis (SS3) - Getting Started with Stock Synthesis</title>
 <style>
@@ -202,38 +202,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code/issues/new/choose</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">User Manual Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc/issues/new</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">User Manual Report an Issue</span></a>
   </li>  
     </ul>
@@ -309,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 25, 2024</p>
+      <p class="date">March 28, 2024</p>
     </div>
   </div>
   
@@ -401,30 +381,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>starter.ss</li>
 <li>Conditional files: wtatage.ss (if doing empirical wt-at-age approach) and/or ss3.par (to continue from a previous run)</li>
 </ul>
-<p>For example, here is what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):</p>
-<p><img src="images/SS_input_files_folder.png" class="img-fluid"></p>
+<p>For example, the following image shows what should be included for a model with no conditional files (where the control and data file names specified in starter.ss are control.ss and data.ss, respectively):</p>
+<p><img src="images/SS_input_files_folder.png" class="img-fluid" alt="Image of file folder with the following files: control.ss, data.ss, forecast.ss, ss3.exe, starter.ss"></p>
 </section>
 <section id="run-ss3" class="level3">
 <h3 class="anchored" data-anchor-id="run-ss3">Run SS3</h3>
 <p>Once all of the model files and the SS3 executable are in the same folder, you can open your command window of choice at the location of the model files.</p>
 <p>To do this, you can typically click to highlight the folder the model files are in, then shift + right click on the same folder and select the option from the menu to open the command line of choice (e.g., Windows Powershell). This should bring up a command window. Then, type <code>ss3</code> (or other name of the ss3 exe) into the command prompt and hit enter. Note that if you are using Windows Powershell, you will need to type <code>./ss3</code>.</p>
 <p>The exact instructions for running SS3 can differ depending on the command window used. If you have trouble, search for resources that describe running an executable for your specific command line.</p>
-<p>If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type <code>ss_win</code> to run an executable called <code>ss_win.exe</code>.) and that the command line has the correct directory.</p>
+<p>If you still have issues, double-check that you are calling the correct exe name (e.g., you would need to type <code>ss3_win</code> to run an executable called <code>ss3_win.exe</code>.) and that the command line has the correct directory.</p>
 <p>After starting the run, you should see output to the command line similar to:</p>
-<p><img src="images/SS_start_run.png" class="img-fluid"></p>
+<p><img src="images/SS_start_run.png" class="img-fluid" alt="Image of command line output showing the model running including the successful read of the input files and moving past the Estimating...please wait... line"></p>
 <p>If the output gets past <code>Estimating…please wait…</code>, then the structure of the SS3 inputs is correct. The volume of information displayed during the run within the command window is controlled in starter.ss file on the line with the comment <code># run display detail (0,1,2)</code>. The 0 setting is the least verbose option, while the 2 setting is the most verbose.</p>
 <p>SS3 always opens and reads files in the same order (starter.ss, data file, forecast.ss, control, then wtatage.ss if using, and finally ss3.par if using), writing to echoinput.sso (a file for debugging runs) and warnings.sso (a file which collects warnings from SS3) as it reads. SS3 inputs are read in order by value, without reference to comments (i.e., anything after <code>#</code> on a line). Linebreaks and whitespace are both treated as separators. Depending on which options are selected, SS3 will expect a particular number of values in a certain order, so failing to provide them will result in errors or at least a different model specification than intended.</p>
 <p>After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.</p>
-<p>SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless <code>–nohess</code> option is specified; See <a href="#options">command line options</a>). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#optional-output-subfolders">this special subfolder option</a>).</p>
+<p>SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless <code>–nohess</code> option is specified; See <a href="#options">command line options</a>). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#optional-output-subfolders">this special subfolder option</a>).</p>
 <p>When the run completes, SS3 shows <code>!! Run has completed !!</code> and the number of warnings:</p>
-<p><img src="images/SS_end_run.png" class="img-fluid"> Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message <code>!! Run has completed !!</code>. Here is an example of a run that exited on error due to invalid inputs:</p>
-<p><img src="images/SS_exit_on_error.png" class="img-fluid"></p>
+<p><img src="images/SS_end_run.png" class="img-fluid">{fig-alt:“Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings.”} Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message <code>!! Run has completed !!</code>. Below is an example of a run that exited on error due to invalid inputs:</p>
+<p><img src="images/SS_exit_on_error.png" class="img-fluid">{fig-alt:“Image of command line output showing a failed run due to invalid inputs.”}</p>
 </section>
 <section id="examine-the-output" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-output">Examine the output</h3>
 <p><strong>.ss_new files</strong> are generated if a model run completes. For more information on the .ss_new files, see the <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#output-files">“Output Files” section of the SS3 user manual</a>.</p>
 <p><strong>ss_summary.sso</strong> files are included with the examples on vlab so that you can compare it with the <code>ss_summary.sso</code> file generated by your model run. You should see similar if not exactly the same values for the likelihood and parameter values if using the same version of SS3.</p>
-<p>Output from SS3 can be read into <a href="https://github.com/r4ss/r4ss">r4ss</a> or the excel viewer.</p>
+<p>Output from SS3 can be read into <a href="https://github.com/r4ss/r4ss">{r4ss}</a> or the excel viewer.</p>
 </section>
 </section>
 </section>
@@ -462,11 +442,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-to-do-when-ss3-doesnt-run" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-do-when-ss3-doesnt-run">What to do when SS3 doesn’t run</h2>
-<p>Here are some basic checks for when SS3 does not run:</p>
+<p>Some basic checks for when SS3 does not run are:</p>
 <ul>
 <li>Make sure that all files and directories are named correctly.</li>
 <li>Check that starter.ss references the correct names of the control and data files.</li>
-<li>If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read corectly or not.</li>
+<li>If SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read correctly or not.</li>
 </ul>
 <p>For further information on troubleshooting, please refer to the SS3 User Manual <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#sec:RunningSS3">“Running Stock Synthesis” subsections</a>, especially <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#re-starting-a-run">“Re-Starting a Run”</a> and <a href="https://nmfs-stock-synthesis.github.io/doc/SS330_User_Manual.html#debugging-tips">“Debugging Tips”</a>.</p>
 </section>
@@ -591,6 +571,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

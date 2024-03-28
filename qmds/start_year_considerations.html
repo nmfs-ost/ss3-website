@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -166,38 +166,18 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code/issues/new/choose</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">User Manual Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc/issues/new</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">User Manual Report an Issue</span></a>
   </li>  
     </ul>
@@ -282,7 +262,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>[Need picture here]</strong></p>
 <ul>
 <li>The first year with rec_devs (main or early) can be Nages before start year.</li>
-<li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful here because they can wait to be turned on in a late phase just to capture that variance.</li>
+<li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.</li>
 <li>The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled" title="Think of it as">
@@ -398,6 +378,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

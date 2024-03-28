@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.552">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -166,38 +166,18 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-github">    
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-source-code/issues/new/choose</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">Stock Synthesis Report an Issue</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc"><i class="bi bi-code" role="img">
-</i> 
  <span class="dropdown-text">User Manual Source Code</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new">
- <span class="dropdown-text">https://github.com/nmfs-ost/ss3-doc/issues/new</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://github.com/nmfs-ost/ss3-doc/issues/new"><i class="bi bi-exclamation-circle" role="img">
-</i> 
  <span class="dropdown-text">User Manual Report an Issue</span></a>
   </li>  
     </ul>
@@ -257,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="a-note-about-phases" class="level2">
 <h2 class="anchored" data-anchor-id="a-note-about-phases">A Note about Phases</h2>
 <p>There is really no <strong><em>one</em></strong> way or even <strong><em>best</em></strong> general way of assigning phases.</p>
-<p>The general guidance provided here may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.</p>
+<p>This general guidance may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.</p>
 <p>If you are an experienced SS3 user with additional suggestions for phasing, please let us know by submitting an issue in this repository. We will gladly review and incorporate those into this guidance.</p>
 </section>
 <section id="a-guide-to-parameter-phasing-in-stock-synthesis" class="level2">
@@ -398,6 +378,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
