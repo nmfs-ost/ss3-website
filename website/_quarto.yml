@@ -14,13 +14,13 @@ website:
       - text: "SS3 User Manuals"
         icon: journal-code
         menu:
-          - href: qmds/user_manual.qmd
-            text: "Citing the SS3 User Manual"
           - href: https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html
             text: "HTML Version"
             target: "_blank"
           - href: https://github.com/nmfs-ost/ss3-source-code/releases/latest/download/SS330_User_Manual.pdf
             text: "PDF Version (downloads on click)"
+          - href: qmds/user_manual.qmd
+            text: "Citing the SS3 User Manual"
       - text: "Tutorials for Getting Started"
         icon: terminal
         menu:

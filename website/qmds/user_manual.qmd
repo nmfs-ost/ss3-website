@@ -4,6 +4,10 @@ format: html
 ---
 ## How to Cite the Stock Synthesis User Manual
 
+The Stock Synthesis user manual can be found under "SS3 User Manuals" in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below:
+- [HTML Version of the SS3 User Manual](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html)
+- [PDF Version of the SS3 User Manual](https://github.com/nmfs-ost/ss3-source-code/releases/latest/download/SS330_User_Manual.pdf) (downloads on click)
+
 Please cite the manual as:
 
 ```
