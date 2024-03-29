@@ -234,10 +234,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#areas" id="toc-areas" class="nav-link" data-scroll-target="#areas">Areas</a></li>
   <li><a href="#seasons" id="toc-seasons" class="nav-link" data-scroll-target="#seasons">Seasons</a></li>
-  <li><a href="#empirical-weight-at-age-vs.-parametric-growth" id="toc-empirical-weight-at-age-vs.-parametric-growth" class="nav-link" data-scroll-target="#empirical-weight-at-age-vs.-parametric-growth">Empirical weight-at-age vs.&nbsp;parametric growth</a></li>
+  <li><a href="#empirical-weight-at-age-ewwa-vs.-parametric-growth" id="toc-empirical-weight-at-age-ewwa-vs.-parametric-growth" class="nav-link" data-scroll-target="#empirical-weight-at-age-ewwa-vs.-parametric-growth">Empirical weight-at-age (EWWA) vs.&nbsp;parametric growth</a></li>
   <li><a href="#fleets" id="toc-fleets" class="nav-link" data-scroll-target="#fleets">Fleets</a></li>
   <li><a href="#one-sex-or-two" id="toc-one-sex-or-two" class="nav-link" data-scroll-target="#one-sex-or-two">One sex or two</a></li>
-  <li><a href="#number-of-ages" id="toc-number-of-ages" class="nav-link" data-scroll-target="#number-of-ages">Number of ages</a></li>
+  <li><a href="#number-of-population-age-bins" id="toc-number-of-population-age-bins" class="nav-link" data-scroll-target="#number-of-population-age-bins">Number of population age bins</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -274,6 +274,13 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
+    accTitle: Number of areas
+    accDescr: {
+    Decision process for determining the number of areas you should have in your 
+    SS3 model. Simply put, the diagram shows that if you have lots of data, 
+    limited movement, and evidence of significant spatial differences in growth 
+    or relative stock size, then you should use more than one area.
+    }
     A["How many areas should I have?"] --&gt; B["Do I have lots of data"]
     B -- Yes --&gt; C["Is there limited movement"]
     C -- Yes --&gt; D["Is there evidence of significant spatial 
@@ -300,13 +307,22 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
+    accTitle: Number of seasons
+    accDescr: {
+    Decision process for determining the number of seasons you should use in your 
+    SS3 model. Simply put, the diagram shows that if you have a short-lived, fast 
+    growing species and are using length data or if you don't have a short-lived, 
+    fast growing species but fishing is during a short season that precedes the 
+    survey or spawning then you should use multiple seasons. Otherwise, use one 
+    season.
+    }
     A["How many seasons should I have?"] --&gt; B["Is it a short-lived, 
                                                 fast growing species?"]
     B -- Yes --&gt; C["Am I using length data?"]
     C --Yes --&gt; D("Use multiple seasons")
     C -- No --&gt; E("Use one season")
     B -- No --&gt; F["Is fishing during a short season that 
-                  preceeds the survey or spawning?"]
+                  precedes the survey or spawning?"]
     F -- Yes --&gt; D
     F -- No --&gt; E
     linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
@@ -319,15 +335,23 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="empirical-weight-at-age-vs.-parametric-growth" class="level3">
-<h3 class="anchored" data-anchor-id="empirical-weight-at-age-vs.-parametric-growth">Empirical weight-at-age vs.&nbsp;parametric growth</h3>
+<section id="empirical-weight-at-age-ewwa-vs.-parametric-growth" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-weight-at-age-ewwa-vs.-parametric-growth">Empirical weight-at-age (EWWA) vs.&nbsp;parametric growth</h3>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-    A["Should I use EWAA or paramateric growth?"] --&gt; B["Do I have lots of age data"]
+    accTitle: Empirical weight-at-age (EWWA) versus parametric growth
+    accDescr: {
+    Decision process for determining if you should use empirical weight-at-age or 
+    parametric growth in you should use in your SS3 model. Simply put, the diagram 
+    shows that if you have lots of age data and there is evidence of variability 
+    in weight-at-age, then you should use empirical-weight-at-age, otherwise you 
+    should use parametric growth.
+    }
+    A["Should I use EWAA or parametric growth?"] --&gt; B["Do I have lots of age data"]
     B -- Yes --&gt; C["Is there evidence of variability 
                   in weight-at-age"]
     C -- Yes --&gt; D("Use EWWA")
@@ -351,6 +375,14 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
+    accTitle: Number of fleets
+    accDescr: {
+    Decision process for determining the number of fleets you should use in your 
+    SS3 model. Simply put, the diagram shows that if you have significant differences in the size 
+    composition of the catch of different subsets of the fishery or there is some 
+    management reason to model the catch separately, then use multiple fleets, 
+    otherwise group all the catch as one fleet.
+    }
     A["How many fleets should I have?"] --&gt; B["Are there significant differences in size
                                               composition of the catch of different subsets
                                               of the fishery?"]
@@ -377,6 +409,11 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
+    accTitle: One sex or two
+    accDescr: {
+    Decision process for determining if you should use one sex or two you should use in your 
+    SS3 model. Simply put, the diagram shows that if you have sex-specific composition data (age or length) or you are modeling growth and the species is sexually dimorphic, then you should use two sexes, otherwise you should use one sex.
+    }
     A["Should I have one sex or two"] --&gt; B["Am I modeling growth?"]
     B -- Yes --&gt; C["Is the species sexually dimorphic?"]
     C -- Yes --&gt; D("Use two sexes")
@@ -395,8 +432,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="number-of-ages" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-ages">Number of ages</h3>
+<section id="number-of-population-age-bins" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-population-age-bins">Number of population age bins</h3>
 <p>Data age bins should cover the majority of the observed ages (<em>i.e.</em> not too large that a fraction is in the maximum age/plus group).</p>
 <p>The first age is always 0, but recruitment can occur at age 1.</p>
 <div class="cell" data-layout-align="default">
@@ -405,6 +442,15 @@ window.Quarto = {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
+    accTitle: Number of population age bins
+    accDescr: {
+    Decision process for determining the if the population age bins can go higher 
+    than the data age bins. Simply put, the diagram shows that if growth is 
+    asymptotic within the observed ages or if the unfished equilibrium is 
+    estimated to have older fish than has been observed then the population age 
+    bins can go higher than the data age bins. Otherwise, the population age bins 
+    can't go higher than the data age bins.
+    }
     A["Can population age bins go 
       higher than data age bins?"] --&gt; B["Is growth asymptotic within
                                                 observed ages?"]
