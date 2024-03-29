@@ -4,9 +4,11 @@ format: html
 ---
 ## How to Cite the Stock Synthesis User Manual
 
-The Stock Synthesis user manual can be found under "SS3 User Manuals" in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below:
+The latest release of the Stock Synthesis user manual can be found under "SS3 User Manuals" in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below:
 - [HTML Version of the SS3 User Manual](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html)
 - [PDF Version of the SS3 User Manual](https://github.com/nmfs-ost/ss3-source-code/releases/latest/download/SS330_User_Manual.pdf) (downloads on click)
+
+Previous releases of the SS3 user manual (v.3.30.17 - latest) can be found under [Releases on the ss3-doc GitHub page](https://github.com/nmfs-ost/ss3-doc/releases). Versions of the SS3 user manual prior to v.3.30.17 are available on the [vlab site](https://vlab.noaa.gov/web/stock-synthesis/document-library/-/document_library/0LmuycloZeIt/view/3406930?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_0LmuycloZeIt_redirect=https%3A%2F%2Fvlab.noaa.gov%3A443%2Fweb%2Fstock-synthesis%2Fdocument-library%2F-%2Fdocument_library%2F0LmuycloZeIt%2Fview%2F4513132).
 
 Please cite the manual as:
 
