@@ -58,7 +58,7 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
     allow the estimation method to better characterize the parameters
     estimated in phases 1-7.
 
-**Andre's preferred order:**
+**André's preferred order:**
 
 1.  Start with an "Age-structured Production Model", estimating R0 and
     catchability, q.
