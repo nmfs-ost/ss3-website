@@ -49,7 +49,7 @@ If you are just getting started with Stock Synthesis, we highly recommend downlo
 To learn more about how to build your own models in Stock Synthesis using the input files directly, see the [Develop a Stock Synthesis model](qmds/ss3_model_tips.qmd) guide.
 
 ### Interacting with Stock Synthesis and Viewing Output Using {r4ss}
-![](qmds/images/r4ss_logo.png){style="float: right;" fig-align="right" width="120" height="140" fig-alt="r4ss package hex logo"}
+![](qmds/images/r4ss_logo.png){style="float: right;" fig-align="right" width="110" height="130" fig-alt="r4ss package hex logo"}
 
 The [{r4ss}](https://github.com/r4ss/r4ss) package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of plots and tables. More information about using [{r4ss}](https://github.com/r4ss/r4ss) is available in the ["Introduction to r4ss"](https://r4ss.github.io/r4ss/articles/r4ss-intro-vignette.html) vignette. Furthermore, you can navigate to these [example plots](https://r4ss.github.io/r4ss/BigSkate) that were created using [{r4ss}](https://github.com/r4ss/r4ss) for the Big Skate model, which can be found in the [ss3-test-models](https://github.com/nmfs-ost/ss3-test-models) repository.
 
@@ -79,21 +79,17 @@ As Stock Synthesis usage has grown so has the number of tools to work with it. T
   - Extended Simple Stock Synthesis ([XSSS](https://github.com/chantelwetzel-noaa/XSSS))
   - [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool)(previously the SS-DL-tool), a shiny app that includes XSSS and SSS in its functionality.
 - [SS3 Shiny helper app](https://connect.fisheries.noaa.gov/ss3-helper/): Visualize a couple common selectivity pattern options available within Stock Synthesis.
-- [SSI](https://vlab.noaa.gov/web/stock-synthesis/document-library/-/document_library/0LmuycloZeIt/view/5042951): Stock Synthesis Interface, a GUI for developing models and running Stock Synthesis which links to {r4ss}. Not supported for versions of Stock Synthesis beyond v.3.30.21.
+- [SSI](https://vlab.noaa.gov/web/stock-synthesis/document-library/-/document_library/0LmuycloZeIt/view/5042951): Stock Synthesis Interface, a GUI for developing models and running Stock Synthesis which links to {r4ss}. **Note that SSI is not supported for versions of Stock Synthesis beyond v.3.30.21.**
 
 Have a tool to work with Stock Synthesis that should also be mentioned? Open an issue in the [ss3-website repository](https://github.com/nmfs-ost/ss3-website) to let us know!
 
 ## How to Cite Stock Synthesis
 Please cite Stock Synthesis as:
-
 ```         
-Methot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical
-framework for fish stock assessment and fishery management. Fisheries Research, 
-142: 86-99. https://doi.org/10.1016/j.fishres.2012.10.012
+Methot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management. Fisheries Research, 142: 86-99. https://doi.org/10.1016/j.fishres.2012.10.012
 ```
 
 The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a .bib file:
-
 ```         
 @article{methotwetzel2013,
   title={Stock Synthesis: A biological and statistical framework for fish stock assessment and fishery management},
