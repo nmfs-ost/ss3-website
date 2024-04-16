@@ -13,6 +13,7 @@ website:
       #   icon: house
       - text: "SS3 User Manuals"
         icon: journal-code
+        aria-label: User Manual
         menu:
           - href: https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html
             text: "HTML Version"
@@ -23,12 +24,14 @@ website:
             text: "Citing the SS3 User Manual"
       - text: "Tutorials for Getting Started"
         icon: terminal
+        aria-label: Tutorials
         menu:
           - qmds/getting_started_ss3.qmd
           - qmds/ss3_model_tips.qmd
           - qmds/ss3_setup_decisions.qmd
       - text: "Vignettes for Model Features"
         icon: person-workspace
+        aria-label: Vignette Workspace
         menu:
           - qmds/start_year_considerations.qmd
           - qmds/predator.qmd
@@ -37,6 +40,7 @@ website:
           
     right:
        - icon: github
+         aria-label: Quarto GitHub
          menu:
            - href: https://github.com/nmfs-ost/ss3-source-code
              text: "Stock Synthesis Source Code"
