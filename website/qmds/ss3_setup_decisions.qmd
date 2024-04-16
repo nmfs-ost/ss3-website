@@ -17,8 +17,8 @@ flowchart TB
     C -- No --> F
     D -- No --> F
     linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
-    style F fill:#5EB6D9
-    style E fill:#5EB6D9
+    style F fill:#5EB6D9,stroke:#fff,color:#fff
+    style E fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 ### Seasons
@@ -35,8 +35,8 @@ flowchart TB
     F -- Yes --> D
     F -- No --> E
     linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black
-    style D fill:#5EB6D9
-    style E fill:#5EB6D9
+    style D fill:#5EB6D9,stroke:#fff,color:#fff
+    style E fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 ### Empirical weight-at-age (EWWA) vs. parametric growth
@@ -50,8 +50,8 @@ flowchart TB
     B -- No --> E("Use parametric growth")
     C -- No --> E
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style D fill:#5EB6D9
-    style E fill:#5EB6D9
+    style D fill:#5EB6D9,stroke:#fff,color:#fff
+    style E fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 
@@ -68,8 +68,8 @@ flowchart TB
     D -- Yes --> C
     D -- No --> E("Group all catch as one fleet")
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style C fill:#5EB6D9
-    style E fill:#5EB6D9
+    style C fill:#5EB6D9,stroke:#fff,color:#fff
+    style E fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 ### One sex or two
@@ -85,8 +85,8 @@ flowchart TB
     C -- No --> F
     E -- No --> F
     linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black
-    style D fill:#5EB6D9
-    style F fill:#5EB6D9
+    style D fill:#5EB6D9,stroke:#fff,color:#fff
+    style F fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 
@@ -109,8 +109,8 @@ flowchart TB
     C -- No --> E("Population age bins can't go 
                   higher than data age bins")
     linkStyle 1,2,3,4 stroke-width:2px,color:black
-    style D fill:#5EB6D9
-    style E fill:#5EB6D9
+    style D fill:#5EB6D9,stroke:#fff,color:#fff
+    style E fill:#5EB6D9,stroke:#fff,color:#fff
 ```
 
 In models with growth, the plus group should be old enough so that fish nearly achieve $L_{inf}$ by the time they are in the plus group.
