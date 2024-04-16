@@ -95,7 +95,7 @@ Retained catch is not entered for predator fleets, nor is there a need to enter 
 
 Control file:
 
-    ```
+    ```         
     # M2 parameter for each predator fleet
     0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1
     0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1
@@ -180,7 +180,7 @@ Notice that the discard flag is "3". This means that for the predator fleet the 
 
 ### Predator Data
 
-```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. {r4ss} data plot with predator data.", fig.alt="{r4ss} data plot with predator data present in abundance indices, length compositions, and discards."}
+```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. {r4ss} data plot showing predator data.", fig.alt="{r4ss} data plot showing predator data present in abundance indices, length compositions, and discards."}
 knitr::include_graphics("images/predators.png")
 ```
 
