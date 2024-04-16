@@ -9,3 +9,6 @@ quarto-doc-website.Rproj
 /.quarto/
 /_site/
 /website/qmds/*.html
+/website/_extensions/
+/website/_freeze/
+/website/docs/site_libs/
