@@ -207,7 +207,7 @@
     "href": "index.html",
     "title": "Stock Synthesis (SS3) Website",
     "section": "",
-    "text": "{% trans 'Skip to main content' %}\nWelcome to the Stock Synthesis website!"
+    "text": "Welcome to the Stock Synthesis website!"
   },
   {
     "objectID": "index.html#introduction",
