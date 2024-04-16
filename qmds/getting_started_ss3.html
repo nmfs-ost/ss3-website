@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/SS_tools_files.png" class="img-fluid figure-img" width="450"></p>
+<p><img src="images/SS3_tools_files.png" class="img-fluid figure-img" width="450"></p>
 <figcaption>Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.</figcaption>
 </figure>
 </div>
@@ -397,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After reading, SS3 proceeds immediately to pre-processing the data and creating internal parameter labels. As SS3 executes, it continues to write debugging output to echoinput.sso and warnings to warnings.sso.</p>
 <p>SS3 next goes to the procedure section where iterative parameter changes are made by ADMB to minimize the negative log likelihood. When ADMB achieves convergence, control passes to the sd_phase for calculation of parameter variance (unless <code>–nohess</code> option is specified; See <a href="#options">command line options</a>). After the sd_phase, SS3 proceeds to the benchmark and forecast code section and then to final reporting. Output files containing results are typically written to the directory in which the model was run from (except when using <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual.html#optional-output-subfolders">this special subfolder option</a>).</p>
 <p>When the run completes, SS3 shows <code>!! Run has completed !!</code> and the number of warnings:</p>
-<p><img src="images/SS_end_run.png" class="img-fluid">{fig-alt:“Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings.”} Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message <code>!! Run has completed !!</code>. Below is an example of a run that exited on error due to invalid inputs:</p>
-<p><img src="images/SS_exit_on_error.png" class="img-fluid">{fig-alt:“Image of command line output showing a failed run due to invalid inputs.”}</p>
+<p><img src="images/SS_end_run.png" class="img-fluid" alt="Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings."> Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message <code>!! Run has completed !!</code>. Below is an example of a run that exited on error due to invalid inputs:</p>
+<p><img src="images/SS_exit_on_error.png" class="img-fluid" alt="Image of command line output showing a failed run due to invalid inputs."></p>
 </section>
 <section id="examine-the-output" class="level3">
 <h3 class="anchored" data-anchor-id="examine-the-output">Examine the output</h3>
