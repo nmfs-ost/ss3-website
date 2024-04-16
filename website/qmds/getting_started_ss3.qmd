@@ -22,8 +22,8 @@ By the end of using this guide, you should:
 3. Understand which tools are available to work with SS3 models
 4. Troubleshoot basic problems associated with running an SS3 model
 
-```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files."}
-knitr::include_graphics("images/SS_tools_files.png")
+```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.", fig-alt="SS3 input and output files and associated tools for working with input and output files including r4ss, any text editor, and SSI"}
+knitr::include_graphics("images/SS3_tools_files.png")
 ```
 
 # Stock Synthesis file structures and tools
@@ -111,10 +111,10 @@ SS3 next goes to the procedure section where iterative parameter changes are mad
 
 When the run completes, SS3 shows `!! Run has completed !!` and the number of warnings:
 
-![](images/SS_end_run.png){fig-alt:"Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings."}
+![](images/SS_end_run.png){fig-alt="Image of command line output showing that new input files have been written, the run has completed, and to see warning.sso for N warnings."}
 Examine warnings.sso for issues and suggestions, regardless of if the run completed successfully or not. If SS3 exits on error, you will not see the message `!! Run has completed !!`. Below is an example of a run that exited on error due to invalid inputs: 
 
-![](images/SS_exit_on_error.png){fig-alt:"Image of command line output showing a failed run due to invalid inputs."}
+![](images/SS_exit_on_error.png){fig-alt="Image of command line output showing a failed run due to invalid inputs."}
 
 ### Examine the output
 
