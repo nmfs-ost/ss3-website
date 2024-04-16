@@ -22,7 +22,7 @@ By the end of using this guide, you should:
 3. Understand which tools are available to work with SS3 models
 4. Troubleshoot basic problems associated with running an SS3 model
 
-```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.", fig-alt="SS3 input and output files and associated tools for working with input and output files including r4ss, any text editor, and SSI"}
+```{r, echo = FALSE, out.width = "450px", fig.cap="Figure 1. SS3 input and output files, and associated tools. Note that some tools are used with both input and output model files.", fig.alt="SS3 input and output files and associated tools for working with input and output files including r4ss, any text editor, and the Stock Assessment Continuum Tool"}
 knitr::include_graphics("images/SS3_tools_files.png")
 ```
 
