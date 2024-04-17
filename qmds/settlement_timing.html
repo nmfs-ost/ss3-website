@@ -100,7 +100,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -217,10 +217,51 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../qmds/settlement_timing.html">Settlement Timing</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmds/start_year_considerations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start Year Considerations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmds/predator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Predators</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmds/settlement_timing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Settlement Timing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmds/phases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guidance on Phases</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -311,15 +352,18 @@ Note
 <section id="example-1-december-spawning-january-settlement" class="level3">
 <h3 class="anchored" data-anchor-id="example-1-december-spawning-january-settlement">Example 1: December spawning, January settlement</h3>
 <p>A common setup will have spawning late in one year (for this example December 1, or month 12.0) and one settlement event at age 0 the following year (for this example January 1, or month 1.0).</p>
-<pre><code>12 #_spawn_month
+<pre><code>#| code-overflow: wrap
+12 #_spawn_month
 #GPattern month  area  age (for each settlement assignment)
  1 1 1 0</code></pre>
 <p>In the spawn_recruitment output table, this results in 61154.1 thousand recruits from the 1977 spawning.</p>
-<pre><code>Yr SpawnBio exp_recr with_regime bias_adjusted pred_recr dev
+<pre><code>#| code-overflow: wrap
+Yr SpawnBio exp_recr with_regime bias_adjusted pred_recr dev
 1977 75541.9  9908.54 9908.54 8276.31 61154.1 2.0</code></pre>
 <p>In the NAA table, these recruits are split to be <code>30577.1 NAA 0</code> in 1978 for each of females and males. They appear in 1978 as age 0 fish because their settlement month (1.0) is earlier than their spawning month (12.0), so settlement must be in the year following spawning.</p>
 <p>SS3 produces this note in warnings.sso:</p>
-<pre><code>Note 3 Information: settle_month is less than spawn_month, so logical age at settlement calculated to be: 1 for settle_time 1 does not match read value of 0 are you sure?</code></pre>
+<pre><code>#| code-overflow: wrap
+Note 3 Information: settle_month is less than spawn_month, so logical age at settlement calculated to be: 1 for settle_time 1 does not match read value of 0 are you sure?</code></pre>
 <p>Switching settlement age to 1 resolves the warning and now the fish first appear in the NAA table as age 1 fish in 1978. Age 0 fish never appear in the NAA table with this configuration.</p>
 <p><strong>Picture of NAA table here</strong></p>
 </section>
