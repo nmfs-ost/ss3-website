@@ -29,7 +29,8 @@ Model the overall natural morality (M) to include explicit mortality (M2) caused
 - If a predator occurs in multiple areas, they might be named "seals_A1" and "seals_A2" and would have separate data inputs and controls, just like fishing fleets.
 - A "fleet" is designated as a predator at the top of the data file.
 
-    ```         
+    ```
+    #| code-overflow: wrap
     4 #_Nfleets (including surveys)
     #_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=predator(M2) 
     #_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month; (always 1 for surveys)
@@ -52,7 +53,8 @@ Retained catch is not entered for predator fleets, nor is there a need to enter 
 
 - Data on the amount of consumption can be entered as discard data, where SS3 will include it in the estimation of M2 values.
 
-    ```         
+    ```
+    #| code-overflow: wrap
     1 #_N_fleets_with_discard
     #_discard_units (1=same_as_catchunits(bio/num); 2=fraction; 3=numbers)
     #_discard_errtype: >0 for DF of T-dist(read CV below); 0 for normal with CV; -1 for normal with se; -2 for lognormal; -3 for trunc normal with CV
@@ -71,7 +73,8 @@ Retained catch is not entered for predator fleets, nor is there a need to enter 
 - If the predator abundance is available, it can be entered as a survey of "F".
 - The format looks like:
 
-    ```         
+    ```
+    #| code-overflow: wrap
     #_Units:  0=numbers; 1=biomass; 2=F; 30=spawnbio; ……
     #_Errtype:  -1=normal; 0=lognormal; >0=T
     #_SD_Report: 0=no sdreport; 1=enable sdreport
@@ -95,7 +98,8 @@ Retained catch is not entered for predator fleets, nor is there a need to enter 
 
 Control file:
 
-    ```         
+    ```
+    #| code-overflow: wrap
     # M2 parameter for each predator fleet
     0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1
     0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1
@@ -161,6 +165,7 @@ downloadthis::download_file(
 - SS3 also needs to setup the size & age selectivity of the predator
     
     ```
+    #| code-overflow: wrap
     #_Pattern Discard Male Special
     24 0 0 0 # 1 Fleet
     24 3 0 0 # 2 Pred

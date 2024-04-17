@@ -38,6 +38,7 @@ The various examples will show how this interacts with the settlement event setu
 A common setup will have spawning late in one year (for this example December 1, or month 12.0) and one settlement event at age 0 the following year (for this example January 1, or month 1.0). 
 
 ```
+#| code-overflow: wrap
 12 #_spawn_month
 #GPattern month  area  age (for each settlement assignment)
  1 1 1 0
@@ -46,6 +47,7 @@ A common setup will have spawning late in one year (for this example December 1,
 In the spawn_recruitment output table, this results in 61154.1 thousand recruits from the 1977 spawning.
 
 ```
+#| code-overflow: wrap
 Yr SpawnBio exp_recr with_regime bias_adjusted pred_recr dev
 1977 75541.9  9908.54 9908.54 8276.31 61154.1 2.0
 ```
@@ -54,6 +56,7 @@ In the NAA table, these recruits are split to be `30577.1 NAA 0` in 1978 for eac
 
 SS3 produces this note in warnings.sso:
 ```
+#| code-overflow: wrap
 Note 3 Information: settle_month is less than spawn_month, so logical age at settlement calculated to be: 1 for settle_time 1 does not match read value of 0 are you sure?
 ```
 
