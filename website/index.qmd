@@ -36,7 +36,7 @@ To see the changes made in the latest release of Stock Synthesis, please see the
 ## Getting Started with Stock Synthesis
 To get started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
 
-```{r, echo = FALSE, out.width = "85%", out.height= "400px", fig.alt="pdf of Getting Started presentation"}
+```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Getting Started presentation"}
 knitr::include_graphics("SS3_Getting_Started.pdf")
 ```
 
