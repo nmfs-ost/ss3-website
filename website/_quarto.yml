@@ -7,6 +7,7 @@ website:
   # issue-url: "https://github.com/nmfs-ost/ss3-source-code/issues/new/choose"
   # repo-actions: [issue]
   navbar:
+    search: false
     left:
       # - text: "Home"
       #   href: index.qmd
