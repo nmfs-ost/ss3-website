@@ -55,11 +55,14 @@ website:
   sidebar: 
     - title: "Tutorials"
       style: "docked"
+      text: "Tutorials"
       contents:
         - qmds/getting_started_ss3.qmd
         - qmds/ss3_model_tips.qmd
         - qmds/ss3_setup_decisions.qmd 
+        
     - title: "Vignettes for Model Features"
+      text: "Tutorials"
       contents: 
         - qmds/start_year_considerations.qmd
         - qmds/predator.qmd
