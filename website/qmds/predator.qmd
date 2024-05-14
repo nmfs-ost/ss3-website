@@ -128,7 +128,7 @@ Control file:
 ## Predator example
 
 ```{r, echo = FALSE}
-path_files <- list.files(path = file.path(getwd(), "example_files"), full.names = TRUE)
+path_files <- list.files(path = file.path(getwd(), "example_files", "predator_example"), full.names = TRUE)
 
 downloadthis::download_file(
   path = path_files,

@@ -1,0 +1,33 @@
+---
+title: "SS3 Webinars"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+We have every other month webinars on SS3 features and topics. The first part of 
+these webinars are more of a presentation on the feature or topic and the second
+part is a Q&A session. Subscribe to the [SS3 Webinar calendar](https://calendar.google.com/calendar/u/0?cid=Y18zNWM2MWQ5Yjg1MGY1YjkwOGNiY2RjNjIwNmZlYzVkNDgxMmQ2ZTU0NDg3YjE0ZjM1ZGMzYmY0M2E3MGQyMmYxQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20).
+
+To suggest future webinar topics, please post to the [SS3 User Forum](https://groups.google.com/g/ss3-forum).
+
+## 5/16/2024 - Fishing Mortality (F) Topics
+
+```{r, echo = FALSE}
+path_files <- list.files(path = file.path(getwd(), "example_files", "demo_constant_timeseries"), full.names = TRUE)
+
+downloadthis::download_file(
+  path = path_files,
+  output_name = "predator_vignette",
+  button_label = "Download predator SS3 input files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Fishing Mortality presentation"}
+knitr::include_graphics("qmds/webinar_presentations/SS3_Fishing_Mortality.pdf")
+```
