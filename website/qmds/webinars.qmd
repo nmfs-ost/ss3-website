@@ -29,5 +29,5 @@ downloadthis::download_file(
 ```
 
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Fishing Mortality presentation"}
-knitr::include_graphics("qmds/webinar_presentations/SS3_Fishing_Mortality.pdf")
+knitr::include_graphics(normalizePath("../qmds/webinar_presentations/SS3_Fishing_Mortality.pdf"))
 ```
