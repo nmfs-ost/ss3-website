@@ -133,32 +133,18 @@
     "text": "A Guide to Parameter Phasing in Stock Synthesis\nThis guide is largely taken from the Stock Assessment Continuum Tool as provided by André Punt\n\nGeneral\n\nGet the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (R0 - expected recruitment in an unfished state) then refine the model fit by adding parameters.\nThe parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 plus those designated as to be estimated in phase 3.\nThe phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.\nThe schema below is based on eight phases but, sometimes I will “skip a phase”, e.g. place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.\n\nAndré’s preferred order:\n\nStart with an “Age-structured Production Model”, estimating R0 and catchability, q.\nAdd recruitment deviations (as these can pick up signals from the age and length data on cohort size) (at this point your model is analogous to JABBA)\nNow estimate the base selectivity [and retention] parameters (enabling this to be refined)\nNow estimate growth\nNow estimate natural mortality, M (if feeling brave!)\nNow estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2 or 1 - if the data are in conflict so be wary)\nNow estimate the other annual deviations (e.g., annual deviations on kappa or age-year deviations on selectivity).\nFinally environmental linkages, e.g., between recruitment and an environmental variable such as temperature.\n\n\n\nOther ways of tackling phases (per Jason Cope)\n\nStart growth and sometimes mortality estimation in phase 3 or even phase 2\nLeave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already\n\n\n\nSome additional notes (per Rick Methot)\n\nBe careful with many phases unless you have good initial values for the un-estimated parameters.\nParameters with high correlation usually should be estimated in the same phase, so ADMB can change them in sync.\nExamine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first."
   },
   {
-    "objectID": "qmds/start_year_considerations.html",
-    "href": "qmds/start_year_considerations.html",
-    "title": "Start Year Considerations",
+    "objectID": "qmds/webinars.html",
+    "href": "qmds/webinars.html",
+    "title": "SS3 Webinars",
     "section": "",
-    "text": "The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, R0, initial_F, and domed selectivity must be considered together."
+    "text": "We have every other month webinars on SS3 features and topics. The first part of these webinars are more of a presentation on the feature or topic and the second part is a Q&A session. Subscribe to the SS3 Webinar calendar.\nTo suggest future webinar topics, please post to the SS3 User Forum."
   },
   {
-    "objectID": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
-    "href": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
-    "title": "Start Year Considerations",
-    "section": "Population age composition in the start year is composed of:",
-    "text": "Population age composition in the start year is composed of:\n\nAn equilibrium age composition using Z = M + initial_F\nAge-specific deviation from that vector for none, to all, of the ages.\n\nThese age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.\nBecause the devs are centered around the equilibrium age composition, it is important that the initial_F be approximately correct, otherwise a pattern can be introduced in the devs.\nSS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs).\n\n\n[Need a picture here]"
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html#start-year-considerations",
-    "href": "qmds/start_year_considerations.html#start-year-considerations",
-    "title": "Start Year Considerations",
-    "section": "Start year considerations",
-    "text": "Start year considerations\n\nLong historical period of relatively stable catch\n\nThis is the ideal situation for use of initial equilibrium catch with initial_F estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if M is low.\nIf that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make R0 big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below BMSY, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create F’s greater than FMSY. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.\n\nSubstantial changes in historical catch levels have occurred within a lifespan before start year\n\nIn this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific F."
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html#first-year-with-recdevs",
-    "href": "qmds/start_year_considerations.html#first-year-with-recdevs",
-    "title": "Start Year Considerations",
-    "section": "First year with recdevs",
-    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.\n\n[Need picture here]\n\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
+    "objectID": "qmds/webinars.html#fishing-mortality-f-topics",
+    "href": "qmds/webinars.html#fishing-mortality-f-topics",
+    "title": "SS3 Webinars",
+    "section": "5/16/2024 - Fishing Mortality (F) Topics",
+    "text": "5/16/2024 - Fishing Mortality (F) Topics\n\n\n Download predator SS3 input files"
   },
   {
     "objectID": "index.html",
@@ -193,7 +179,7 @@
     "href": "index.html#asking-questions-about-stock-synthesis",
     "title": "Stock Synthesis (SS3) Website",
     "section": "Asking questions about Stock Synthesis",
-    "text": "Asking questions about Stock Synthesis\nQuestions can be asked by contributing to a discussion in the Stock Synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov.You can also look for answers or submit questions to the Stock Synthesis forums. Note that an account is required to ask questions on the forums.\nWe are moving to GitHub for most of our communications, so we generally prefer that users start with posting to GitHub discussions before trying other methods of communicating with the SS3 Team."
+    "text": "Asking questions about Stock Synthesis\nQuestions can be asked by contributing to a discussion in the Stock Synthesis source code repository or by emailing nmfs.stock.synthesis@noaa.gov.You can also look for answers or submit questions to the SS3 Forum. Note that you have to request to join the Google Group.\nWe are moving to GitHub for most of our communications, so we generally prefer that users start with posting to GitHub discussions before trying other methods of communicating with the SS3 Team."
   },
   {
     "objectID": "index.html#contributing-to-stock-synthesis",
@@ -215,6 +201,34 @@
     "title": "Stock Synthesis (SS3) Website",
     "section": "How to Cite Stock Synthesis",
     "text": "How to Cite Stock Synthesis\nPlease cite Stock Synthesis as:\n#| code-overflow: wrap\nMethot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical framework \nfor fish stock assessment and fishery management. Fisheries Research, 142: 86-99.\nhttps://doi.org/10.1016/j.fishres.2012.10.012\nThe following BibTeX entry can be copied and used in a .bib file:\n#| code-overflow: wrap\n@article{methotwetzel2013,\n  title={Stock Synthesis: A biological and statistical framework for fish stock assessment \n  and fishery management},\n  author={Richard Donald {Methot, Jr.} and Chantell R. Wetzel},\n  year={2013}, \n  journal={Fisheries Research},\n  volume={142},\n  pages={86--99},\n  doi={10.1016/j.fishres.2012.10.012},\n}\nTo see how to cite the Stock Synthesis User Manual, please refer to the SS3 User Manual guidance.\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries"
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html",
+    "href": "qmds/start_year_considerations.html",
+    "title": "Start Year Considerations",
+    "section": "",
+    "text": "The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, R0, initial_F, and domed selectivity must be considered together."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
+    "href": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
+    "title": "Start Year Considerations",
+    "section": "Population age composition in the start year is composed of:",
+    "text": "Population age composition in the start year is composed of:\n\nAn equilibrium age composition using Z = M + initial_F\nAge-specific deviation from that vector for none, to all, of the ages.\n\nThese age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.\nBecause the devs are centered around the equilibrium age composition, it is important that the initial_F be approximately correct, otherwise a pattern can be introduced in the devs.\nSS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs).\n\n\n[Need a picture here]"
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#start-year-considerations",
+    "href": "qmds/start_year_considerations.html#start-year-considerations",
+    "title": "Start Year Considerations",
+    "section": "Start year considerations",
+    "text": "Start year considerations\n\nLong historical period of relatively stable catch\n\nThis is the ideal situation for use of initial equilibrium catch with initial_F estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if M is low.\nIf that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make R0 big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below BMSY, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create F’s greater than FMSY. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.\n\nSubstantial changes in historical catch levels have occurred within a lifespan before start year\n\nIn this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific F."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#first-year-with-recdevs",
+    "href": "qmds/start_year_considerations.html#first-year-with-recdevs",
+    "title": "Start Year Considerations",
+    "section": "First year with recdevs",
+    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.\n\n[Need picture here]\n\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
   },
   {
     "objectID": "qmds/getting_started_ss3.html",
