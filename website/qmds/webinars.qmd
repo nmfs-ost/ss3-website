@@ -19,14 +19,16 @@ path_files <- list.files(path = file.path(getwd(), "example_files", "demo_consta
 
 downloadthis::download_file(
   path = path_files,
-  output_name = "predator_vignette",
-  button_label = "Download predator SS3 input files",
+  output_name = "f_mortality",
+  button_label = "Download F Mortality Example input files",
   button_type = "default",
   has_icon = TRUE,
   icon = "fa fa-save",
   self_contained = FALSE
 )
 ```
+
+  
 
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Fishing Mortality presentation"}
 knitr::include_graphics(normalizePath("../qmds/webinar_presentations/SS3_Fishing_Mortality.pdf"))
