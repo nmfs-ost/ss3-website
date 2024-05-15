@@ -23,14 +23,14 @@ website:
             text: "PDF Version (downloads on click)"
           - href: qmds/user_manual.qmd
             text: "Citing the SS3 User Manual"
-      - text: "Tutorials for Getting Started"
+      - text: "Getting Started Tutorials"
         icon: terminal
         aria-label: Tutorials
         menu:
           - qmds/getting_started_ss3.qmd
           - qmds/ss3_model_tips.qmd
           - qmds/ss3_setup_decisions.qmd
-      - text: "Vignettes for Model Features"
+      - text: "Model Feature Vignettes"
         icon: person-workspace
         aria-label: Vignette Workspace
         menu:
