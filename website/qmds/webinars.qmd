@@ -10,7 +10,7 @@ We have every other month webinars on SS3 features and topics. The first part of
 these webinars are more of a presentation on the feature or topic and the second
 part is a Q&A session. Subscribe to the [SS3 Webinar calendar](https://calendar.google.com/calendar/u/0?cid=Y18zNWM2MWQ5Yjg1MGY1YjkwOGNiY2RjNjIwNmZlYzVkNDgxMmQ2ZTU0NDg3YjE0ZjM1ZGMzYmY0M2E3MGQyMmYxQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20).
 
-To suggest future webinar topics, please post to the [SS3 User Forum](https://groups.google.com/g/ss3-forum).
+To suggest future webinar topics, please post to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum).
 
 ## 5/16/2024 - Fishing Mortality (F) Topics
 
@@ -27,7 +27,8 @@ downloadthis::download_file(
   self_contained = FALSE
 )
 ```
-
+  
+  
   
 
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Fishing Mortality presentation"}
