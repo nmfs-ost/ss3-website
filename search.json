@@ -88,7 +88,7 @@
     "href": "qmds/ss3_model_tips.html#runs-estimating-all-parameters",
     "title": "Developing your first Stock Synthesis model",
     "section": "Runs estimating all parameters",
-    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 user manual for additional details).\nDo runs with or without estimating the hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
+    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 user manual for additional details).\nDo runs with or without estimating the Hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
   },
   {
     "objectID": "qmds/ss3_model_tips.html#if-the-residuals-have-substantial-patterns",
@@ -119,11 +119,11 @@
     "text": "Does my model model make sense?\n\nDoes the biology make sense? Selectivity?\nIs the model fitting the indices? Length and age data?\nWhat is the pattern in recruitment?\nDoes the prior type match what I thought I was specifying?"
   },
   {
-    "objectID": "qmds/ss3_model_tips.html#does-my-model-model-fit-well",
-    "href": "qmds/ss3_model_tips.html#does-my-model-model-fit-well",
+    "objectID": "qmds/ss3_model_tips.html#does-my-model-fit-well",
+    "href": "qmds/ss3_model_tips.html#does-my-model-fit-well",
     "title": "Developing your first Stock Synthesis model",
-    "section": "Does my model model fit well?",
-    "text": "Does my model model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
+    "section": "Does my model fit well?",
+    "text": "Does my model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
   },
   {
     "objectID": "qmds/ss3_model_tips.html#does-my-data-weighting-make-sense",

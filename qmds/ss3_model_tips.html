@@ -221,7 +221,7 @@ window.Quarto = {
   <li><a href="#how-to-create-new-ss3-models" id="toc-how-to-create-new-ss3-models" class="nav-link" data-scroll-target="#how-to-create-new-ss3-models">How to create new SS3 models</a></li>
   <li><a href="#guidance-on-model-specification" id="toc-guidance-on-model-specification" class="nav-link" data-scroll-target="#guidance-on-model-specification">Guidance on model specification</a></li>
   <li><a href="#phases-in-ss3-and-admb" id="toc-phases-in-ss3-and-admb" class="nav-link" data-scroll-target="#phases-in-ss3-and-admb">Phases in SS3 and ADMB</a></li>
-  <li><a href="#basic-debugging-use-echoinput.sso-and-warning.sso" id="toc-basic-debugging-use-echoinput.sso-and-warning.sso" class="nav-link" data-scroll-target="#basic-debugging-use-echoinput.sso-and-warning.sso">Basic debugging: use <strong>echoinput.sso</strong> and <strong>warning.sso</strong></a></li>
+  <li><a href="#basic-debugging-use-echoinput.sso-and-warning.sso" id="toc-basic-debugging-use-echoinput.sso-and-warning.sso" class="nav-link" data-scroll-target="#basic-debugging-use-echoinput.sso-and-warning.sso">Basic debugging: use echoinput.sso and warning.sso</a></li>
   <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results">Visualizing results</a></li>
   <li><a href="#proposed-workflow-for-arriving-at-a-final-model" id="toc-proposed-workflow-for-arriving-at-a-final-model" class="nav-link" data-scroll-target="#proposed-workflow-for-arriving-at-a-final-model">Proposed workflow for arriving at a “final” model</a>
   <ul class="collapse">
@@ -239,7 +239,7 @@ window.Quarto = {
   <li><a href="#some-questions-to-consider-during-model-development" id="toc-some-questions-to-consider-during-model-development" class="nav-link" data-scroll-target="#some-questions-to-consider-during-model-development">Some questions to consider during model development</a>
   <ul class="collapse">
   <li><a href="#does-my-model-model-make-sense" id="toc-does-my-model-model-make-sense" class="nav-link" data-scroll-target="#does-my-model-model-make-sense">Does my model model make sense?</a></li>
-  <li><a href="#does-my-model-model-fit-well" id="toc-does-my-model-model-fit-well" class="nav-link" data-scroll-target="#does-my-model-model-fit-well">Does my model model fit well?</a></li>
+  <li><a href="#does-my-model-fit-well" id="toc-does-my-model-fit-well" class="nav-link" data-scroll-target="#does-my-model-fit-well">Does my model fit well?</a></li>
   <li><a href="#does-my-data-weighting-make-sense" id="toc-does-my-data-weighting-make-sense" class="nav-link" data-scroll-target="#does-my-data-weighting-make-sense">Does my data weighting make sense?</a></li>
   <li><a href="#did-i-fix-variation-in-recruitment-correctly" id="toc-did-i-fix-variation-in-recruitment-correctly" class="nav-link" data-scroll-target="#did-i-fix-variation-in-recruitment-correctly">Did I fix variation in recruitment correctly?</a></li>
   </ul></li>
@@ -303,7 +303,7 @@ window.Quarto = {
 <p>Some commonly used tools for editing the SS3 input files are:</p>
 <ol type="1">
 <li><strong>Your favorite text editor</strong>.</li>
-<li><strong>The <code>SS_read*</code> and <code>SS_write*</code> functions in the R package <a href="https://github.com/r4ss/r4ss">{r4ss}</a></strong>. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The <a href="https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss">{r4ss} vignette</a> demonstrates how to use these functions</li>
+<li><strong>The <code>SS_read()</code> and <code>SS_write()</code> functions in the R package <a href="https://github.com/r4ss/r4ss">{r4ss}</a></strong>. These functions allow you to read in SS3 input files to R, manipulate them from within R, then write them out to a file. The <a href="https://r4ss.github.io/r4ss/vignettes/r4ss-intro-vignette.html#scripting-stock-synthesis-workflows-with-r4ss">{r4ss} vignette</a> demonstrates how to use these functions</li>
 <li><strong>Stock Assessment Continuum Tool</strong>. Available through github at https://github.com/shcaba/SS-DL-tool.</li>
 <li><a href="https://github.com/nmfs-ost/ssi"><strong>Stock Synthesis Interface (SSI; the SS3 GUI)</strong></a>. The SSI allows you to read in a model, performs some checks to ensure valid inputs, make modifications to the model, and offers visualizations of inputs. You can also run models from SSI. Note that SSI is not maintained for Stock Synthesis versions after v.3.30.21.</li>
 </ol>
@@ -312,7 +312,7 @@ window.Quarto = {
 <h1>Guidance on model specification</h1>
 <p>SS3 has a rich set of features. Some required inputs are conditional on other inputs, so it is important to be mindful that changing an option might result in SS3 expecting a different number of values in the input files than it did previously. Most of the time, these conditional inputs are read right after the option.</p>
 <p>The <a href="https://github.com/nmfs-ost/ss3-doc/releases">SS3 user manual</a> can be used as a guide to help you edit your model. Conditional inputs are noted in the manual.</p>
-<p>If you are unsure if you got the setup right (e.g., adding the correct number of parameter lines for a chosen catchability setup), try running the model with <code>maxphase = 0</code> in the starter file and ADMB option <code>-nohess</code> (or for SS3 3.30.16 and greater, run the model with command line options <code>-stopph 0 -nohess</code>, no need to change the starter file). If the model run completes, you can compare the <strong>control.ss_new</strong> file and the first data set in <strong>data.ss_new</strong> to your SS3 input files to make sure SS3 interpreted the values as intended. If the run exits before completion, you can look at <strong>warning.sso</strong> and <strong>echoinput.sso</strong> for clues as to what was wrong with your setup.</p>
+<p>If you are unsure if you got the setup right (e.g., adding the correct number of parameter lines for a chosen catchability setup), try running the model with <code>maxphase = 0</code> in the starter file and ADMB option <code>-nohess</code> (or for SS3 3.30.16 and greater, run the model with command line options <code>-stopph 0 -nohess</code>, no need to change the starter file). If the model run completes, you can compare the control.ss_new file and the first data set in data.ss_new to your SS3 input files to make sure SS3 interpreted the values as intended. If the run exits before completion, you can look at warning.sso and echoinput.sso for clues as to what was wrong with your setup.</p>
 <p>For additional help with model specification, please post your questions in the GitHub <a href="https://github.com/nmfs-ost/ss3-source-code/discussions">discussions</a> or on the vlab <a href="https://vlab.noaa.gov/web/stock-synthesis/public-forums">forums</a> (for registered SS3 users) or send an email to the SS3 team at NMFS.Stock.Synthesis@noaa.gov.</p>
 </section>
 <section id="phases-in-ss3-and-admb" class="level1">
@@ -327,8 +327,8 @@ window.Quarto = {
 <p>When a model is run without estimating anything, the phases are ignored; because there is no estimation, running without estimation is like including a negative phase for all parameters.</p>
 </section>
 <section id="basic-debugging-use-echoinput.sso-and-warning.sso" class="level1">
-<h1>Basic debugging: use <strong>echoinput.sso</strong> and <strong>warning.sso</strong></h1>
-<p>The most useful tools for debugging SS3 issues are the SS3 output files <strong>echoinput.sso</strong> and <strong>warning.sso</strong>. As SS3 runs, it writes back to <strong>echoinput.sso</strong>. When SS3 exits without finishing, looking at the last contents written to <strong>echoinput.sso</strong> and comparing it with your input files can provide clues as to where (and possibly why) the run failed. Note that SS3 reads inputs in order and will read them incorrectly if the wrong number of inputs is provided. Any warnings generated during the run are written to <strong>warning.sso</strong>. The <strong>warnings.sso</strong> file should always be examined at the end of the run, even if the run was successful, as it includes suggestions for improving the model specification and warnings about common model specification mistakes.</p>
+<h1>Basic debugging: use echoinput.sso and warning.sso</h1>
+<p>The most useful tools for debugging SS3 issues are the SS3 output files echoinput.sso and warning.sso. As SS3 runs, it writes back to echoinput.sso. When SS3 exits without finishing, looking at the last contents written to echoinput.sso and comparing it with your input files can provide clues as to where (and possibly why) the run failed. Note that SS3 reads inputs in order and will read them incorrectly if the wrong number of inputs is provided. Any warnings generated during the run are written to warning.sso. The warnings.sso file should always be examined at the end of the run, even if the run was successful, as it includes suggestions for improving the model specification and warnings about common model specification mistakes.</p>
 </section>
 <section id="visualizing-results" class="level1">
 <h1>Visualizing results</h1>
@@ -339,7 +339,7 @@ window.Quarto = {
 <p>It’s important to remember that arriving at a model takes time and many iterations! You should plan on making small revisions, rerunning the model, and looking at how the model has changed with each small revision. Typically, many intermediate model runs are required before you reach a final model. At a minimum, keep notes inside of the run folder or elsewhere regarding the run specific changes. Using version control could also be helpful for tracking model changes. Below, we provide some suggestions on the steps to take as you iterate toward your “final” model.</p>
 <section id="first-runs-without-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="first-runs-without-estimation">First runs without estimation</h2>
-<p>First, check that SS3 reads the input files as intended. Use <code>-stopph 0 -nohess</code> command line options to run the model without estimation. Then examine <strong>warning.sso</strong>, <strong>echoinput.sso</strong>, and the <strong>.ss_new files</strong> produced to see how SS3 interpreted your input files and if it was as you intended.</p>
+<p>First, check that SS3 reads the input files as intended. Use <code>-stopph 0 -nohess</code> command line options to run the model without estimation. Then examine warning.sso, echoinput.sso, and the .ss_new files produced to see how SS3 interpreted your input files and if it was as you intended.</p>
 <p>After you have verified that SS3 is reading your input correctly, you can also consider adjustment to selectivity, growth, and recruitment parameters.</p>
 <!-- Probably too many details, but could add to this section: -->
 <!-- *In particular, you can check that lnR0 is large enough to support the catch time series. If it is not, it should be adjusted. Note that the depletion fleet controls can be used as an automated approach for this issue.* -->
@@ -354,8 +354,8 @@ window.Quarto = {
 <p>Once all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:</p>
 <ol type="1">
 <li>Do one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html">SS3 user manual</a> for additional details).</li>
-<li>Do runs with or without estimating the hessian to tune the data weightings.</li>
-<li>Run the model multiple times and jitter the starting values (option to jitter is selected in <code>starter.ss</code>). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.</li>
+<li>Do runs with or without estimating the Hessian to tune the data weightings.</li>
+<li>Run the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.</li>
 </ol>
 <p>After these runs, your model should be fine-tuned and ready for final runs.</p>
 </section>
@@ -369,15 +369,15 @@ window.Quarto = {
 </section>
 <section id="if-ss3-runs-but-there-is-a-large-gradient-at-the-end" class="level2">
 <h2 class="anchored" data-anchor-id="if-ss3-runs-but-there-is-a-large-gradient-at-the-end">If SS3 runs, but there is a large gradient at the end</h2>
-<p>Large gradients are usually reported in <strong>warnings.sso</strong> file, so this problem should be clear when examining the file after a model run. If this is the case, try the following</p>
+<p>Large gradients are usually reported in warnings.sso file, so this problem should be clear when examining the file after a model run. If this is the case, try the following</p>
 <ul>
-<li>Examine <strong>Report.sso</strong> for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.</li>
+<li>Examine Report.sso for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.</li>
 <li>Examine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population.</li>
 </ul>
 </section>
 <section id="if-the-hessian-does-not-invert" class="level2">
 <h2 class="anchored" data-anchor-id="if-the-hessian-does-not-invert">If the Hessian does not invert</h2>
-<p>The Hessian information is reported in the <strong>Report.sso</strong> file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the Hessian will not invert.</p>
+<p>The Hessian information is reported in the Report.sso file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the Hessian will not invert.</p>
 </section>
 </section>
 <section id="advanced-admb-run-options-mcmc-adnuts" class="level1">
@@ -400,8 +400,8 @@ window.Quarto = {
 <li>Does the prior type match what I thought I was specifying?</li>
 </ul>
 </section>
-<section id="does-my-model-model-fit-well" class="level2">
-<h2 class="anchored" data-anchor-id="does-my-model-model-fit-well">Does my model model fit well?</h2>
+<section id="does-my-model-fit-well" class="level2">
+<h2 class="anchored" data-anchor-id="does-my-model-fit-well">Does my model fit well?</h2>
 <ul>
 <li><p>The <code>r4ss::SS_output()</code> function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:</p>
 <ul>
