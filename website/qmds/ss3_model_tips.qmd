@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.
 
-If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the [Getting Started guide](qmds/getting_started_ss3.qmd) before attempting to develop and run your own model as outlined in this guide.
+If you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the [Getting Started Guide](qmds/getting_started_ss3.qmd) before attempting to develop and run your own model as outlined in this guide.
 
 By the end of using this guide, you should be able to:
 
@@ -54,7 +54,7 @@ A **negative phase** indicates that the parameter is not estimated, but specifie
  +  -9999, which is a special value within SS3 (see the profilevalues.ss section of the SS3 user manual).
  + Values more negative than -999 for parameters in the tagging section of the control file.
 
-A **positive phase** indicates that the parameter will be estimated. Parameters with a lower positive phase will be estimated before those with a higher positive phase. Which phase should you put an estimated parameter in? While there is variability among analysts and models in how phasing is used, in general, parameters with low positive phases should be for values which define the scale of the population (i.e., *R0*, natural mortality, steepness, selectivity slope). Parameters for fine-tuning fits to the data are often estimated in later phases (i.e., catchability, growth, and recruitment deviation parameters). Many models use positive phases from about 1 to 5, although it is possible to use higher phasing values.
+A **positive phase** indicates that the parameter will be estimated. Parameters with a lower positive phase will be estimated before those with a higher positive phase. Which phase should you put an estimated parameter in? While there is variability among analysts and models in how phasing is used, in general, parameters with low positive phases should be for values which define the scale of the population (i.e., $R_{0}$, natural mortality, steepness, selectivity slope). Parameters for fine-tuning fits to the data are often estimated in later phases (i.e., catchability, growth, and recruitment deviation parameters). Many models use positive phases from about 1 to 5, although it is possible to use higher phasing values.
 
 When a model is run without estimating anything, the phases are ignored; because there is no estimation, running without estimation is like including a negative phase for all parameters.
 
@@ -101,7 +101,7 @@ In this section, we have listed some common problems that you may encounter and 
 
 ## If the residuals have substantial patterns
 
-It is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model.  If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue.
+It is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model. If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue.
 
 ## If SS3 runs, but there is a large gradient at the end
 
@@ -111,9 +111,9 @@ Large gradients are usually reported in **warnings.sso** file, so this problem s
  + Examine **Report.sso** for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.
  + Examine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population.
  
-## If the hessian does not invert
+## If the Hessian does not invert
 
-The hessian information is reported in the **Report.sso** file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the hessian will not invert.
+The Hessian information is reported in the **Report.sso** file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the Hessian will not invert.
 
 # Advanced ADMB run options (MCMC, adnuts)
 
@@ -140,21 +140,21 @@ There are many elements to consider in an SS3 model. Below are some questions an
   + Is the parameter hitting a bound?
   + Is the parameter gradient low?
  
-+ Below the parameter estimates that `r4ss::SS_output()` prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data.  For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity).  
++ Below the parameter estimates that `r4ss::SS_output()` prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity).  
 
 ## Does my data weighting make sense?
 
-The `r4ss::SS_output()` function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister Ianelli weighting (i.e., weighting by the harmonic mean).  The `r4ss::SS_plots()` function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model.  
+The `r4ss::SS_output()` function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister-Ianelli weighting (i.e., weighting by the harmonic mean). The `r4ss::SS_plots()` function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model.  
 
 ## Did I fix variation in recruitment correctly?
 
-Check the the sigmaR (i.e., recruitment devs standard deviation) information. The sigmaR parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.
+Check the the $\sigma R$ (sigmaR) (i.e., recruitment deviations standard deviation) information. The $\sigma R$ parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.
 
-For a fixed value of sigmaR, a section of the output will provide diagnostics to determine if the fixed sigmaR value is capturing the estimated variations in recruitment. The `r4ss::SS_output()` function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using.
+For a fixed value of $\sigma R$, a section of the output will provide diagnostics to determine if the fixed $\sigma R$ value is capturing the estimated variations in recruitment. The `r4ss::SS_output()` function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using.
 
 # Where to get additional help
 
-+ Post questions in the GitHub [discussions](https://github.com/nmfs-stock-synthesis/ss3-source-code/discussions) or to the [forums](https://vlab.noaa.gov/web/stock-synthesis/public-forums) or send an emails to the team at NMFS.Stock.Synthesis@noaa.gov for assistance.
++ Post questions in the GitHub [discussions](https://github.com/nmfs-stock-synthesis/ss3-source-code/discussions) or to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum) or send an emails to the team at NMFS.Stock.Synthesis@noaa.gov for assistance.
 + [Carvalho et al. 2021](https://doi.org/10.1016/j.fishres.2021.105959) contains guidance on developing stock assessments.
 
 

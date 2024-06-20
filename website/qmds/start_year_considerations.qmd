@@ -3,30 +3,30 @@ title: "Start Year Considerations"
 format: html
 ---
 
-The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, R0, initial_F, and domed selectivity must be considered together.
+The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, $R_{0}$, initial $F$, and domed selectivity must be considered together.
 
 ## Population age composition in the start year is composed of:
-  - An equilibrium age composition using Z = M + initial_F
+  - An equilibrium age composition using $Z = M + initial F$
   - Age-specific deviation from that vector for none, to all, of the ages.
     - These age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.
-    - Because the devs are centered around the equilibrium age composition, it is important that the initial_F be approximately correct, otherwise a pattern can be introduced in the devs.
+    - Because the devs are centered around the equilibrium age composition, it is important that the initial $F$ be approximately correct, otherwise a pattern can be introduced in the devs.
     - SS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs).
 
-**[Need a picture here]**
+<!-- **[Need a picture here]** -->
 
 ## Start year considerations
 
   - Long historical period of relatively stable catch
-    - This is the ideal situation for use of initial equilibrium catch with initial_F estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if M is low.
-    - If that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make R0 big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below BMSY, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch.  With this alternative, the time series of catches will be able to create F’s greater than FMSY. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.
+    - This is the ideal situation for use of initial equilibrium catch with initial $F$ estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if $M$ is low.
+    - If that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make $R_{0}$ big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below $B_{MSY}$, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create $F$’s greater than $F_{MSY}$. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.
   - Substantial changes in historical catch levels have occurred within a lifespan before start year
-    - In this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific F.
+    - In this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific $F$.
 
 
 ## First year with recdevs
-  - By starting rec_devs early (even long before influential data occur) the variability associated with sigmaR creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.
+  - By starting rec_devs early (even long before influential data occur) the variability associated with $\sigma R$ creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.
   
-**[Need picture here]**
+<!-- **[Need picture here]** -->
 
   - The first year with rec_devs (main or early) can be Nages before start year.
   - Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.

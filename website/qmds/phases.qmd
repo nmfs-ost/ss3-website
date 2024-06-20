@@ -42,7 +42,7 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 #### General
 
 -   Get the scale of the population right first. First estimate the
-    parameter that determines scale in an SS3 model (R0 - expected
+    parameter that determines scale in an SS3 model ($R_{0}$ - expected
     recruitment in an unfished state) then refine the model fit by
     adding parameters.
 -   The parameters are added at each phase so, for example, the
@@ -60,8 +60,8 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 
 **André's preferred order:**
 
-1.  Start with an "Age-structured Production Model", estimating R0 and
-    catchability, q.
+1.  Start with an "Age-structured Production Model", estimating $R_{0}$ and
+    catchability, Q.
 
 2.  Add recruitment deviations (as these can pick up signals from the
     age and length data on cohort size) (at this point your model is
@@ -72,7 +72,7 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 
 4.  Now estimate growth
 
-5.  Now estimate natural mortality, M (if feeling brave!)
+5.  Now estimate natural mortality, $M$ (if feeling brave!)
 
 6.  Now estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2
     or 1 - if the data are in conflict so be wary)
@@ -86,9 +86,9 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 #### Other ways of tackling phases (per Jason Cope)
 
 -   Start growth and sometimes mortality estimation in phase 3 or even
-    phase 2
+    phase 2.
 -   Leave selectivity until phases 3 or 4 (after life history) IF you
-    have decent starting values for selectivity already
+    have decent starting values for selectivity already.
 
 #### Some additional notes (per Rick Methot)
 

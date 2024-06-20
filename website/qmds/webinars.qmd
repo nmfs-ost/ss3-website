@@ -12,7 +12,10 @@ part is a Q&A session. Subscribe to the [SS3 Webinar calendar](https://calendar.
 
 To suggest future webinar topics, please post to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum).
 
-## 5/16/2024 - Fishing Mortality (F) Topics
+## 07/25/2024 - Recruitment
+**Materials will appear closer to the webinar date.**
+
+## 05/16/2024 - Fishing Mortality ($F$)
 
 ```{r, echo = FALSE}
 path_files <- list.files(path = file.path(getwd(), "example_files", "demo_constant_timeseries"), full.names = TRUE)
