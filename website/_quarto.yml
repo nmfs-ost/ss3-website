@@ -47,14 +47,12 @@ website:
        - icon: github
          aria-label: Quarto GitHub
          menu:
-           - href: https://github.com/nmfs-ost/ss3-source-code
-             text: "Stock Synthesis Source Code"
-           - href: https://github.com/nmfs-ost/ss3-source-code/issues/new/choose
-             text: "Stock Synthesis Report an Issue"
+           - href: https://github.com/nmfs-ost/ss3-website
+             text: "SS3 Website GitHub Repository"
            - href: https://github.com/nmfs-ost/ss3-doc
-             text: "User Manual Source Code"
-           - href: https://github.com/nmfs-ost/ss3-doc/issues/new
-             text: "User Manual Report an Issue"
+             text: "User Manual GitHub Repository"
+           - href: https://github.com/nmfs-ost/ss3-source-code
+             text: "Stock Synthesis GitHub Repository"
        
 format:
   html:
