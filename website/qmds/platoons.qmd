@@ -1,0 +1,14 @@
+---
+title: "Platoons"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Platoons Presentation
+This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3.
+
+```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of Platoons presentation"}
+knitr::include_graphics(normalizePath("../qmds/presentations/Platoons_PICES_2023.pdf"))
+```

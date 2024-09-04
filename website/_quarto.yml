@@ -38,6 +38,7 @@ website:
           - qmds/predator.qmd
           - qmds/settlement_timing.qmd
           - qmds/phases.qmd
+          - qmds/platoons.qmd
       - text: "SS3 Webinar Series"
         icon: webcam
         aria-label: Webinars

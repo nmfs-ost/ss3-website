@@ -8,7 +8,7 @@ editor:
 
 ## Goal
 
-Model the overall natural morality ($M$) to include explicit mortality ($M2$) caused by each major predator.
+Model the overall natural mortality ($M$) to include explicit mortality ($M2$) caused by each major predator.
 
 - $M = M1 + sum(M2)$
 - The $M1$ is the base and is modeled with the existing M options to allow various approaches to age-specific $M1$
@@ -131,13 +131,13 @@ Control file:
 path_files <- list.files(path = file.path(getwd(), "example_files", "predator_example"), full.names = TRUE)
 
 downloadthis::download_file(
-  path = path_files,
-  output_name = "predator_vignette",
-  button_label = "Download predator SS3 input files",
-  button_type = "default",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
+    path = path_files,
+    output_name = "predator_vignette",
+    button_label = "Download predator SS3 input files",
+    button_type = "default",
+    has_icon = TRUE,
+    icon = "fa fa-save",
+    self_contained = FALSE
 )
 ```
 
