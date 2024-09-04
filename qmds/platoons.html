@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Guidance on Phases – Stock Synthesis (SS3)</title>
+<title>Platoons – Stock Synthesis (SS3)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,35 +51,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -215,9 +186,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#phases-basics" id="toc-phases-basics" class="nav-link active" data-scroll-target="#phases-basics">Phases Basics</a></li>
-  <li><a href="#a-note-about-phases" id="toc-a-note-about-phases" class="nav-link" data-scroll-target="#a-note-about-phases">A Note about Phases</a></li>
-  <li><a href="#a-guide-to-parameter-phasing-in-stock-synthesis" id="toc-a-guide-to-parameter-phasing-in-stock-synthesis" class="nav-link" data-scroll-target="#a-guide-to-parameter-phasing-in-stock-synthesis">A Guide to Parameter Phasing in Stock Synthesis</a></li>
+  <li><a href="#platoons-presentation" id="toc-platoons-presentation" class="nav-link active" data-scroll-target="#platoons-presentation">Platoons Presentation</a></li>
   </ul>
 </nav>
     </div>
@@ -226,7 +195,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Guidance on Phases</h1>
+<h1 class="title">Platoons</h1>
 </div>
 
 
@@ -243,60 +212,20 @@ window.Quarto = {
 </header>
 
 
-<section id="phases-basics" class="level2">
-<h2 class="anchored" data-anchor-id="phases-basics">Phases Basics</h2>
-<ul>
-<li><p>Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.</p></li>
-<li><p>You can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.</p></li>
-<li><p>How you spread it out is up to you. Below is some general guidance on assigning phases.</p></li>
-</ul>
-</section>
-<section id="a-note-about-phases" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-about-phases">A Note about Phases</h2>
-<p>There is really no <strong><em>one</em></strong> way or even <strong><em>best</em></strong> general way of assigning phases.</p>
-<p>This general guidance may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.</p>
-<p>If you are an experienced SS3 user with additional suggestions for phasing, please let us know by submitting an issue in this repository. We will gladly review and incorporate those into this guidance.</p>
-</section>
-<section id="a-guide-to-parameter-phasing-in-stock-synthesis" class="level2">
-<h2 class="anchored" data-anchor-id="a-guide-to-parameter-phasing-in-stock-synthesis">A Guide to Parameter Phasing in Stock Synthesis</h2>
-<p><em>This guide is largely taken from the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a> as provided by André Punt</em></p>
-<section id="general" class="level4">
-<h4 class="anchored" data-anchor-id="general">General</h4>
-<ul>
-<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (<span class="math inline">\(R_{0}\)</span> - expected recruitment in an unfished state) then refine the model fit by adding parameters.</li>
-<li>The parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 <strong><em>plus</em></strong> those designated as to be estimated in phase 3.</li>
-<li>The phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.</li>
-<li>The schema below is based on eight phases but, sometimes I will “skip a phase”, e.g.&nbsp;place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.</li>
-</ul>
-<p><strong>André’s preferred order:</strong></p>
-<ol type="1">
-<li><p>Start with an “Age-structured Production Model”, estimating <span class="math inline">\(R_{0}\)</span> and catchability, Q.</p></li>
-<li><p>Add recruitment deviations (as these can pick up signals from the age and length data on cohort size) (at this point your model is analogous to JABBA)</p></li>
-<li><p>Now estimate the base selectivity [and retention] parameters (enabling this to be refined)</p></li>
-<li><p>Now estimate growth</p></li>
-<li><p>Now estimate natural mortality, <span class="math inline">\(M\)</span> (if feeling brave!)</p></li>
-<li><p>Now estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2 or 1 - if the data are in conflict so be wary)</p></li>
-<li><p>Now estimate the other annual deviations (e.g., annual deviations on kappa or age-year deviations on selectivity).</p></li>
-<li><p>Finally environmental linkages, e.g., between recruitment and an environmental variable such as temperature.</p></li>
-</ol>
-</section>
-<section id="other-ways-of-tackling-phases-per-jason-cope" class="level4">
-<h4 class="anchored" data-anchor-id="other-ways-of-tackling-phases-per-jason-cope">Other ways of tackling phases (per Jason Cope)</h4>
-<ul>
-<li>Start growth and sometimes mortality estimation in phase 3 or even phase 2.</li>
-<li>Leave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already.</li>
-</ul>
-</section>
-<section id="some-additional-notes-per-rick-methot" class="level4">
-<h4 class="anchored" data-anchor-id="some-additional-notes-per-rick-methot">Some additional notes (per Rick Methot)</h4>
-<ul>
-<li><p>Be careful with many phases unless you have good initial values for the un-estimated parameters.</p></li>
-<li><p>Parameters with high correlation usually should be estimated in the same phase, so ADMB can change them in sync.</p></li>
-<li><p>Examine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first.</p></li>
-</ul>
+<section id="platoons-presentation" class="level2">
+<h2 class="anchored" data-anchor-id="platoons-presentation">Platoons Presentation</h2>
+<p>This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><embed src="presentations/Platoons_PICES_2023.pdf" style="width:90.0%" alt="pdf of Platoons presentation" height="400"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
