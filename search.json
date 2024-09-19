@@ -266,11 +266,18 @@
     "text": "Introduction\nStock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder ADMB.\nSS3 is made up of\n\nA population sub-model that simulates the following population processes:\n\nbiology (growth, maturity, fecundity),\nrecruitment,\nmovement,\nfishery selectivity\nnatural and fishing mortality, and\nresponsiveness to environmental and predation factors.\n\nAn observation sub-model that estimates expected values for various types of data.\nA statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.\nA forecast sub-model that projects management quantities.\n\nThere are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums."
   },
   {
-    "objectID": "index.html#installing-stock-synthesis",
-    "href": "index.html#installing-stock-synthesis",
+    "objectID": "index.html#installing-the-stock-synthesis-latest-release",
+    "href": "index.html#installing-the-stock-synthesis-latest-release",
     "title": "Stock Synthesis (SS3) Website",
-    "section": "Installing Stock Synthesis",
-    "text": "Installing Stock Synthesis\n\n\n\n\n\n\nLatest release\nDownload the latest release of the Stock Synthesis executable.\n\n\nChange log\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download this Excel spreadsheet."
+    "section": "Installing the Stock Synthesis latest release",
+    "text": "Installing the Stock Synthesis latest release\n Download the latest release of the Stock Synthesis executable."
+  },
+  {
+    "objectID": "index.html#change-log",
+    "href": "index.html#change-log",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Change log",
+    "text": "Change log\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download this Excel spreadsheet."
   },
   {
     "objectID": "index.html#getting-started-with-stock-synthesis",
