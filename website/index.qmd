@@ -37,8 +37,11 @@ There are 100+ stocks in the US and throughout the world that use SS3 for which 
 
 ## Installing Stock Synthesis 
 ![](qmds/images/icon-download.png){fig-align="left" height="03%" width="03%" fig-alt="download icon"} 
+
+### Latest release
 Download the [latest release](https://github.com/nmfs-ost/ss3-source-code/releases/latest) of the Stock Synthesis executable. 
 
+### Change log
 To see the changes made in the latest release of Stock Synthesis, please see the [change log on GitHub](https://github.com/orgs/nmfs-ost/projects/11) that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download [this Excel spreadsheet](https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true).
 
 ## Getting Started with Stock Synthesis
