@@ -1,166 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "",
-    "text": "Welcome to the Stock Synthesis website!"
-  },
-  {
-    "objectID": "index.html#news",
-    "href": "index.html#news",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "News!",
-    "text": "News!\n\nNew SS3 User Forum Google Group - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.\nThe next SS3 Webinar is 10/03/2024 at 3 pm Eastern / 12 PM Pacific on Recrutiment with Time-Varying Biology.\n\nAdd SS3 Webinar and Office Hours Calendar to your calendar\n\nAn SS3 ICES Course will be offered in Copenhagen, DK October 7-11, 2024 still has availability. See the course page for more details and email training@ices.dk directly to register."
-  },
-  {
-    "objectID": "index.html#introduction",
-    "href": "index.html#introduction",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Introduction",
-    "text": "Introduction\nStock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder ADMB.\nSS3 is made up of\n\nA population sub-model that simulates the following population processes:\n\nbiology (growth, maturity, fecundity),\nrecruitment,\nmovement,\nfishery selectivity\nnatural and fishing mortality, and\nresponsiveness to environmental and predation factors.\n\nAn observation sub-model that estimates expected values for various types of data.\nA statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.\nA forecast sub-model that projects management quantities.\n\nThere are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums."
-  },
-  {
-    "objectID": "index.html#installing-stock-synthesis",
-    "href": "index.html#installing-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Installing Stock Synthesis",
-    "text": "Installing Stock Synthesis\n Download the latest release of the Stock Synthesis executable.\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download this Excel spreadsheet."
-  },
-  {
-    "objectID": "index.html#getting-started-with-stock-synthesis",
-    "href": "index.html#getting-started-with-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Getting Started with Stock Synthesis",
-    "text": "Getting Started with Stock Synthesis\nTo get started with Stock Synthesis, please see the presentation below and the Getting Started with Stock Synthesis Tutorial:\n\n\n\n\n\n\n\n\n\n\nGetting Started Using the Stock Assessment Continuum Tool\nIf you are just getting started with Stock Synthesis, we highly recommend downloading the Stock Assessment Continuum Tool, a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the {r4ss} package. \n\n\nGetting Started Using the Input Files\nTo learn more about how to build your own models in Stock Synthesis using the input files directly, see the Develop a Stock Synthesis model guide.\n\n\nInteracting with Stock Synthesis and Viewing Output Using {r4ss}\n\n\n\n\n\nThe {r4ss} package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of plots and tables. More information about using {r4ss} is available in the “Introduction to r4ss” vignette. Furthermore, you can navigate to these example plots that were created using {r4ss} for the Big Skate model, which can be found in the ss3-test-models repository.\n\n\nUser Example Models\nWe maintain a GitHub repository of example stock synthesis models for users. Information on what the key features of the user example models are and how to download them can be found in the SS3 user examples repository."
-  },
-  {
-    "objectID": "index.html#asking-questions-about-stock-synthesis",
-    "href": "index.html#asking-questions-about-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Asking questions about Stock Synthesis",
-    "text": "Asking questions about Stock Synthesis\nPlease look for answers or submit questions to the Stock Synthesis Google Group (must request to join first). Questions can also be asked by opening an issue or posting a discussion in the ss3-source-code repository, or by emailing nmfs.stock.synthesis@noaa.gov."
-  },
-  {
-    "objectID": "index.html#contributing-to-stock-synthesis",
-    "href": "index.html#contributing-to-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Contributing to Stock Synthesis",
-    "text": "Contributing to Stock Synthesis\nHave feature requests or bug reports? Want to contribute code? Please open an issue. If you are able to contribute code to fix the issue or add a feature, then the SS3 Team will communicate with you after which you will be able to submit a pull request from your fork of the repository to be reviewed by the SS3 Team. Even Team members cannot directly contribute to the ss3-source-code without a pull request. For complete details, please see CONTRIBUTING.md\nThis project and everyone participating in it is governed by the National Marine Fisheries Service (NMFS) Fisheries Toolbox Code of Conduct. By participating, you are expected to uphold this code."
-  },
-  {
-    "objectID": "index.html#tools-for-working-with-stock-synthesis",
-    "href": "index.html#tools-for-working-with-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "Tools for working with Stock Synthesis",
-    "text": "Tools for working with Stock Synthesis\nAs Stock Synthesis usage has grown so has the number of tools to work with it. These include repositories on GitHub with the stock-synthesis topic, some of which are listed below, as well as some of the following tools found in other locations:\n\nr4ss: Create plots and tables of Stock Synthesis output and functions to work with Stock Synthesis in R.\nss3diags: Run advanced diagnostics for Stock Synthesis models.\nss3sim: Conduct simulation studies using Stock Synthesis.\nSSMSE: Use Stock Synthesis operating models in Management Strategy Evaluation.\nsa4ss: Create accessible R markdown stock assessment documents with results from Stock Synthesis models. Note this tool is intended for use by analysts within the Northwest and Southwest Fisheries Science Centers currently.\nData limited tools:\n\nSimple Stock Synthesis (SSS)\nExtended Simple Stock Synthesis (XSSS)\nStock Assessment Continuum Tool(previously the SS-DL-tool), a shiny app that includes XSSS and SSS in its functionality.\n\nSS3 Shiny helper app: Visualize a couple common selectivity pattern options available within Stock Synthesis.\nSSI: Stock Synthesis Interface, a GUI for developing models and running Stock Synthesis which links to {r4ss}. Note that SSI is not supported for versions of Stock Synthesis beyond v.3.30.21.\n\nHave a tool to work with Stock Synthesis that should also be mentioned? Open an issue in the ss3-website repository to let us know!"
-  },
-  {
-    "objectID": "index.html#how-to-cite-stock-synthesis",
-    "href": "index.html#how-to-cite-stock-synthesis",
-    "title": "Stock Synthesis (SS3) Website",
-    "section": "How to Cite Stock Synthesis",
-    "text": "How to Cite Stock Synthesis\nPlease cite Stock Synthesis as:\n#| code-overflow: wrap\nMethot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical framework \nfor fish stock assessment and fishery management. Fisheries Research, 142: 86-99.\nhttps://doi.org/10.1016/j.fishres.2012.10.012\nThe following BibTeX entry can be copied and used in a .bib file:\n#| code-overflow: wrap\n@article{methotwetzel2013,\n  title={Stock Synthesis: A biological and statistical framework for fish stock assessment \n  and fishery management},\n  author={Richard Donald {Methot, Jr.} and Chantell R. Wetzel},\n  year={2013}, \n  journal={Fisheries Research},\n  volume={142},\n  pages={86--99},\n  doi={10.1016/j.fishres.2012.10.012},\n}\nTo see how to cite the Stock Synthesis User Manual, please refer to the SS3 User Manual guidance.\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries"
-  },
-  {
-    "objectID": "qmds/phases.html",
-    "href": "qmds/phases.html",
-    "title": "Guidance on Phases",
-    "section": "",
-    "text": "Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.\nYou can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.\nHow you spread it out is up to you. Below is some general guidance on assigning phases."
-  },
-  {
-    "objectID": "qmds/phases.html#phases-basics",
-    "href": "qmds/phases.html#phases-basics",
-    "title": "Guidance on Phases",
-    "section": "",
-    "text": "Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.\nYou can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.\nHow you spread it out is up to you. Below is some general guidance on assigning phases."
-  },
-  {
-    "objectID": "qmds/phases.html#a-note-about-phases",
-    "href": "qmds/phases.html#a-note-about-phases",
-    "title": "Guidance on Phases",
-    "section": "A Note about Phases",
-    "text": "A Note about Phases\nThere is really no one way or even best general way of assigning phases.\nThis general guidance may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.\nIf you are an experienced SS3 user with additional suggestions for phasing, please let us know by submitting an issue in this repository. We will gladly review and incorporate those into this guidance."
-  },
-  {
-    "objectID": "qmds/phases.html#a-guide-to-parameter-phasing-in-stock-synthesis",
-    "href": "qmds/phases.html#a-guide-to-parameter-phasing-in-stock-synthesis",
-    "title": "Guidance on Phases",
-    "section": "A Guide to Parameter Phasing in Stock Synthesis",
-    "text": "A Guide to Parameter Phasing in Stock Synthesis\nThis guide is largely taken from the Stock Assessment Continuum Tool as provided by André Punt\n\nGeneral\n\nGet the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (\\(R_{0}\\) - expected recruitment in an unfished state) then refine the model fit by adding parameters.\nThe parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 plus those designated as to be estimated in phase 3.\nThe phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.\nThe schema below is based on eight phases but, sometimes I will “skip a phase”, e.g. place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.\n\nAndré’s preferred order:\n\nStart with an “Age-structured Production Model”, estimating \\(R_{0}\\) and catchability, Q.\nAdd recruitment deviations (as these can pick up signals from the age and length data on cohort size) (at this point your model is analogous to JABBA)\nNow estimate the base selectivity [and retention] parameters (enabling this to be refined)\nNow estimate growth\nNow estimate natural mortality, \\(M\\) (if feeling brave!)\nNow estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2 or 1 - if the data are in conflict so be wary)\nNow estimate the other annual deviations (e.g., annual deviations on kappa or age-year deviations on selectivity).\nFinally environmental linkages, e.g., between recruitment and an environmental variable such as temperature.\n\n\n\nOther ways of tackling phases (per Jason Cope)\n\nStart growth and sometimes mortality estimation in phase 3 or even phase 2.\nLeave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already.\n\n\n\nSome additional notes (per Rick Methot)\n\nBe careful with many phases unless you have good initial values for the un-estimated parameters.\nParameters with high correlation usually should be estimated in the same phase, so ADMB can change them in sync.\nExamine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first."
-  },
-  {
-    "objectID": "qmds/predator.html",
-    "href": "qmds/predator.html",
-    "title": "Predators",
-    "section": "",
-    "text": "Model the overall natural mortality (\\(M\\)) to include explicit mortality (\\(M2\\)) caused by each major predator.\n\n\\(M = M1 + sum(M2)\\)\nThe \\(M1\\) is the base and is modeled with the existing M options to allow various approaches to age-specific \\(M1\\)\n\\(M2\\) is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\n\\(M1\\) should be less than the total \\(M\\) value you were using previously such that \\(M1\\) plus the time-varying \\(M2\\) will be similar to what previously was a constant overall \\(M\\)."
-  },
-  {
-    "objectID": "qmds/predator.html#goal",
-    "href": "qmds/predator.html#goal",
-    "title": "Predators",
-    "section": "",
-    "text": "Model the overall natural mortality (\\(M\\)) to include explicit mortality (\\(M2\\)) caused by each major predator.\n\n\\(M = M1 + sum(M2)\\)\nThe \\(M1\\) is the base and is modeled with the existing M options to allow various approaches to age-specific \\(M1\\)\n\\(M2\\) is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\n\\(M1\\) should be less than the total \\(M\\) value you were using previously such that \\(M1\\) plus the time-varying \\(M2\\) will be similar to what previously was a constant overall \\(M\\)."
-  },
-  {
-    "objectID": "qmds/predator.html#predators-m2",
-    "href": "qmds/predator.html#predators-m2",
-    "title": "Predators",
-    "section": "Predators (\\(M2\\))",
-    "text": "Predators (\\(M2\\))\n\nThere can be multiple predators, each adding a \\(M2\\).\nThese are contained in the same arrays as fishing fleets, so \\(M2\\) has available all the code characteristics as a fishing fleet.\nVery little code is specific to predators…yet.\nEach predator will kill fish. \\(M2(f)/Z\\) is the fraction of the total kill that is consumed by predator(\\(f\\)) in a given area*season.\nEach predator will have selectivity (age and/or length) just as any other fleet.\n\nMany predators tend to select smaller fish."
-  },
-  {
-    "objectID": "qmds/predator.html#m2-is-area-specific",
-    "href": "qmds/predator.html#m2-is-area-specific",
-    "title": "Predators",
-    "section": "\\(M2\\) is area-specific",
-    "text": "\\(M2\\) is area-specific\n\nIf a predator occurs in multiple areas, they might be named “seals_A1” and “seals_A2” and would have separate data inputs and controls, just like fishing fleets.\nA “fleet” is designated as a predator at the top of the data file.\n#| code-overflow: wrap\n4 #_Nfleets (including surveys)\n#_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=predator(M2) \n#_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month; (always 1 for surveys)\n#_fleet_area:  area the fleet/survey operates in\n#_units of catch:  1=bio; 2=num (ignored for surveys; their units read later)\n#_catch_mult: 0=no; 1=yes\n#_rows are fleets\n#_fleet_type fishery_timing area catch_units need_catch_mult fleetname\n1 -1 1 1 0 Fleet  # 1\n4 -1 1 1 0 Seals  # 2\n3 1 1 2 0 CPUE  # 3\n3 1 1 2 0 Acoustic  # 4\n\n\n\n\n\n\n\nNote\n\n\n\nRetained catch is not entered for predator fleets, nor is there a need to enter placeholder values."
-  },
-  {
-    "objectID": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
-    "href": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
-    "title": "Predators",
-    "section": "Consumption by predators is stored in discard arrays",
-    "text": "Consumption by predators is stored in discard arrays\n\nData on the amount of consumption can be entered as discard data, where SS3 will include it in the estimation of \\(M2\\) values.\n#| code-overflow: wrap\n1 #_N_fleets_with_discard\n#_discard_units (1=same_as_catchunits(bio/num); 2=fraction; 3=numbers)\n#_discard_errtype: &gt;0 for DF of T-dist(read CV below); 0 for normal with CV; -1 for normal with se; -2 for lognormal; -3 for trunc normal with CV\n# note: only enter units and errtype for fleets with discard \n# note: discard data is the total for an entire season, so input of month here must be to a month in that season\n#_Fleet units errtype\n2 1 -2 # Seals\n#_yr month fleet obs stderr\n1980 2.5 2 76 0.2 #_ Seals\n1980 5.5 2 76 0.2 #_ Seals"
-  },
-  {
-    "objectID": "qmds/predator.html#predator-abundance",
-    "href": "qmds/predator.html#predator-abundance",
-    "title": "Predators",
-    "section": "Predator abundance",
-    "text": "Predator abundance\n\nThe abundance of the predator is the “fishing effort” this is correlated with the level of \\(M2\\).\nIf the predator abundance is available, it can be entered as a survey of “F”.\nThe format looks like:\n#| code-overflow: wrap\n#_Units:  0=numbers; 1=biomass; 2=F; 30=spawnbio; ……\n#_Errtype:  -1=normal; 0=lognormal; &gt;0=T\n#_SD_Report: 0=no sdreport; 1=enable sdreport\n#_Fleet Units Errtype SD_Report\n1 1 0 0 # fishing_fleet\n2 2 0 0 # pred\nThis triggers the need to specify a catchability for this fleet in the control file.\nNeither consumption data nor predator abundance data is necessary, but they are both helpful in tuning the level and time-variation of \\(M2\\)."
-  },
-  {
-    "objectID": "qmds/predator.html#future-predator-options",
-    "href": "qmds/predator.html#future-predator-options",
-    "title": "Predators",
-    "section": "Future predator options",
-    "text": "Future predator options\n\nAdd a new option that is specific to predators\nDevelop specific catchability (e.g., Type 1 vs. Type 2 response for consumption/predator options)."
-  },
-  {
-    "objectID": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
-    "href": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
-    "title": "Predators",
-    "section": "\\(M2\\) parameter for each predator, in each season",
-    "text": "\\(M2\\) parameter for each predator, in each season\n\nThe recommended approach is to set up this parameter to have a mean-reverting random walk over time.\nThe time series of predator consumption (in the discard section), and the series of predator relative abundance (as effort), will inform SS3 about changes in \\(M2\\) over time.\n\nControl file:\n```\n#| code-overflow: wrap\n# M2 parameter for each predator fleet\n0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1\n0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1\n0 10 0.936248 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s2\n0 10 2.71282 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s3\n0 10 2.83102 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s4\n#\n# timevary MG parameters \n#_ LO HI INIT PRIOR PR_SD PR_type  PHASE\n1e-05 2.4 1.4368 0.2 0.8 0 3 #M2_pred1_BLK1repl_1964\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_dev_autocorr\n0.0001 2 1.7 0.5 0.5 6 -5 #M2_pred1_s2_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s2_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s3_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 # M2_pred1_s3_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s4_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s4_dev_autocorr\n```"
-  },
-  {
-    "objectID": "qmds/predator.html#diet-data",
-    "href": "qmds/predator.html#diet-data",
-    "title": "Predators",
-    "section": "Diet data",
-    "text": "Diet data\n\nIf diet data with size or age composition of the prey is available, it can be entered in the composition data section where it will inform the estimation of the age/length selectivity of the predator for it’s prey.\nIt should have a retained code of 0 for total kill, not 1 for discard."
-  },
-  {
-    "objectID": "qmds/predator.html#predator-example",
-    "href": "qmds/predator.html#predator-example",
-    "title": "Predators",
-    "section": "Predator example",
-    "text": "Predator example\n\n\n Download predator SS3 input files\n\n\n\nExample Info: 4 seasons, and \\(M2\\) can vary by season\n\n\\(M2\\) has a random deviation over time to allow time-varying flexibility.\nThen we add data to inform those deviations.\nIn this example, those data are consumption entered as discard data.\nAn alternative is to enter an indicator (e.g., survey or other indicator of predator abundance) of the level of \\(M2\\) itself.\n\nThis is not done in this example, but would be a survey of Type 2.\nHopefully we can create more meaningful linkages between predators and \\(M2\\) in the future.\n\n\n\n\nData file:\n\nOne fleet is Type 4 and labeled as Pred\nThe section of discard data is used as a place to enter the amount of consumption. This is not necessary, but it does help calibrate the \\(M2\\) levels.\nThe fact that at least one fleet is a predator triggers the need to include \\(M2\\) internal to the SS3 calculations.\n\n\n\nControl file:\n\nThis example has somewhat complex \\(M1\\) pattern by age. This is independent of \\(M2\\) so need not be maintained in your work.\nThe \\(M2\\) parameter setup begins at line 106.\nThe \\(M2\\) parameter has a block to shift it’s value in 1964 and annual deviations.\nIt also is set up to have annual devsiations in the seasonal values of \\(M2\\). There are a lot of parameters. In this case, it works because there is a discard observation for each one. It should still work without all that consumption data because it is a random effect, but let’s talk if you have challenges.\nSS3 also needs to setup the size & age selectivity of the predator\n#| code-overflow: wrap\n#_Pattern Discard Male Special\n24 0 0 0 # 1 Fleet\n24 3 0 0 # 2 Pred\n\n\n\n\n\n\n\nNote\n\n\n\nNotice that the discard flag is “3”. This means that for the predator fleet the data file contains no relevant “retained catch”, so the \\(M2\\) level will only be informing the amount of “discard” which is the predator consumption.\n\n\n\nIn this example, the selectivity of the predator was setup using double normal (Type = 24), but parameters set to essentially be logistic. You can change this as needed.\n\n\n\n\\(M2\\) in Report.sso\n\nIf you search through the Report.sso file for “M2”, you will find the parameter values near the top.\nThe consumption output is in the “Discard” section.\nThe time-series of \\(M2\\) is further down.\n\n\n\nPredator Data\n\n\n\n\n\nFigure 1. {r4ss} data plot showing predator data.\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe discard label will appear in the plot because predator consumption is stored internally in the same place as discards."
-  },
-  {
     "objectID": "qmds/getting_started_ss3.html",
     "href": "qmds/getting_started_ss3.html",
     "title": "Getting Started with Stock Synthesis",
@@ -238,6 +77,83 @@
     "text": "What to do when SS3 doesn’t run\nSome basic checks for when SS3 does not run are:\n\nMake sure that all files and directories are named correctly.\nCheck that starter.ss references the correct names of the control and data files.\nIf SS3 starts to read files and then crashes, check warnings.sso and echoinput.sso. The warnings.sso will reveal potential issues with the model, while echoinput.sso will show how far SS3 was able to run. Work backwards from the bottom of echoinput.sso, looking for where SS3 stopped and if the inputs are being read correctly or not.\n\nFor further information on troubleshooting, please refer to the SS3 User Manual “Running Stock Synthesis” subsections, especially “Re-Starting a Run” and “Debugging Tips”."
   },
   {
+    "objectID": "qmds/ss3_model_tips.html",
+    "href": "qmds/ss3_model_tips.html",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "",
+    "text": "The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.\nIf you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the Getting Started Guide before attempting to develop and run your own model as outlined in this guide.\nBy the end of using this guide, you should be able to:\n\nDevelop your own SS3 model development workflow based on the tools and methods suggested\nFind information on the required inputs for different model specifications\nUnderstand how to use phases within an SS3 model\nDebug basic issues with input in Stock Synthesis models and identify when there are more advanced model problems"
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#first-runs-without-estimation",
+    "href": "qmds/ss3_model_tips.html#first-runs-without-estimation",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "First runs without estimation",
+    "text": "First runs without estimation\nFirst, check that SS3 reads the input files as intended. Use -stopph 0 -nohess command line options to run the model without estimation. Then examine warning.sso, echoinput.sso, and the .ss_new files produced to see how SS3 interpreted your input files and if it was as you intended.\nAfter you have verified that SS3 is reading your input correctly, you can also consider adjustment to selectivity, growth, and recruitment parameters."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#runs-estimating-some-parameters",
+    "href": "qmds/ss3_model_tips.html#runs-estimating-some-parameters",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Runs estimating some parameters",
+    "text": "Runs estimating some parameters\nTry changing max phase to be greater than 0 (perhaps 2 or 3) to estimate some but not all parameters. Do this by using -stopph x -nohess, where x should the maximum phase desired (e.g., 2 or 3). -nohess is still used to reduce run time. During this stage of model runs, you should try to adjust the model to resolve all major patterns in the residuals. This may include considering and making changes to the model structure."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#runs-estimating-all-parameters",
+    "href": "qmds/ss3_model_tips.html#runs-estimating-all-parameters",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Runs estimating all parameters",
+    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 user manual for additional details).\nDo runs with or without estimating the Hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#if-the-residuals-have-substantial-patterns",
+    "href": "qmds/ss3_model_tips.html#if-the-residuals-have-substantial-patterns",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "If the residuals have substantial patterns",
+    "text": "If the residuals have substantial patterns\nIt is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model. If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
+    "href": "qmds/ss3_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "If SS3 runs, but there is a large gradient at the end",
+    "text": "If SS3 runs, but there is a large gradient at the end\nLarge gradients are usually reported in warnings.sso file, so this problem should be clear when examining the file after a model run. If this is the case, try the following\n\nExamine Report.sso for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.\nExamine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#if-the-hessian-does-not-invert",
+    "href": "qmds/ss3_model_tips.html#if-the-hessian-does-not-invert",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "If the Hessian does not invert",
+    "text": "If the Hessian does not invert\nThe Hessian information is reported in the Report.sso file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the Hessian will not invert."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#does-my-model-model-make-sense",
+    "href": "qmds/ss3_model_tips.html#does-my-model-model-make-sense",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Does my model model make sense?",
+    "text": "Does my model model make sense?\n\nDoes the biology make sense? Selectivity?\nIs the model fitting the indices? Length and age data?\nWhat is the pattern in recruitment?\nDoes the prior type match what I thought I was specifying?"
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#does-my-model-fit-well",
+    "href": "qmds/ss3_model_tips.html#does-my-model-fit-well",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Does my model fit well?",
+    "text": "Does my model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#does-my-data-weighting-make-sense",
+    "href": "qmds/ss3_model_tips.html#does-my-data-weighting-make-sense",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Does my data weighting make sense?",
+    "text": "Does my data weighting make sense?\nThe r4ss::SS_output() function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister-Ianelli weighting (i.e., weighting by the harmonic mean). The r4ss::SS_plots() function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model."
+  },
+  {
+    "objectID": "qmds/ss3_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
+    "href": "qmds/ss3_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
+    "title": "Developing your first Stock Synthesis model",
+    "section": "Did I fix variation in recruitment correctly?",
+    "text": "Did I fix variation in recruitment correctly?\nCheck the the \\(\\sigma R\\) (sigmaR) (i.e., recruitment deviations standard deviation) information. The \\(\\sigma R\\) parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.\nFor a fixed value of \\(\\sigma R\\), a section of the output will provide diagnostics to determine if the fixed \\(\\sigma R\\) value is capturing the estimated variations in recruitment. The r4ss::SS_output() function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using."
+  },
+  {
     "objectID": "qmds/webinars.html",
     "href": "qmds/webinars.html",
     "title": "SS3 Webinars",
@@ -257,6 +173,167 @@
     "title": "SS3 Webinars",
     "section": "05/16/2024 - Fishing Mortality (\\(F\\))",
     "text": "05/16/2024 - Fishing Mortality (\\(F\\))\n\n\n Download F Mortality Example input files"
+  },
+  {
+    "objectID": "qmds/phases.html",
+    "href": "qmds/phases.html",
+    "title": "Guidance on Phases",
+    "section": "",
+    "text": "Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.\nYou can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.\nHow you spread it out is up to you. Below is some general guidance on assigning phases."
+  },
+  {
+    "objectID": "qmds/phases.html#phases-basics",
+    "href": "qmds/phases.html#phases-basics",
+    "title": "Guidance on Phases",
+    "section": "",
+    "text": "Phases are a way of switching on the estimation of parameters in a specified order. A negative phase means that you are fixing a parameter and it is not estimated, a positive phase means that you want the model to estimate the parameter. Most models use 3 to 5 phases. Parameters that enter in an early stage remain active as other parameters become active.\nYou can spread out when you estimate parameters using phases which, in some cases, can help speed up your model.\nHow you spread it out is up to you. Below is some general guidance on assigning phases."
+  },
+  {
+    "objectID": "qmds/phases.html#a-note-about-phases",
+    "href": "qmds/phases.html#a-note-about-phases",
+    "title": "Guidance on Phases",
+    "section": "A Note about Phases",
+    "text": "A Note about Phases\nThere is really no one way or even best general way of assigning phases.\nThis general guidance may not accommodate every model or necessarily give you the best model fit. However, it may provide a starting point when initially trying to assign phases to parameters.\nIf you are an experienced SS3 user with additional suggestions for phasing, please let us know by submitting an issue in this repository. We will gladly review and incorporate those into this guidance."
+  },
+  {
+    "objectID": "qmds/phases.html#a-guide-to-parameter-phasing-in-stock-synthesis",
+    "href": "qmds/phases.html#a-guide-to-parameter-phasing-in-stock-synthesis",
+    "title": "Guidance on Phases",
+    "section": "A Guide to Parameter Phasing in Stock Synthesis",
+    "text": "A Guide to Parameter Phasing in Stock Synthesis\nThis guide is largely taken from the Stock Assessment Continuum Tool as provided by André Punt\n\nGeneral\n\nGet the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (\\(R_{0}\\) - expected recruitment in an unfished state) then refine the model fit by adding parameters.\nThe parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 plus those designated as to be estimated in phase 3.\nThe phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.\nThe schema below is based on eight phases but, sometimes I will “skip a phase”, e.g. place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.\n\nAndré’s preferred order:\n\nStart with an “Age-structured Production Model”, estimating \\(R_{0}\\) and catchability, Q.\nAdd recruitment deviations (as these can pick up signals from the age and length data on cohort size) (at this point your model is analogous to JABBA)\nNow estimate the base selectivity [and retention] parameters (enabling this to be refined)\nNow estimate growth\nNow estimate natural mortality, \\(M\\) (if feeling brave!)\nNow estimate steepness, h (h may hit an unrealistic bound, i.e., 0.2 or 1 - if the data are in conflict so be wary)\nNow estimate the other annual deviations (e.g., annual deviations on kappa or age-year deviations on selectivity).\nFinally environmental linkages, e.g., between recruitment and an environmental variable such as temperature.\n\n\n\nOther ways of tackling phases (per Jason Cope)\n\nStart growth and sometimes mortality estimation in phase 3 or even phase 2.\nLeave selectivity until phases 3 or 4 (after life history) IF you have decent starting values for selectivity already.\n\n\n\nSome additional notes (per Rick Methot)\n\nBe careful with many phases unless you have good initial values for the un-estimated parameters.\nParameters with high correlation usually should be estimated in the same phase, so ADMB can change them in sync.\nExamine your composition data patterns before deciding to estimate recruitment deviations or time-varying selectivity first."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html",
+    "href": "qmds/start_year_considerations.html",
+    "title": "Start Year Considerations",
+    "section": "",
+    "text": "The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, \\(R_{0}\\), initial \\(F\\), and domed selectivity must be considered together."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
+    "href": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
+    "title": "Start Year Considerations",
+    "section": "Population age composition in the start year is composed of:",
+    "text": "Population age composition in the start year is composed of:\n\nAn equilibrium age composition using \\(Z = M + initial F\\)\nAge-specific deviation from that vector for none, to all, of the ages.\n\nThese age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.\nBecause the devs are centered around the equilibrium age composition, it is important that the initial \\(F\\) be approximately correct, otherwise a pattern can be introduced in the devs.\nSS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs)."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#start-year-considerations",
+    "href": "qmds/start_year_considerations.html#start-year-considerations",
+    "title": "Start Year Considerations",
+    "section": "Start year considerations",
+    "text": "Start year considerations\n\nLong historical period of relatively stable catch\n\nThis is the ideal situation for use of initial equilibrium catch with initial \\(F\\) estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if \\(M\\) is low.\nIf that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make \\(R_{0}\\) big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below \\(B_{MSY}\\), then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create \\(F\\)’s greater than \\(F_{MSY}\\). Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.\n\nSubstantial changes in historical catch levels have occurred within a lifespan before start year\n\nIn this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific \\(F\\)."
+  },
+  {
+    "objectID": "qmds/start_year_considerations.html#first-year-with-recdevs",
+    "href": "qmds/start_year_considerations.html#first-year-with-recdevs",
+    "title": "Start Year Considerations",
+    "section": "First year with recdevs",
+    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with \\(\\sigma R\\) creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.\n\n\n\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
+  },
+  {
+    "objectID": "qmds/user_manual.html",
+    "href": "qmds/user_manual.html",
+    "title": "Citing the SS3 User Manual",
+    "section": "",
+    "text": "The latest release of the Stock Synthesis user manual can be found under “SS3 User Manuals” in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below: - HTML Version of the SS3 User Manual - PDF Version of the SS3 User Manual (downloads on click)\nPrevious releases of the SS3 user manual (v.3.30.17 - latest) can be found under Releases on the ss3-doc GitHub page. Versions of the SS3 user manual prior to v.3.30.17 are available on the vlab site.\nPlease cite the manual as:\n#| code-overflow: wrap\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User \nManual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report \nNMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
+  },
+  {
+    "objectID": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
+    "href": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
+    "title": "Citing the SS3 User Manual",
+    "section": "",
+    "text": "The latest release of the Stock Synthesis user manual can be found under “SS3 User Manuals” in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below: - HTML Version of the SS3 User Manual - PDF Version of the SS3 User Manual (downloads on click)\nPrevious releases of the SS3 user manual (v.3.30.17 - latest) can be found under Releases on the ss3-doc GitHub page. Versions of the SS3 user manual prior to v.3.30.17 are available on the vlab site.\nPlease cite the manual as:\n#| code-overflow: wrap\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User \nManual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report \nNMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "",
+    "text": "Welcome to the Stock Synthesis website!"
+  },
+  {
+    "objectID": "index.html#news",
+    "href": "index.html#news",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "News!",
+    "text": "News!\n\nNew SS3 User Forum Google Group - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.\nThe next SS3 Webinar is 10/03/2024 at 3 pm Eastern / 12 PM Pacific on Recrutiment with Time-Varying Biology.\n\nAdd SS3 Webinar and Office Hours Calendar to your calendar\n\nAn SS3 ICES Course will be offered in Copenhagen, DK October 7-11, 2024 still has availability. See the course page for more details and email training@ices.dk directly to register."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Introduction",
+    "text": "Introduction\nStock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder ADMB.\nSS3 is made up of\n\nA population sub-model that simulates the following population processes:\n\nbiology (growth, maturity, fecundity),\nrecruitment,\nmovement,\nfishery selectivity\nnatural and fishing mortality, and\nresponsiveness to environmental and predation factors.\n\nAn observation sub-model that estimates expected values for various types of data.\nA statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.\nA forecast sub-model that projects management quantities.\n\nThere are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums."
+  },
+  {
+    "objectID": "index.html#installing-stock-synthesis",
+    "href": "index.html#installing-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Installing Stock Synthesis",
+    "text": "Installing Stock Synthesis\n\n\n\n\n\n\nLatest release\nDownload the latest release of the Stock Synthesis executable.\n\n\nChange log\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download this Excel spreadsheet."
+  },
+  {
+    "objectID": "index.html#getting-started-with-stock-synthesis",
+    "href": "index.html#getting-started-with-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Getting Started with Stock Synthesis",
+    "text": "Getting Started with Stock Synthesis\nTo get started with Stock Synthesis, please see the presentation below and the Getting Started with Stock Synthesis Tutorial:\n\n\n\n\n\n\n\n\n\n\nGetting Started Using the Stock Assessment Continuum Tool\nIf you are just getting started with Stock Synthesis, we highly recommend downloading the Stock Assessment Continuum Tool, a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the {r4ss} package. \n\n\nGetting Started Using the Input Files\nTo learn more about how to build your own models in Stock Synthesis using the input files directly, see the Develop a Stock Synthesis model guide.\n\n\nInteracting with Stock Synthesis and Viewing Output Using {r4ss}\n\n\n\n\n\nThe {r4ss} package is a collection of R functions for interacting with Stock Synthesis. These functions include downloading the executable, changing model input, running the model, and creating an assortment of plots and tables. More information about using {r4ss} is available in the “Introduction to r4ss” vignette. Furthermore, you can navigate to these example plots that were created using {r4ss} for the Big Skate model, which can be found in the ss3-test-models repository.\n\n\nUser Example Models\nWe maintain a GitHub repository of example stock synthesis models for users. Information on what the key features of the user example models are and how to download them can be found in the SS3 user examples repository."
+  },
+  {
+    "objectID": "index.html#asking-questions-about-stock-synthesis",
+    "href": "index.html#asking-questions-about-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Asking questions about Stock Synthesis",
+    "text": "Asking questions about Stock Synthesis\nPlease look for answers or submit questions to the Stock Synthesis Google Group (must request to join first). Questions can also be asked by opening an issue or posting a discussion in the ss3-source-code repository, or by emailing nmfs.stock.synthesis@noaa.gov."
+  },
+  {
+    "objectID": "index.html#contributing-to-stock-synthesis",
+    "href": "index.html#contributing-to-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Contributing to Stock Synthesis",
+    "text": "Contributing to Stock Synthesis\nHave feature requests or bug reports? Want to contribute code? Please open an issue. If you are able to contribute code to fix the issue or add a feature, then the SS3 Team will communicate with you after which you will be able to submit a pull request from your fork of the repository to be reviewed by the SS3 Team. Even Team members cannot directly contribute to the ss3-source-code without a pull request. For complete details, please see CONTRIBUTING.md\nThis project and everyone participating in it is governed by the National Marine Fisheries Service (NMFS) Fisheries Toolbox Code of Conduct. By participating, you are expected to uphold this code."
+  },
+  {
+    "objectID": "index.html#tools-for-working-with-stock-synthesis",
+    "href": "index.html#tools-for-working-with-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "Tools for working with Stock Synthesis",
+    "text": "Tools for working with Stock Synthesis\nAs Stock Synthesis usage has grown so has the number of tools to work with it. These include repositories on GitHub with the stock-synthesis topic, some of which are listed below, as well as some of the following tools found in other locations:\n\nr4ss: Create plots and tables of Stock Synthesis output and functions to work with Stock Synthesis in R.\nss3diags: Run advanced diagnostics for Stock Synthesis models.\nss3sim: Conduct simulation studies using Stock Synthesis.\nSSMSE: Use Stock Synthesis operating models in Management Strategy Evaluation.\nsa4ss: Create accessible R markdown stock assessment documents with results from Stock Synthesis models. Note this tool is intended for use by analysts within the Northwest and Southwest Fisheries Science Centers currently.\nData limited tools:\n\nSimple Stock Synthesis (SSS)\nExtended Simple Stock Synthesis (XSSS)\nStock Assessment Continuum Tool(previously the SS-DL-tool), a shiny app that includes XSSS and SSS in its functionality.\n\nSS3 Shiny helper app: Visualize a couple common selectivity pattern options available within Stock Synthesis.\nSSI: Stock Synthesis Interface, a GUI for developing models and running Stock Synthesis which links to {r4ss}. Note that SSI is not supported for versions of Stock Synthesis beyond v.3.30.21.\n\nHave a tool to work with Stock Synthesis that should also be mentioned? Open an issue in the ss3-website repository to let us know!"
+  },
+  {
+    "objectID": "index.html#how-to-cite-stock-synthesis",
+    "href": "index.html#how-to-cite-stock-synthesis",
+    "title": "Stock Synthesis (SS3) Website",
+    "section": "How to Cite Stock Synthesis",
+    "text": "How to Cite Stock Synthesis\nPlease cite Stock Synthesis as:\n#| code-overflow: wrap\nMethot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical framework \nfor fish stock assessment and fishery management. Fisheries Research, 142: 86-99.\nhttps://doi.org/10.1016/j.fishres.2012.10.012\nThe following BibTeX entry can be copied and used in a .bib file:\n#| code-overflow: wrap\n@article{methotwetzel2013,\n  title={Stock Synthesis: A biological and statistical framework for fish stock assessment \n  and fishery management},\n  author={Richard Donald {Methot, Jr.} and Chantell R. Wetzel},\n  year={2013}, \n  journal={Fisheries Research},\n  volume={142},\n  pages={86--99},\n  doi={10.1016/j.fishres.2012.10.012},\n}\nTo see how to cite the Stock Synthesis User Manual, please refer to the SS3 User Manual guidance.\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries"
+  },
+  {
+    "objectID": "qmds/platoons.html",
+    "href": "qmds/platoons.html",
+    "title": "Platoons",
+    "section": "",
+    "text": "This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3."
+  },
+  {
+    "objectID": "qmds/platoons.html#platoons-presentation",
+    "href": "qmds/platoons.html#platoons-presentation",
+    "title": "Platoons",
+    "section": "",
+    "text": "This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3."
+  },
+  {
+    "objectID": "qmds/ss3_setup_decisions.html",
+    "href": "qmds/ss3_setup_decisions.html",
+    "title": "Important SS3 Set-up Decisions",
+    "section": "",
+    "text": "flowchart TB\n    accTitle: Number of areas\n    A[\"How many areas should I have?\"] --&gt; B[\"Do I have lots of data\"]\n    B -- Yes --&gt; C[\"Is there limited movement\"]\n    C -- Yes --&gt; D[\"Is there evidence of significant spatial \n                    differences in growth or relative stock size?\"]\n    D -- Yes --&gt; E(\"Use more than one area\")\n    B -- No --&gt; F(\"Use one area\")\n    C -- No --&gt; F\n    D -- No --&gt; F\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many seasons should I have?\"] --&gt; B[\"Is it a short-lived, \n                                                fast growing species?\"]\n    B -- Yes --&gt; C[\"Am I using length data?\"]\n    C --Yes --&gt; D(\"Use multiple seasons\")\n    C -- No --&gt; E(\"Use one season\")\n    B -- No --&gt; F[\"Is fishing during a short season that \n                  precedes the survey or spawning?\"]\n    F -- Yes --&gt; D\n    F -- No --&gt; E\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I use EWAA or parametric growth?\"] --&gt; B[\"Do I have lots of age data\"]\n    B -- Yes --&gt; C[\"Is there evidence of variability \n                  in weight-at-age\"]\n    C -- Yes --&gt; D(\"Use EWWA\")\n    B -- No --&gt; E(\"Use parametric growth\")\n    C -- No --&gt; E\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many fleets should I have?\"] --&gt; B[\"Are there significant differences in size\n                                              composition of the catch of different subsets\n                                              of the fishery?\"]\n    B --Yes --&gt; C(\"Multiple fleets\")\n    B -- No --&gt; D[\"Is there some management reason to \n                  model the catch separately?\"]\n    D -- Yes --&gt; C\n    D -- No --&gt; E(\"Group all catch as one fleet\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style C fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I have one sex or two\"] --&gt; B[\"Am I modeling growth?\"]\n    B -- Yes --&gt; C[\"Is the species sexually dimorphic?\"]\n    C -- Yes --&gt; D(\"Use two sexes\")\n    A --&gt; E[\"Do I have sex-specific composition data?\"]\n    E -- Yes --&gt; D\n    B -- No --&gt; F(\"Combine females and males into one sex\")\n    C -- No --&gt; F\n    E -- No --&gt; F\n    linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\nData age bins should cover the majority of the observed ages (i.e. not too large that a fraction is in the maximum age/plus group).\nThe first age is always 0, but recruitment can occur at age 1.\n\n\n\n\n\nflowchart TB\n    A[\"Can population age bins go \n      higher than data age bins?\"] --&gt; B[\"Is growth asymptotic within\n                                                observed ages?\"]\n    B -- No --&gt; C[\"Is unfished equilibrium estimated to \n                  have older fish than has been observed?\"]                                    \n    B -- Yes --&gt; D(\"Population age bins can go \n                   higher than data age bins\")\n    C -- Yes --&gt; D\n    C -- No --&gt; E(\"Population age bins can't go \n                  higher than data age bins\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\nIn models with growth, the plus group should be old enough so that fish nearly achieve \\(L_{inf}\\) by the time they are in the plus group."
+  },
+  {
+    "objectID": "qmds/ss3_setup_decisions.html#model-dimensions-to-figure-out-before-adding-data",
+    "href": "qmds/ss3_setup_decisions.html#model-dimensions-to-figure-out-before-adding-data",
+    "title": "Important SS3 Set-up Decisions",
+    "section": "",
+    "text": "flowchart TB\n    accTitle: Number of areas\n    A[\"How many areas should I have?\"] --&gt; B[\"Do I have lots of data\"]\n    B -- Yes --&gt; C[\"Is there limited movement\"]\n    C -- Yes --&gt; D[\"Is there evidence of significant spatial \n                    differences in growth or relative stock size?\"]\n    D -- Yes --&gt; E(\"Use more than one area\")\n    B -- No --&gt; F(\"Use one area\")\n    C -- No --&gt; F\n    D -- No --&gt; F\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many seasons should I have?\"] --&gt; B[\"Is it a short-lived, \n                                                fast growing species?\"]\n    B -- Yes --&gt; C[\"Am I using length data?\"]\n    C --Yes --&gt; D(\"Use multiple seasons\")\n    C -- No --&gt; E(\"Use one season\")\n    B -- No --&gt; F[\"Is fishing during a short season that \n                  precedes the survey or spawning?\"]\n    F -- Yes --&gt; D\n    F -- No --&gt; E\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I use EWAA or parametric growth?\"] --&gt; B[\"Do I have lots of age data\"]\n    B -- Yes --&gt; C[\"Is there evidence of variability \n                  in weight-at-age\"]\n    C -- Yes --&gt; D(\"Use EWWA\")\n    B -- No --&gt; E(\"Use parametric growth\")\n    C -- No --&gt; E\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many fleets should I have?\"] --&gt; B[\"Are there significant differences in size\n                                              composition of the catch of different subsets\n                                              of the fishery?\"]\n    B --Yes --&gt; C(\"Multiple fleets\")\n    B -- No --&gt; D[\"Is there some management reason to \n                  model the catch separately?\"]\n    D -- Yes --&gt; C\n    D -- No --&gt; E(\"Group all catch as one fleet\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style C fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I have one sex or two\"] --&gt; B[\"Am I modeling growth?\"]\n    B -- Yes --&gt; C[\"Is the species sexually dimorphic?\"]\n    C -- Yes --&gt; D(\"Use two sexes\")\n    A --&gt; E[\"Do I have sex-specific composition data?\"]\n    E -- Yes --&gt; D\n    B -- No --&gt; F(\"Combine females and males into one sex\")\n    C -- No --&gt; F\n    E -- No --&gt; F\n    linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\nData age bins should cover the majority of the observed ages (i.e. not too large that a fraction is in the maximum age/plus group).\nThe first age is always 0, but recruitment can occur at age 1.\n\n\n\n\n\nflowchart TB\n    A[\"Can population age bins go \n      higher than data age bins?\"] --&gt; B[\"Is growth asymptotic within\n                                                observed ages?\"]\n    B -- No --&gt; C[\"Is unfished equilibrium estimated to \n                  have older fish than has been observed?\"]                                    \n    B -- Yes --&gt; D(\"Population age bins can go \n                   higher than data age bins\")\n    C -- Yes --&gt; D\n    C -- No --&gt; E(\"Population age bins can't go \n                  higher than data age bins\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\nIn models with growth, the plus group should be old enough so that fish nearly achieve \\(L_{inf}\\) by the time they are in the plus group."
   },
   {
     "objectID": "qmds/settlement_timing.html",
@@ -364,150 +441,73 @@
     "text": "Looking at model results\nOnce verifying that there is no indication that the model hasn’t converged (although an extensive jittering analysis need not be done at this stage), looking at estimates from the model can be helpful. Perhaps the easiest and quickest way to look at many plots from a model is to use the SS_plots() in {r4ss}. To plot the results, use:\n\noutput &lt;- SS_output(dir = \"simpler\")\nSS_plots(output)\n\nWhen the function is done run running, an HTML window will open up in your browser and you can look through plots quickly to determine if the model “makes sense” or if adjustments need to be made."
   },
   {
-    "objectID": "qmds/platoons.html",
-    "href": "qmds/platoons.html",
-    "title": "Platoons",
+    "objectID": "qmds/predator.html",
+    "href": "qmds/predator.html",
+    "title": "Predators",
     "section": "",
-    "text": "This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3."
+    "text": "Model the overall natural mortality (\\(M\\)) to include explicit mortality (\\(M2\\)) caused by each major predator.\n\n\\(M = M1 + sum(M2)\\)\nThe \\(M1\\) is the base and is modeled with the existing M options to allow various approaches to age-specific \\(M1\\)\n\\(M2\\) is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\n\\(M1\\) should be less than the total \\(M\\) value you were using previously such that \\(M1\\) plus the time-varying \\(M2\\) will be similar to what previously was a constant overall \\(M\\)."
   },
   {
-    "objectID": "qmds/platoons.html#platoons-presentation",
-    "href": "qmds/platoons.html#platoons-presentation",
-    "title": "Platoons",
+    "objectID": "qmds/predator.html#goal",
+    "href": "qmds/predator.html#goal",
+    "title": "Predators",
     "section": "",
-    "text": "This presentation was given at the 2023 PICES Meeting by Rick Methot about the usage of platoons in SS3."
+    "text": "Model the overall natural mortality (\\(M\\)) to include explicit mortality (\\(M2\\)) caused by each major predator.\n\n\\(M = M1 + sum(M2)\\)\nThe \\(M1\\) is the base and is modeled with the existing M options to allow various approaches to age-specific \\(M1\\)\n\\(M2\\) is expected to be time-varying and can be linked to predator abundance or consumption. It is age/length-specific according to the selectivity of the predator.\n\\(M1\\) should be less than the total \\(M\\) value you were using previously such that \\(M1\\) plus the time-varying \\(M2\\) will be similar to what previously was a constant overall \\(M\\)."
   },
   {
-    "objectID": "qmds/user_manual.html",
-    "href": "qmds/user_manual.html",
-    "title": "Citing the SS3 User Manual",
-    "section": "",
-    "text": "The latest release of the Stock Synthesis user manual can be found under “SS3 User Manuals” in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below: - HTML Version of the SS3 User Manual - PDF Version of the SS3 User Manual (downloads on click)\nPrevious releases of the SS3 user manual (v.3.30.17 - latest) can be found under Releases on the ss3-doc GitHub page. Versions of the SS3 user manual prior to v.3.30.17 are available on the vlab site.\nPlease cite the manual as:\n#| code-overflow: wrap\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User \nManual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report \nNMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
+    "objectID": "qmds/predator.html#predators-m2",
+    "href": "qmds/predator.html#predators-m2",
+    "title": "Predators",
+    "section": "Predators (\\(M2\\))",
+    "text": "Predators (\\(M2\\))\n\nThere can be multiple predators, each adding a \\(M2\\).\nThese are contained in the same arrays as fishing fleets, so \\(M2\\) has available all the code characteristics as a fishing fleet.\nVery little code is specific to predators…yet.\nEach predator will kill fish. \\(M2(f)/Z\\) is the fraction of the total kill that is consumed by predator(\\(f\\)) in a given area*season.\nEach predator will have selectivity (age and/or length) just as any other fleet.\n\nMany predators tend to select smaller fish."
   },
   {
-    "objectID": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
-    "href": "qmds/user_manual.html#how-to-cite-the-stock-synthesis-user-manual",
-    "title": "Citing the SS3 User Manual",
-    "section": "",
-    "text": "The latest release of the Stock Synthesis user manual can be found under “SS3 User Manuals” in the navigation bar at the top of this page. Additionally, links to the html and pdf versions of the user manual are below: - HTML Version of the SS3 User Manual - PDF Version of the SS3 User Manual (downloads on click)\nPrevious releases of the SS3 user manual (v.3.30.17 - latest) can be found under Releases on the ss3-doc GitHub page. Versions of the SS3 user manual prior to v.3.30.17 are available on the vlab site.\nPlease cite the manual as:\n#| code-overflow: wrap\nMethot, R. D., Jr., C. R. Wetzel, I. G. Taylor, and K. Doering. 2020. Stock Synthesis User \nManual Version 3.30.15. U.S. Department of Commerce, NOAA Processed Report \nNMFS-NWFSC-PR-2020-05. https://doi.org/10.25923/5wpn-qt71\nThe following BibTeX entry can be copied and used in a .bib file:\n@techreport{methot2020stock,\n  title={Stock Synthesis User Manual: Version 3.30.15},\n  author={Methot, Richard Donald and Wetzel, Chantel R and Taylor, Ian G and Doering, Kathryn L},\n  year={2020}, \n  institution={U.S. Department of Commerce},\n  type={NOAA Processed Report Series NMFS-NWFSC-PR-2020-05},\n  doi={10.25923/5wpn-qt71},\n}"
+    "objectID": "qmds/predator.html#m2-is-area-specific",
+    "href": "qmds/predator.html#m2-is-area-specific",
+    "title": "Predators",
+    "section": "\\(M2\\) is area-specific",
+    "text": "\\(M2\\) is area-specific\n\nIf a predator occurs in multiple areas, they might be named “seals_A1” and “seals_A2” and would have separate data inputs and controls, just like fishing fleets.\nA “fleet” is designated as a predator at the top of the data file.\n#| code-overflow: wrap\n4 #_Nfleets (including surveys)\n#_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=predator(M2) \n#_sample_timing: -1 for fishing fleet to use season-long catch-at-age for observations, or 1 to use observation month; (always 1 for surveys)\n#_fleet_area:  area the fleet/survey operates in\n#_units of catch:  1=bio; 2=num (ignored for surveys; their units read later)\n#_catch_mult: 0=no; 1=yes\n#_rows are fleets\n#_fleet_type fishery_timing area catch_units need_catch_mult fleetname\n1 -1 1 1 0 Fleet  # 1\n4 -1 1 1 0 Seals  # 2\n3 1 1 2 0 CPUE  # 3\n3 1 1 2 0 Acoustic  # 4\n\n\n\n\n\n\n\nNote\n\n\n\nRetained catch is not entered for predator fleets, nor is there a need to enter placeholder values."
   },
   {
-    "objectID": "qmds/ss3_setup_decisions.html",
-    "href": "qmds/ss3_setup_decisions.html",
-    "title": "Important SS3 Set-up Decisions",
-    "section": "",
-    "text": "flowchart TB\n    accTitle: Number of areas\n    A[\"How many areas should I have?\"] --&gt; B[\"Do I have lots of data\"]\n    B -- Yes --&gt; C[\"Is there limited movement\"]\n    C -- Yes --&gt; D[\"Is there evidence of significant spatial \n                    differences in growth or relative stock size?\"]\n    D -- Yes --&gt; E(\"Use more than one area\")\n    B -- No --&gt; F(\"Use one area\")\n    C -- No --&gt; F\n    D -- No --&gt; F\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many seasons should I have?\"] --&gt; B[\"Is it a short-lived, \n                                                fast growing species?\"]\n    B -- Yes --&gt; C[\"Am I using length data?\"]\n    C --Yes --&gt; D(\"Use multiple seasons\")\n    C -- No --&gt; E(\"Use one season\")\n    B -- No --&gt; F[\"Is fishing during a short season that \n                  precedes the survey or spawning?\"]\n    F -- Yes --&gt; D\n    F -- No --&gt; E\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I use EWAA or parametric growth?\"] --&gt; B[\"Do I have lots of age data\"]\n    B -- Yes --&gt; C[\"Is there evidence of variability \n                  in weight-at-age\"]\n    C -- Yes --&gt; D(\"Use EWWA\")\n    B -- No --&gt; E(\"Use parametric growth\")\n    C -- No --&gt; E\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many fleets should I have?\"] --&gt; B[\"Are there significant differences in size\n                                              composition of the catch of different subsets\n                                              of the fishery?\"]\n    B --Yes --&gt; C(\"Multiple fleets\")\n    B -- No --&gt; D[\"Is there some management reason to \n                  model the catch separately?\"]\n    D -- Yes --&gt; C\n    D -- No --&gt; E(\"Group all catch as one fleet\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style C fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I have one sex or two\"] --&gt; B[\"Am I modeling growth?\"]\n    B -- Yes --&gt; C[\"Is the species sexually dimorphic?\"]\n    C -- Yes --&gt; D(\"Use two sexes\")\n    A --&gt; E[\"Do I have sex-specific composition data?\"]\n    E -- Yes --&gt; D\n    B -- No --&gt; F(\"Combine females and males into one sex\")\n    C -- No --&gt; F\n    E -- No --&gt; F\n    linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\nData age bins should cover the majority of the observed ages (i.e. not too large that a fraction is in the maximum age/plus group).\nThe first age is always 0, but recruitment can occur at age 1.\n\n\n\n\n\nflowchart TB\n    A[\"Can population age bins go \n      higher than data age bins?\"] --&gt; B[\"Is growth asymptotic within\n                                                observed ages?\"]\n    B -- No --&gt; C[\"Is unfished equilibrium estimated to \n                  have older fish than has been observed?\"]                                    \n    B -- Yes --&gt; D(\"Population age bins can go \n                   higher than data age bins\")\n    C -- Yes --&gt; D\n    C -- No --&gt; E(\"Population age bins can't go \n                  higher than data age bins\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\nIn models with growth, the plus group should be old enough so that fish nearly achieve \\(L_{inf}\\) by the time they are in the plus group."
+    "objectID": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
+    "href": "qmds/predator.html#consumption-by-predators-is-stored-in-discard-arrays",
+    "title": "Predators",
+    "section": "Consumption by predators is stored in discard arrays",
+    "text": "Consumption by predators is stored in discard arrays\n\nData on the amount of consumption can be entered as discard data, where SS3 will include it in the estimation of \\(M2\\) values.\n#| code-overflow: wrap\n1 #_N_fleets_with_discard\n#_discard_units (1=same_as_catchunits(bio/num); 2=fraction; 3=numbers)\n#_discard_errtype: &gt;0 for DF of T-dist(read CV below); 0 for normal with CV; -1 for normal with se; -2 for lognormal; -3 for trunc normal with CV\n# note: only enter units and errtype for fleets with discard \n# note: discard data is the total for an entire season, so input of month here must be to a month in that season\n#_Fleet units errtype\n2 1 -2 # Seals\n#_yr month fleet obs stderr\n1980 2.5 2 76 0.2 #_ Seals\n1980 5.5 2 76 0.2 #_ Seals"
   },
   {
-    "objectID": "qmds/ss3_setup_decisions.html#model-dimensions-to-figure-out-before-adding-data",
-    "href": "qmds/ss3_setup_decisions.html#model-dimensions-to-figure-out-before-adding-data",
-    "title": "Important SS3 Set-up Decisions",
-    "section": "",
-    "text": "flowchart TB\n    accTitle: Number of areas\n    A[\"How many areas should I have?\"] --&gt; B[\"Do I have lots of data\"]\n    B -- Yes --&gt; C[\"Is there limited movement\"]\n    C -- Yes --&gt; D[\"Is there evidence of significant spatial \n                    differences in growth or relative stock size?\"]\n    D -- Yes --&gt; E(\"Use more than one area\")\n    B -- No --&gt; F(\"Use one area\")\n    C -- No --&gt; F\n    D -- No --&gt; F\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many seasons should I have?\"] --&gt; B[\"Is it a short-lived, \n                                                fast growing species?\"]\n    B -- Yes --&gt; C[\"Am I using length data?\"]\n    C --Yes --&gt; D(\"Use multiple seasons\")\n    C -- No --&gt; E(\"Use one season\")\n    B -- No --&gt; F[\"Is fishing during a short season that \n                  precedes the survey or spawning?\"]\n    F -- Yes --&gt; D\n    F -- No --&gt; E\n    linkStyle 1,2,3,4,5,6 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I use EWAA or parametric growth?\"] --&gt; B[\"Do I have lots of age data\"]\n    B -- Yes --&gt; C[\"Is there evidence of variability \n                  in weight-at-age\"]\n    C -- Yes --&gt; D(\"Use EWWA\")\n    B -- No --&gt; E(\"Use parametric growth\")\n    C -- No --&gt; E\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"How many fleets should I have?\"] --&gt; B[\"Are there significant differences in size\n                                              composition of the catch of different subsets\n                                              of the fishery?\"]\n    B --Yes --&gt; C(\"Multiple fleets\")\n    B -- No --&gt; D[\"Is there some management reason to \n                  model the catch separately?\"]\n    D -- Yes --&gt; C\n    D -- No --&gt; E(\"Group all catch as one fleet\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style C fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart TB\n    A[\"Should I have one sex or two\"] --&gt; B[\"Am I modeling growth?\"]\n    B -- Yes --&gt; C[\"Is the species sexually dimorphic?\"]\n    C -- Yes --&gt; D(\"Use two sexes\")\n    A --&gt; E[\"Do I have sex-specific composition data?\"]\n    E -- Yes --&gt; D\n    B -- No --&gt; F(\"Combine females and males into one sex\")\n    C -- No --&gt; F\n    E -- No --&gt; F\n    linkStyle 1,2,3,4,5,6,7 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style F fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\n\n\n\nData age bins should cover the majority of the observed ages (i.e. not too large that a fraction is in the maximum age/plus group).\nThe first age is always 0, but recruitment can occur at age 1.\n\n\n\n\n\nflowchart TB\n    A[\"Can population age bins go \n      higher than data age bins?\"] --&gt; B[\"Is growth asymptotic within\n                                                observed ages?\"]\n    B -- No --&gt; C[\"Is unfished equilibrium estimated to \n                  have older fish than has been observed?\"]                                    \n    B -- Yes --&gt; D(\"Population age bins can go \n                   higher than data age bins\")\n    C -- Yes --&gt; D\n    C -- No --&gt; E(\"Population age bins can't go \n                  higher than data age bins\")\n    linkStyle 1,2,3,4 stroke-width:2px,color:black\n    style D fill:#5EB6D9,stroke:#fff,color:#fff\n    style E fill:#5EB6D9,stroke:#fff,color:#fff\n\n\n\n\n\n\nIn models with growth, the plus group should be old enough so that fish nearly achieve \\(L_{inf}\\) by the time they are in the plus group."
+    "objectID": "qmds/predator.html#predator-abundance",
+    "href": "qmds/predator.html#predator-abundance",
+    "title": "Predators",
+    "section": "Predator abundance",
+    "text": "Predator abundance\n\nThe abundance of the predator is the “fishing effort” this is correlated with the level of \\(M2\\).\nIf the predator abundance is available, it can be entered as a survey of “F”.\nThe format looks like:\n#| code-overflow: wrap\n#_Units:  0=numbers; 1=biomass; 2=F; 30=spawnbio; ……\n#_Errtype:  -1=normal; 0=lognormal; &gt;0=T\n#_SD_Report: 0=no sdreport; 1=enable sdreport\n#_Fleet Units Errtype SD_Report\n1 1 0 0 # fishing_fleet\n2 2 0 0 # pred\nThis triggers the need to specify a catchability for this fleet in the control file.\nNeither consumption data nor predator abundance data is necessary, but they are both helpful in tuning the level and time-variation of \\(M2\\)."
   },
   {
-    "objectID": "qmds/ss3_model_tips.html",
-    "href": "qmds/ss3_model_tips.html",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "",
-    "text": "The developing your first SS3 model guide teaches users how to develop a basic Stock Synthesis model. We assume that these users have had previous population dynamics modeling experience and already understand how to run an existing SS3 model.\nIf you are a new SS3 user who is not yet comfortable running an SS3 model, we suggest trying to run an example working model using advice in the Getting Started Guide before attempting to develop and run your own model as outlined in this guide.\nBy the end of using this guide, you should be able to:\n\nDevelop your own SS3 model development workflow based on the tools and methods suggested\nFind information on the required inputs for different model specifications\nUnderstand how to use phases within an SS3 model\nDebug basic issues with input in Stock Synthesis models and identify when there are more advanced model problems"
+    "objectID": "qmds/predator.html#future-predator-options",
+    "href": "qmds/predator.html#future-predator-options",
+    "title": "Predators",
+    "section": "Future predator options",
+    "text": "Future predator options\n\nAdd a new option that is specific to predators\nDevelop specific catchability (e.g., Type 1 vs. Type 2 response for consumption/predator options)."
   },
   {
-    "objectID": "qmds/ss3_model_tips.html#first-runs-without-estimation",
-    "href": "qmds/ss3_model_tips.html#first-runs-without-estimation",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "First runs without estimation",
-    "text": "First runs without estimation\nFirst, check that SS3 reads the input files as intended. Use -stopph 0 -nohess command line options to run the model without estimation. Then examine warning.sso, echoinput.sso, and the .ss_new files produced to see how SS3 interpreted your input files and if it was as you intended.\nAfter you have verified that SS3 is reading your input correctly, you can also consider adjustment to selectivity, growth, and recruitment parameters."
+    "objectID": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
+    "href": "qmds/predator.html#m2-parameter-for-each-predator-in-each-season",
+    "title": "Predators",
+    "section": "\\(M2\\) parameter for each predator, in each season",
+    "text": "\\(M2\\) parameter for each predator, in each season\n\nThe recommended approach is to set up this parameter to have a mean-reverting random walk over time.\nThe time series of predator consumption (in the discard section), and the series of predator relative abundance (as effort), will inform SS3 about changes in \\(M2\\) over time.\n\nControl file:\n```\n#| code-overflow: wrap\n# M2 parameter for each predator fleet\n0 4 0.180481 0.2 0.8 0 3 0 5 1980 2020 2 1 2 #M2_pred1\n0 10 1 1 1 0 -1 0 0 0 0 0 0 0 # M2_pred1_s1\n0 10 0.936248 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s2\n0 10 2.71282 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s3\n0 10 2.83102 1 1 0 4 0 5 1980 2020 4 0 0 #M2_pred1_s4\n#\n# timevary MG parameters \n#_ LO HI INIT PRIOR PR_SD PR_type  PHASE\n1e-05 2.4 1.4368 0.2 0.8 0 3 #M2_pred1_BLK1repl_1964\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_dev_autocorr\n0.0001 2 1.7 0.5 0.5 6 -5 #M2_pred1_s2_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s2_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s3_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 # M2_pred1_s3_dev_autocorr\n0.0001 2 1.7 0.5 0.5 -6 -5 #M2_pred1_s4_dev_se\n-0.99 0.99 0 0 0.5 -6 -6 #M2_pred1_s4_dev_autocorr\n```"
   },
   {
-    "objectID": "qmds/ss3_model_tips.html#runs-estimating-some-parameters",
-    "href": "qmds/ss3_model_tips.html#runs-estimating-some-parameters",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Runs estimating some parameters",
-    "text": "Runs estimating some parameters\nTry changing max phase to be greater than 0 (perhaps 2 or 3) to estimate some but not all parameters. Do this by using -stopph x -nohess, where x should the maximum phase desired (e.g., 2 or 3). -nohess is still used to reduce run time. During this stage of model runs, you should try to adjust the model to resolve all major patterns in the residuals. This may include considering and making changes to the model structure."
+    "objectID": "qmds/predator.html#diet-data",
+    "href": "qmds/predator.html#diet-data",
+    "title": "Predators",
+    "section": "Diet data",
+    "text": "Diet data\n\nIf diet data with size or age composition of the prey is available, it can be entered in the composition data section where it will inform the estimation of the age/length selectivity of the predator for it’s prey.\nIt should have a retained code of 0 for total kill, not 1 for discard."
   },
   {
-    "objectID": "qmds/ss3_model_tips.html#runs-estimating-all-parameters",
-    "href": "qmds/ss3_model_tips.html#runs-estimating-all-parameters",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Runs estimating all parameters",
-    "text": "Runs estimating all parameters\nOnce all major patterns in the residuals have been resolved, try estimating all parameters in the model. Change max phase to include all of your model phases (i.e., equal to or higher than the highest phase specified in your model). You’ll want to do multiple runs for different model refinement purposes at this time:\n\nDo one or more run(s) with the hessian estimated to get variance of the recruitment deviations and then use this vector of variances to adjust the bias adjustment ramp (see the SS3 user manual for additional details).\nDo runs with or without estimating the Hessian to tune the data weightings.\nRun the model multiple times and jitter the starting values (option to jitter is selected in starter.ss). This runs the model with new starting parameter values to determine if a better model fit is possible using different starting values.\n\nAfter these runs, your model should be fine-tuned and ready for final runs."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#if-the-residuals-have-substantial-patterns",
-    "href": "qmds/ss3_model_tips.html#if-the-residuals-have-substantial-patterns",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "If the residuals have substantial patterns",
-    "text": "If the residuals have substantial patterns\nIt is often difficult to pinpoint the cause of residuals that have substantial patterns, but two potential reasons this could happen are unrealistic starting values or poor model specification. If you have residuals with substantial pattern, you can try changing the starting values. If a parameter is not moving from the starting value, there may not be enough information to determine its value and it may be necessary to fix the value in the model. If the parameter does move with different starting values, it is possible that the starting value used before was not reasonable and thus changing the starting value to a reasonable value fixes the issue."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
-    "href": "qmds/ss3_model_tips.html#if-ss3-runs-but-there-is-a-large-gradient-at-the-end",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "If SS3 runs, but there is a large gradient at the end",
-    "text": "If SS3 runs, but there is a large gradient at the end\nLarge gradients are usually reported in warnings.sso file, so this problem should be clear when examining the file after a model run. If this is the case, try the following\n\nExamine Report.sso for parameters that are on or near bounds, as these may be the parameters that are causing issues. It depends on the value, but you can consider changing your bounds or the parameters, depending on what seems most plausible given your model.\nExamine residuals to identify if there is overall poor lack-of-fit. This may indicate that the ADMB algorithm failed to find the global minimum. Try alternative starting values to attempt to solve this problem. However, it is also possible that there is large disagreement between your model structure and your model file, in which case you may want to reconsider the model specification - perhaps there is an alternative model structure that makes more sense for the population."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#if-the-hessian-does-not-invert",
-    "href": "qmds/ss3_model_tips.html#if-the-hessian-does-not-invert",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "If the Hessian does not invert",
-    "text": "If the Hessian does not invert\nThe Hessian information is reported in the Report.sso file, so go to this section to confirm if this is an issue. This is a difficult issue to solve, but considering alternative models may be necessary if the Hessian will not invert."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#does-my-model-model-make-sense",
-    "href": "qmds/ss3_model_tips.html#does-my-model-model-make-sense",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Does my model model make sense?",
-    "text": "Does my model model make sense?\n\nDoes the biology make sense? Selectivity?\nIs the model fitting the indices? Length and age data?\nWhat is the pattern in recruitment?\nDoes the prior type match what I thought I was specifying?"
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#does-my-model-fit-well",
-    "href": "qmds/ss3_model_tips.html#does-my-model-fit-well",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Does my model fit well?",
-    "text": "Does my model fit well?\n\nThe r4ss::SS_output() function prints some very useful diagnostics to the R console window, including a list of the estimated parameters, the estimated value, whether the parameter is hitting a bound, the gradient, and the prior type. Use this (or other SS3 output files) to answer:\n\nDid the parameter move from the initial value?\nIs the parameter hitting a bound?\nIs the parameter gradient low?\n\nBelow the parameter estimates that r4ss::SS_output() prints to the console, there is a specific section that highlights the parameters with the highest model gradients. Examining this list might indicate which (if any) parameters may need to be fixed due to lack of information in the data. For example, there may be selectivity parameters included in the list where small changes in the parameter value do not change the model results (or the form of the selectivity)."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#does-my-data-weighting-make-sense",
-    "href": "qmds/ss3_model_tips.html#does-my-data-weighting-make-sense",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Does my data weighting make sense?",
-    "text": "Does my data weighting make sense?\nThe r4ss::SS_output() function prints information on tuning to the R console. This includes tuning information for length and age data that can be used for data weighting when using McAllister-Ianelli weighting (i.e., weighting by the harmonic mean). The r4ss::SS_plots() function creates mean length and ages figures with captions showing the recommended Francis weights for each data source. Even if you are using an alternative data weighting approach (i.e., Francis, Dirichlet, or other), it is always good practice to explore an alternative approach and see how data weighting changes the model."
-  },
-  {
-    "objectID": "qmds/ss3_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
-    "href": "qmds/ss3_model_tips.html#did-i-fix-variation-in-recruitment-correctly",
-    "title": "Developing your first Stock Synthesis model",
-    "section": "Did I fix variation in recruitment correctly?",
-    "text": "Did I fix variation in recruitment correctly?\nCheck the the \\(\\sigma R\\) (sigmaR) (i.e., recruitment deviations standard deviation) information. The \\(\\sigma R\\) parameter is typically fixed within the model, so if it is not fixed within your model, you should consider whether or not this makes sense for the population and given the quality and quantity of data.\nFor a fixed value of \\(\\sigma R\\), a section of the output will provide diagnostics to determine if the fixed \\(\\sigma R\\) value is capturing the estimated variations in recruitment. The r4ss::SS_output() function will print a recommended value based on the variation in the estimated recruitment deviations that you may want to consider using."
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html",
-    "href": "qmds/start_year_considerations.html",
-    "title": "Start Year Considerations",
-    "section": "",
-    "text": "The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, \\(R_{0}\\), initial \\(F\\), and domed selectivity must be considered together."
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
-    "href": "qmds/start_year_considerations.html#population-age-composition-in-the-start-year-is-composed-of",
-    "title": "Start Year Considerations",
-    "section": "Population age composition in the start year is composed of:",
-    "text": "Population age composition in the start year is composed of:\n\nAn equilibrium age composition using \\(Z = M + initial F\\)\nAge-specific deviation from that vector for none, to all, of the ages.\n\nThese age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.\nBecause the devs are centered around the equilibrium age composition, it is important that the initial \\(F\\) be approximately correct, otherwise a pattern can be introduced in the devs.\nSS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs)."
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html#start-year-considerations",
-    "href": "qmds/start_year_considerations.html#start-year-considerations",
-    "title": "Start Year Considerations",
-    "section": "Start year considerations",
-    "text": "Start year considerations\n\nLong historical period of relatively stable catch\n\nThis is the ideal situation for use of initial equilibrium catch with initial \\(F\\) estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if \\(M\\) is low.\nIf that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make \\(R_{0}\\) big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below \\(B_{MSY}\\), then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create \\(F\\)’s greater than \\(F_{MSY}\\). Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.\n\nSubstantial changes in historical catch levels have occurred within a lifespan before start year\n\nIn this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific \\(F\\)."
-  },
-  {
-    "objectID": "qmds/start_year_considerations.html#first-year-with-recdevs",
-    "href": "qmds/start_year_considerations.html#first-year-with-recdevs",
-    "title": "Start Year Considerations",
-    "section": "First year with recdevs",
-    "text": "First year with recdevs\n\nBy starting rec_devs early (even long before influential data occur) the variability associated with \\(\\sigma R\\) creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.\n\n\n\nThe first year with rec_devs (main or early) can be Nages before start year.\nDevs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.\nThe challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.\n\n\n\n\n\n\n\nThink of it as\n\n\n\nHow much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?"
+    "objectID": "qmds/predator.html#predator-example",
+    "href": "qmds/predator.html#predator-example",
+    "title": "Predators",
+    "section": "Predator example",
+    "text": "Predator example\n\n\n Download predator SS3 input files\n\n\n\nExample Info: 4 seasons, and \\(M2\\) can vary by season\n\n\\(M2\\) has a random deviation over time to allow time-varying flexibility.\nThen we add data to inform those deviations.\nIn this example, those data are consumption entered as discard data.\nAn alternative is to enter an indicator (e.g., survey or other indicator of predator abundance) of the level of \\(M2\\) itself.\n\nThis is not done in this example, but would be a survey of Type 2.\nHopefully we can create more meaningful linkages between predators and \\(M2\\) in the future.\n\n\n\n\nData file:\n\nOne fleet is Type 4 and labeled as Pred\nThe section of discard data is used as a place to enter the amount of consumption. This is not necessary, but it does help calibrate the \\(M2\\) levels.\nThe fact that at least one fleet is a predator triggers the need to include \\(M2\\) internal to the SS3 calculations.\n\n\n\nControl file:\n\nThis example has somewhat complex \\(M1\\) pattern by age. This is independent of \\(M2\\) so need not be maintained in your work.\nThe \\(M2\\) parameter setup begins at line 106.\nThe \\(M2\\) parameter has a block to shift it’s value in 1964 and annual deviations.\nIt also is set up to have annual devsiations in the seasonal values of \\(M2\\). There are a lot of parameters. In this case, it works because there is a discard observation for each one. It should still work without all that consumption data because it is a random effect, but let’s talk if you have challenges.\nSS3 also needs to setup the size & age selectivity of the predator\n#| code-overflow: wrap\n#_Pattern Discard Male Special\n24 0 0 0 # 1 Fleet\n24 3 0 0 # 2 Pred\n\n\n\n\n\n\n\nNote\n\n\n\nNotice that the discard flag is “3”. This means that for the predator fleet the data file contains no relevant “retained catch”, so the \\(M2\\) level will only be informing the amount of “discard” which is the predator consumption.\n\n\n\nIn this example, the selectivity of the predator was setup using double normal (Type = 24), but parameters set to essentially be logistic. You can change this as needed.\n\n\n\n\\(M2\\) in Report.sso\n\nIf you search through the Report.sso file for “M2”, you will find the parameter values near the top.\nThe consumption output is in the “Discard” section.\nThe time-series of \\(M2\\) is further down.\n\n\n\nPredator Data\n\n\n\n\n\nFigure 1. {r4ss} data plot showing predator data.\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe discard label will appear in the plot because predator consumption is stored internally in the same place as discards."
   }
 ]
