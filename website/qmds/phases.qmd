@@ -15,8 +15,8 @@ editor:
     phases. Parameters that enter in an early stage remain active as
     other parameters become active.
 
--   You can spread out when you estimate parameters using phases which,
-    in some cases, can help speed up your model.
+-   You can spread out when you estimate parameters using phases. **In some cases, 
+    can speed up your model or help with convergence.**
 
 -   How you spread it out is up to you. Below is some general guidance
     on assigning phases.
