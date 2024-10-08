@@ -263,10 +263,12 @@ window.Quarto = {
 <section id="general" class="level4">
 <h4 class="anchored" data-anchor-id="general">General</h4>
 <ul>
-<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (<span class="math inline">\(R_{0}\)</span> - expected recruitment in an unfished state) then refine the model fit by adding parameters.</li>
+<li>** At least one parameter needs to be in phase 1, otherwise the model will crash.**</li>
+<li>Get the scale of the population right first. First estimate the parameter that determines scale in an SS3 model (<span class="math inline">\(R_{0}\)</span> - expected recruitment in an unfished state) in phase 1 and then refine the model fit by adding parameters.</li>
 <li>The parameters are added at each phase so, for example, the parameters that are estimated in phase 3 are those estimated in phase 2 <strong><em>plus</em></strong> those designated as to be estimated in phase 3.</li>
 <li>The phasing sequence should not matter but (a) good phasing can speed things up, (b) bad phasing can lead to the estimation being trapped in a local minimum, and (c) jittering™ can help to assess how reliable the final estimates are.</li>
 <li>The schema below is based on eight phases but, sometimes I will “skip a phase”, e.g.&nbsp;place the other “annual deviations” in phase 9 rather than phase 8 (And estimate no “new” parameters in phase 8) to allow the estimation method to better characterize the parameters estimated in phases 1-7.</li>
+<li><strong>However</strong>, many models don’t go beyond 5 phases and generally people don’t advise going beyond 10 phases.</li>
 </ul>
 <p><strong>André’s preferred order:</strong></p>
 <ol type="1">
