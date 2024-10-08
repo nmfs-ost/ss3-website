@@ -85,8 +85,8 @@ Tool](https://github.com/shcaba/SS-DL-tool) as provided by André Punt*
 
 #### Other ways of tackling phases (per Jason Cope)
 
--   Start growth and sometimes mortality estimation in phase 3 or even
-    phase 2.
+-   Start life history parameters (growth and sometimes mortality) 
+    estimation in phase 3 or even phase 2.
 -   Leave selectivity until phases 3 or 4 (after life history) IF you
     have decent starting values for selectivity already.
 
