@@ -1,1 +1,4 @@
-/.quarto/
+website/.quarto/*
+website/docs/**/*.html
+website/docs/**/*.json
+website/docs/site_libs/*
