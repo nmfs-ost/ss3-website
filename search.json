@@ -28,11 +28,11 @@
     "text": "Installing the Stock Synthesis latest release\n Download the latest release of the Stock Synthesis executable."
   },
   {
-    "objectID": "index.html#change-log",
-    "href": "index.html#change-log",
+    "objectID": "index.html#change-logs",
+    "href": "index.html#change-logs",
     "title": "Stock Synthesis (SS3) Website",
-    "section": "Change log",
-    "text": "Change log\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for versions prior to v.3.30.19, please download this Excel spreadsheet."
+    "section": "Change logs",
+    "text": "Change logs\nTo see the changes made in the latest release of Stock Synthesis, please see the change log on GitHub that shows all changes from v.3.30.19 onward. To see the change log for v.3.30.00 to v.3.30.20, please download this Excel spreadsheet. For the change log for v.3.24, please see this Excel spreadsheet and the Readme on the historical SS3 change logs."
   },
   {
     "objectID": "index.html#getting-started-with-stock-synthesis",
