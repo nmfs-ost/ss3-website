@@ -25,11 +25,10 @@ jobs:
             any::downloadthis
             any::FSA
 
-      - name: Install remotes
-        run: Rscript -e 'install.packages("remotes")'
-        
-      - name: Install r4ss
-        run: Rscript -e 'remotes::install_github("r4ss/r4ss")'
+      - name: Install remotes and r4ss
+        run: |
+          Rscript -e 'install.packages("remotes")'
+          Rscript -e 'remotes::install_github("r4ss/r4ss")'
       
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
