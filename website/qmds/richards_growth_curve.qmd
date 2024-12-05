@@ -24,6 +24,7 @@ Install and load the `r4ss` package, so we can import Stock Synthesis
 model output.
 
 ```{r, message=FALSE, echo = TRUE}
+install.packages("remotes")
 remotes::install_github("r4ss/r4ss")
 library(r4ss)
 ```
