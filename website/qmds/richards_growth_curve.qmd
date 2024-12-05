@@ -30,13 +30,18 @@ library(r4ss)
 
 ### Parameter definitions
 
+The Richards growth model has four parameters,
+
+$L_1$: length at age $A_1$\
+$L_2$: length at age $A_2$\
+$k$: growth coefficient\
+$b$: shape parameter\
+
+and three input variables:
+
 $t$: age\
-$L1$: Minimum length\
-$L2$: Maximum length\
-$k$: von Bertalanffy growth coefficient parameter\
-$b$: Richards growth parameter\
-$A1$: Fixed age for first size-at-age\
-$A2$: Fixed age for second size-at-age
+$A_1$: young age selected by user, for the estimation of $L_1$\
+$A_2$: old age selected by user, for the estimation of $L_2$
 
 ### SS3 Code
 
@@ -130,7 +135,7 @@ Compare three growth curves: length-at-age reported in the Stock
 Synthesis output, predicted lengths using the `ss3_code()` function, and
 predicted lengths using the `schnute()` function.
 
-```{r, fig.width=6, fig.height=8, fig.align="center", out.width="50%"}
+```{r, fig.width=6, fig.height=8, fig.align="center", out.width="60%"}
 t <- 0:20
 plot(Len_Beg~Age_Beg, model$endgrowth, subset=Sex==1, ylim=c(0,80),
      xlab="age", ylab="length", type="l", lwd=1.5, col=2)
@@ -165,7 +170,7 @@ lines are drawn using the actual von Bertalanffy and Gompertz functions,
 and the circles are drawn using the Richards curve with the appropriate
 values for the $b$ parameter.
 
-```{r, fig.width=6, fig.height=8, fig.align="center", out.width="50%"}
+```{r, fig.width=6, fig.height=8, fig.align="center", out.width="60%"}
 plot(NA, xlim=range(t), ylim=c(0,80), xlab="age", ylab="length")
 lines(t, von_bertalanffy(t, L1, L2, k, A1, A2), ylim=c(0,80), lwd=2, col=2)
 points(t, schnute(t, L1, L2, k, 1, A1, A2), col=2)
@@ -179,7 +184,7 @@ legend("topleft", c("von Bertalanffy (b=1)","Gompertz (b near 0)"),
 
 ### Richards growth curves with different $k$ and $b$ combinations {#sec-b_combinations}
 
-```{r, fig.width=6, fig.height=6, fig.align="center", out.width="55%"}
+```{r, fig.width=6, fig.height=6, fig.align="center", out.width="60%"}
 x <- seq(0, 20, by=0.1)
 L1 <- 5
 L2 <- 80
@@ -229,8 +234,8 @@ The one value of $b$ that is not allowed when using the Richards growth
 curve in Stock Synthesis is $b\!=\!0$. This also holds for the R
 functions `ss3_code()` and `schnute()` used in this vignette. When
 estimating $b$ as a floating-point number, there is effectively no risk
-of the parameter having the value of precisely zero, as long as the
-initial value is non-zero. To use a Gompertz growth curve, the $b$
+of the parameter becoming precisely zero during estimation, as long as
+the initial value is non-zero. To use a Gompertz growth curve, the $b$
 parameter can be fixed at a small value such as 0.0001, as demonstrated
 in @sec-special.
 
@@ -267,39 +272,27 @@ $$L_{\infty R} ~=~ L_1^b \;+\; \frac{L_2^b\,-\,L_1^b}{1-e^{-k(A_2-A_1)}}$$
 We proceed by replacing $L_{\infty R}$ with its definition and then
 gradually simplify the equation:
 
-$$
-L_t ~=~ \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;+\;
+\begin{eqnarray*}
+L_t &=& \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;+\;
          \left(L_1^b\,-\,\Big[L_1^b \,+\,
          \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}}\Big]\right)
-         e^{-k(t-A_1)}\,\bigg]^{1/b}
-$$
-
-$$
-L_t ~=~ \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;+\;
+         e^{-k(t-A_1)}\,\bigg]^{1/b}\\[4ex]
+L_t &=& \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;+\;
          \left(L_1^b\,-\, L_1^b \,-\, \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}}
-         \right) e^{-k(t-A_1)}\,\bigg]^{1/b}
-$$
-
-$$
-L_t ~=~ \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;-\;
-         \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}}\, e^{-k(t-A_1)}\,\bigg]^{1/b}
-$$
-
-$$
-L_t ~=~ \bigg[\,L_1^b \;+\; (L_2^b-L_1^b)\,\frac{1}{1-e^{-k(A_2-A_1)}} \;-\;
-         (L_2^b-L_1^b)\,\frac{e^{-k(t-A_1)}}{1-e^{-k(A_2-A_1)}}\,\bigg]^{1/b}
-$$
-
-$$
-L_t ~=~ \left[\:L_1^b\;+\;(L_2^b-L_1^b)\,
+         \right) e^{-k(t-A_1)}\,\bigg]^{1/b}\\[4ex]
+L_t &=& \bigg[\,L_1^b \;+\; \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}} \;-\;
+         \frac{L_2^b-L_1^b}{1-e^{-k(A_2-A_1)}}\, e^{-k(t-A_1)}\,\bigg]^{1/b}\\[4ex]
+L_t &=& \bigg[\,L_1^b \;+\; (L_2^b-L_1^b)\,\frac{1}{1-e^{-k(A_2-A_1)}} \;-\;
+         (L_2^b-L_1^b)\,\frac{e^{-k(t-A_1)}}{1-e^{-k(A_2-A_1)}}\,\bigg]^{1/b}\\[4ex]
+L_t &=& \left[\:L_1^b\;+\;(L_2^b-L_1^b)\,
          \frac{1-e^{-k(t-A_1)}}{1-e^{-k(A_2-A_1)}}\,\right]^{1/b}
-$$
+\end{eqnarray*}
 
 
 ```{r}
 schnute <- function(t, L1, L2, k, b, A1, A2)
 {
-  (L1^b + (L2^b-L1^b) * ((1-exp(-k*(t-A1))) / (1-exp(-k*(A2-A1)))))^(1/b)
+  (L1^b + (L2^b-L1^b) * (1-exp(-k*(t-A1))) / (1-exp(-k*(A2-A1))))^(1/b)
 }
 ```
 
