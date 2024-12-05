@@ -24,13 +24,13 @@ Install and load the `r4ss` package, so we can import Stock Synthesis
 model output.
 
 ```{r, message=FALSE, echo = TRUE}
-#remotes::install_github("r4ss/r4ss")
+remotes::install_github("r4ss/r4ss")
 library(r4ss)
 ```
 
 ### Parameter definitions
 
-The Richards growth model has four parameters,
+The Richards growth model has four parameters:
 
 $L_1$: length at age $A_1$\
 $L_2$: length at age $A_2$\
@@ -121,6 +121,7 @@ dir <- file.path(getwd(),"example_files")
 ```
 
 ```{r, message=FALSE, results="hide"}
+# dir = the file path to the directory above where the example files are downloaded
 model <- r4ss::SS_output(file.path(dir, "simple_small_richards"))
 A1 <- subset(model$Growth_Parameters, Sex==1, A1, drop=TRUE)
 A2 <- subset(model$Growth_Parameters, Sex==1, A2, drop=TRUE)
@@ -155,7 +156,7 @@ and older.
 ```{r}
 comparison <- data.frame(
   age = t,
-  ss_output = subset(model$endgrowth, Sex==1, Len_Beg, drop=TRUE),
+  ss3_output = subset(model$endgrowth, Sex==1, Len_Beg, drop=TRUE),
   ss3_code = ss3_code(t, L1, L2, k, b, A1, A2),
   schnute = schnute(t, L1, L2, k, b, A1, A2)
 )
@@ -315,3 +316,8 @@ this vignette.
 Schnute case 2 [@schnute1981, Eq. 16] is a Gompertz growth model
 parametrized with $L_1$, $L_2$, and $k$, similar to `ss3_code()` and
 `schnute()` when $b$ is fixed at nearly 0.
+
+
+## References
+::: {#refs}
+:::
