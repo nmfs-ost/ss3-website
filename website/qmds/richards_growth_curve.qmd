@@ -234,8 +234,8 @@ The one value of $b$ that is not allowed when using the Richards growth
 curve in Stock Synthesis is $b\!=\!0$. This also holds for the R
 functions `ss3_code()` and `schnute()` used in this vignette. When
 estimating $b$ as a floating-point number, there is effectively no risk
-of the parameter having the value of precisely zero, as long as the
-initial value is non-zero. To use a Gompertz growth curve, the $b$
+of the parameter becoming precisely zero during estimation, as long as
+the initial value is non-zero. To use a Gompertz growth curve, the $b$
 parameter can be fixed at a small value such as 0.0001, as demonstrated
 in @sec-special.
 
