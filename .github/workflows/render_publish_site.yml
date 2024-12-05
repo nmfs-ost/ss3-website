@@ -19,11 +19,11 @@ jobs:
             any::knitr
             any::rmarkdown
             any::downloadthis
-            any::remotes
+            any::pak
             any::FSA
             
       - name: Install r4ss
-        run: Rscript -e 'remotes::install_github("r4ss/r4ss")'
+        run: Rscript -e 'pak::pkg_install("r4ss/r4ss")'
       
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
