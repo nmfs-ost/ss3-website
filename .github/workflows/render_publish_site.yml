@@ -24,6 +24,9 @@ jobs:
             any::rmarkdown
             any::downloadthis
             any::FSA
+            any::curl
+            any::gh
+            any::httr2
 
       - name: Install remotes and r4ss
         run: |
