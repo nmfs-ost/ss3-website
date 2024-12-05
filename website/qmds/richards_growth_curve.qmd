@@ -39,9 +39,9 @@ $b$: shape parameter\
 
 and three input variables:
 
-$t$: observed age\
-$A_1$: young age selected by user\
-$A_2$: old age selected by user
+$t$: age\
+$A_1$: young age selected by user, for the estimation of $L_1$\
+$A_2$: old age selected by user, for the estimation of $L_2$
 
 ### SS3 Code
 
