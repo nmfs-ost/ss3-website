@@ -40,6 +40,7 @@ website:
           - qmds/settlement_timing.qmd
           - qmds/phases.qmd
           - qmds/platoons.qmd
+          - qmds/richards_growth_curve.qmd
       - text: "SS3 Webinar Series"
         icon: webcam
         aria-label: Webinars
