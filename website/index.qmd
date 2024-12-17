@@ -3,6 +3,7 @@ title: "Stock Synthesis (SS3) Website"
 format: 
   html: 
     linestretch: 1.2
+    code-overflow: wrap
 ---
 Welcome to the Stock Synthesis website!
 
@@ -91,16 +92,15 @@ Have a tool to work with Stock Synthesis that should also be mentioned? Open an 
 ## How to Cite Stock Synthesis
 Please cite Stock Synthesis as:
 
-``` 
-#| code-overflow: wrap
+```
 Methot, R.D. and Wetzel, C.R. (2013). Stock Synthesis: A biological and statistical framework 
 for fish stock assessment and fishery management. Fisheries Research, 142: 86-99.
 https://doi.org/10.1016/j.fishres.2012.10.012
 ```
 
 The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a .bib file:
+
 ```
-#| code-overflow: wrap
 @article{methotwetzel2013,
   title={Stock Synthesis: A biological and statistical framework for fish stock assessment 
   and fishery management},
@@ -114,6 +114,10 @@ The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a
 ```
 
 To see how to cite the Stock Synthesis User Manual, please refer to the [SS3 User Manual guidance](qmds/user_manual.qmd).
+
+
+
+
 
 <img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
