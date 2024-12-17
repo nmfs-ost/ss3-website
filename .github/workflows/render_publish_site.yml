@@ -27,6 +27,9 @@ jobs:
             any::curl
             any::gh
             any::httr2
+            any::systemfonts
+            any::svglite
+            any::kableExtra
 
       - name: Install remotes and r4ss
         run: |
