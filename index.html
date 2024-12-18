@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -206,6 +226,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#contributing-to-stock-synthesis" id="toc-contributing-to-stock-synthesis" class="nav-link" data-scroll-target="#contributing-to-stock-synthesis">Contributing to Stock Synthesis</a></li>
   <li><a href="#tools-for-working-with-stock-synthesis" id="toc-tools-for-working-with-stock-synthesis" class="nav-link" data-scroll-target="#tools-for-working-with-stock-synthesis">Tools for working with Stock Synthesis</a></li>
   <li><a href="#how-to-cite-stock-synthesis" id="toc-how-to-cite-stock-synthesis" class="nav-link" data-scroll-target="#how-to-cite-stock-synthesis">How to Cite Stock Synthesis</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -236,11 +257,8 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="news">News!</h2>
 <ul>
 <li>New <a href="https://groups.google.com/g/ss3-forum">SS3 User Forum Google Group</a> - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.</li>
-<li>The next SS3 Office Hours is 12/17/2024 at 3 PM Eastern / 12 PM Pacific. Use the meeting video link <a href="https://meet.google.com/pkx-sgok-wnp">https://meet.google.com/pkx-sgok-wnp</a> or dial in at: ‪(US) +1 929-256-1525‬ PIN: ‪142 661 448‬#</li>
-<li>The next SS3 webinar is 1/16/2025 at 4 PM Eastern / 1 PM Pacific where Arni Magnusson will discuss his work improving the documentation of the Richards curve in the SS3 User Manual and an <a href="./qmds/richards_growth_curve.html">associated vignette</a> on this website. Use the meeting video link <a href="https://meet.google.com/oij-dcic-qif">https://meet.google.com/oij-dcic-qif</a> or dial in at: (US) +1 518-759-2492‬ PIN: ‪805 027 612‬#
-<ul>
+<li>The next SS3 webinar is on 1/16/2025 at 4 PM Eastern / 1 PM Pacific where Arni Magnusson will discuss his work improving the documentation of the Richards curve in the SS3 User Manual and an <a href="./qmds/richards_growth_curve.html">associated vignette</a> on this website. Use the meeting video link <a href="https://meet.google.com/oij-dcic-qif" class="uri">https://meet.google.com/oij-dcic-qif</a> or dial in at: (US) +1 518-759-2492‬ PIN: ‪805 027 612‬#</li>
 <li><a href="https://calendar.google.com/calendar/u/0?cid=Y18zNWM2MWQ5Yjg1MGY1YjkwOGNiY2RjNjIwNmZlYzVkNDgxMmQ2ZTU0NDg3YjE0ZjM1ZGMzYmY0M2E3MGQyMmYxQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">Add SS3 Webinar and Office Hours Calendar to your calendar</a></li>
-</ul></li>
 </ul>
 </section>
 <section id="introduction" class="level2">
@@ -261,7 +279,8 @@ ul.task-list li input[type="checkbox"] {
 <li>A statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.</li>
 <li>A forecast sub-model that projects management quantities.</li>
 </ul>
-<p>There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings on SS3. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participating in the online discussions and forums. <img src="qmds/images/ss3_map.png" class="img-fluid" style="width:90.0%" alt="Image of a map showing where Stock Synthesis is used around the world and for which species."></p>
+<p>The equations behind the basic features of SS3 can be found in Appendix A of <span class="citation" data-cites="methot2013">Methot and Wetzel (<a href="#ref-methot2013" role="doc-biblioref">2013</a>)</span>.</p>
+<p>There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participates in the online discussions and forums. <img src="qmds/images/ss3_map.png" class="img-fluid" style="width:90.0%" alt="Image of a map showing where Stock Synthesis is used around the world and for which species."></p>
 </section>
 <section id="installing-the-stock-synthesis-latest-release" class="level2">
 <h2 class="anchored" data-anchor-id="installing-the-stock-synthesis-latest-release">Installing the Stock Synthesis latest release</h2>
@@ -352,6 +371,14 @@ https://doi.org/10.1016/j.fishres.2012.10.012</code></pre>
   doi={10.1016/j.fishres.2012.10.012},
 }</code></pre>
 <p>To see how to cite the Stock Synthesis User Manual, please refer to the <a href="./qmds/user_manual.html">SS3 User Manual guidance</a>.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-methot2013" class="csl-entry" role="listitem">
+Methot, Richard D., and Chantell R. Wetzel. 2013. <span>“Stock Synthesis: A Biological and Statistical Framework for Fish Stock Assessment and Fishery Management.”</span> <em>Fisheries Research</em> 142 (May): 86–99. <a href="https://doi.org/10.1016/j.fishres.2012.10.012">https://doi.org/10.1016/j.fishres.2012.10.012</a>.
+</div>
+</div>
 <p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"></p>
 <p><a href="https://www.commerce.gov/">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/">NOAA Fisheries</a></p>
 
