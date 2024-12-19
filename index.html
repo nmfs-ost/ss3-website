@@ -263,7 +263,7 @@ div.csl-indent {
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a>.</p>
+<p>Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder <a href="https://www.admb-project.org/">ADMB</a> <span class="citation" data-cites="fournier2012">(<a href="#ref-fournier2012" role="doc-biblioref">Fournier et al. 2012</a>)</span>.</p>
 <p>SS3 is made up of</p>
 <ul>
 <li>A population sub-model that simulates the following population processes:
@@ -279,7 +279,7 @@ div.csl-indent {
 <li>A statistical sub-model that characterizes the data’s goodness of fit and obtains best-fitting parameters with associated variance.</li>
 <li>A forecast sub-model that projects management quantities.</li>
 </ul>
-<p>The equations behind the basic features of SS3 can be found in Appendix A of <span class="citation" data-cites="methot2013">Methot and Wetzel (<a href="#ref-methot2013" role="doc-biblioref">2013</a>)</span>.</p>
+<p>The equations behind the basic features of SS3 can be found in <a href="https://sedarweb.org/documents/sedar-39-rd08-appendix-a-technical-description-of-the-stock-synthesis-assessment-program/">Appendix A</a> of <span class="citation" data-cites="methot2013">Methot and Wetzel (<a href="#ref-methot2013" role="doc-biblioref">2013</a>)</span> (<a href="https://sedarweb.org/documents/sedar-39-rd07-stock-synthesis-a-biological-and-statistical-framework-for-fish-stock-assessment-and-fishery-management/">link to PDF of paper</a>).</p>
 <p>There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participates in the online discussions and forums. <img src="qmds/images/ss3_map.png" class="img-fluid" style="width:90.0%" alt="Image of a map showing where Stock Synthesis is used around the world and for which species."></p>
 </section>
 <section id="installing-the-stock-synthesis-latest-release" class="level2">
@@ -375,6 +375,9 @@ https://doi.org/10.1016/j.fishres.2012.10.012</code></pre>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-fournier2012" class="csl-entry" role="listitem">
+Fournier, David A., Hans J. Skaug, Johnoel Ancheta, James Ianelli, Arni Magnusson, Mark N. Maunder, Anders Nielsen, and John Sibert. 2012. <span>“AD Model Builder: Using Automatic Differentiation for Statistical Inference of Highly Parameterized Complex Nonlinear Models.”</span> <em>Optimization Methods and Software</em> 27 (2): 233–49. <a href="https://doi.org/10.1080/10556788.2011.597854">https://doi.org/10.1080/10556788.2011.597854</a>.
+</div>
 <div id="ref-methot2013" class="csl-entry" role="listitem">
 Methot, Richard D., and Chantell R. Wetzel. 2013. <span>“Stock Synthesis: A Biological and Statistical Framework for Fish Stock Assessment and Fishery Management.”</span> <em>Fisheries Research</em> 142 (May): 86–99. <a href="https://doi.org/10.1016/j.fishres.2012.10.012">https://doi.org/10.1016/j.fishres.2012.10.012</a>.
 </div>
