@@ -17,7 +17,7 @@ Welcome to the Stock Synthesis website!
 
 ## Introduction
 
-Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder [ADMB](https://www.admb-project.org/).
+Stock Synthesis (SS3) is an age- and size-structured stock assessment model in the class of models termed integrated analysis. Stock Synthesis has evolved over time to be able to model a wide range of fish population dynamics and somatic growth and to utilize diverse types of data. The model is coded in C++ with parameter estimation enabled by automatic differentiation though AD Model Builder [ADMB](https://www.admb-project.org/) [@fournier2012].
 
 SS3 is made up of
 
@@ -32,7 +32,7 @@ SS3 is made up of
 -   A statistical sub-model that characterizes the data's goodness of fit and obtains best-fitting parameters with associated variance.
 -   A forecast sub-model that projects management quantities.
 
-The equations behind the basic features of SS3 can be found in Appendix A of @methot2013.
+The equations behind the basic features of SS3 can be found in [Appendix A](https://sedarweb.org/documents/sedar-39-rd08-appendix-a-technical-description-of-the-stock-synthesis-assessment-program/) of @methot2013 ([link to PDF of paper](https://sedarweb.org/documents/sedar-39-rd07-stock-synthesis-a-biological-and-statistical-framework-for-fish-stock-assessment-and-fishery-management/)).
 
 There are 100+ stocks in the US and throughout the world that use SS3 for which we have provided many national, international, and web-based trainings. Additionally, we have a very active user-base that contributes heavily to SS3 and the associated R packages as well as participates in the online discussions and forums. ![](qmds/images/ss3_map.png){width="90%" fig-alt="Image of a map showing where Stock Synthesis is used around the world and for which species."}
 
@@ -126,6 +126,7 @@ The following [BibTeX](http://www.bibtex.org/) entry can be copied and used in a
 To see how to cite the Stock Synthesis User Manual, please refer to the [SS3 User Manual guidance](qmds/user_manual.qmd).
 
 ## References
+
 ::: {#refs}
 :::
 
