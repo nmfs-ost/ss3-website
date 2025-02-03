@@ -15,7 +15,7 @@ To suggest future webinar topics, please post to the [SS3 User Forum Google Grou
 ## January 16, 2025 - Richards curve with Arni Magnusson
 
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of presentation from Arni Magnusson on the Richards Curve"}
-knitr::include_graphics(normalizePath("../qmds/presentations/Richards_Cruve_webinar.pdf"))
+knitr::include_graphics(normalizePath("../qmds/presentations/Richards_Curve_Webinar.pdf"))
 ```
 
 Please also see the [Richards Growth Curve vignette](qmds/richards_growth_curve.qmd).
