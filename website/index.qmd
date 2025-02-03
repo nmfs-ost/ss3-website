@@ -12,7 +12,10 @@ Welcome to the Stock Synthesis website!
 ## News!
 
 -   New [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum) - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.
--   The next SS3 webinar is on 1/16/2025 at 4 PM Eastern / 1 PM Pacific where Arni Magnusson will discuss his work improving the documentation of the Richards curve in the SS3 User Manual and an [associated vignette](qmds/richards_growth_curve.qmd) on this website. Use the meeting video link <https://meet.google.com/oij-dcic-qif> or dial in at: (US) +1 518-759-2492‬ PIN: ‪805 027 612‬#
+
+## Webinar and Office Hours
+-   The next SS3 Office Hours is on February 18 at 3 pm ET / 12 pm PT. Office hours are a great time to bring your own questions and discussion topics! [Link to join the SS3 Office Hours](https://meet.google.com/pkx-sgok-wnp)
+-   The next SS3 Webinar is on March 20 at 3 pm ET / 12 pm PT. [Link to join the SS3 Webinar](https://meet.google.com/oij-dcic-qif)
 -   [Add SS3 Webinar and Office Hours Calendar to your calendar](https://calendar.google.com/calendar/u/0?cid=Y18zNWM2MWQ5Yjg1MGY1YjkwOGNiY2RjNjIwNmZlYzVkNDgxMmQ2ZTU0NDg3YjE0ZjM1ZGMzYmY0M2E3MGQyMmYxQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20)
 
 ## Introduction

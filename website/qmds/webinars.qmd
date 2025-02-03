@@ -14,7 +14,11 @@ To suggest future webinar topics, please post to the [SS3 User Forum Google Grou
 
 ## January 16, 2025 - Richards curve with Arni Magnusson
 
-Please see the [Richards Growth Curve vignette](qmds/richards_growth_curve.qmd).
+```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of presentation from Arni Magnusson on the Richards Curve"}
+knitr::include_graphics(normalizePath("../qmds/presentations/Richards_Cruve_webinar.pdf"))
+```
+
+Please also see the [Richards Growth Curve vignette](qmds/richards_growth_curve.qmd).
 
 ## November 19, 2024 - Interacting with SS3 repos on GitHub
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of presentation on interacting with SS3 repos on GitHub"}
