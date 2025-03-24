@@ -7,11 +7,11 @@ format:
 bibliography: references.bib
 ---
 
-Welcome to the Stock Synthesis website!
+Welcome to the Stock Synthesis website! 
 
-## News!
+If you are a new SS3 user, please see the @sec-startSS3 and the @sec-startSAC sections as well as the [SS3 User Manual](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html).
 
--   New [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum) - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.
+We have a new [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum). Please let us know your institution and why you want to join the user group in your request to join.
 
 ## Webinar and Office Hours
 -   The next SS3 Office Hours is on February 18 at 3 pm ET / 12 pm PT. Office hours are a great time to bring your own questions and discussion topics! [Link to join the SS3 Office Hours](https://meet.google.com/pkx-sgok-wnp)
@@ -47,7 +47,7 @@ There are 100+ stocks in the US and throughout the world that use SS3 for which 
 
 To see the changes made in the latest release of Stock Synthesis, please see the [change log on GitHub](https://github.com/orgs/nmfs-ost/projects/11) that shows all changes from v.3.30.19 onward. To see the change log for v.3.30.00 to v.3.30.20, please download [this Excel spreadsheet](https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true). For the change log for v.3.24, please see [this Excel spreadsheet](Change_log_SS_3.24.xlsx) and [the Readme](readme_StockSynthesis_changelogs.txt) on the historical SS3 change logs.
 
-## Getting Started with Stock Synthesis
+## Getting Started with Stock Synthesis {#sec-startSS3}
 
 To get started with Stock Synthesis, please see the presentation below and the [Getting Started with Stock Synthesis Tutorial](qmds/getting_started_ss3.qmd):
 
@@ -55,7 +55,7 @@ To get started with Stock Synthesis, please see the presentation below and the [
 knitr::include_graphics("SS3_Getting_Started.pdf")
 ```
 
-### Getting Started Using the Stock Assessment Continuum Tool
+### Getting Started Using the Stock Assessment Continuum Tool {#sec-startSAC}
 
 If you are just getting started with Stock Synthesis, we highly recommend downloading the [Stock Assessment Continuum Tool](https://github.com/shcaba/SS-DL-tool), a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the [{r4ss}](https://github.com/r4ss/r4ss) package. ![](qmds/images/stock_assess_continuation_tool.png){width="90%" fig-alt="Picture of the stock assessment continuum tool shiny app."}
 
