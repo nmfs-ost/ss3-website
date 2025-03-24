@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -52,10 +52,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0ae9f1f4f9bf91bdeb805a26b550233.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-60c7bd8979bac0cdb15b30daaed1d4ed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -211,14 +211,13 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#news" id="toc-news" class="nav-link active" data-scroll-target="#news">News!</a></li>
-  <li><a href="#webinar-and-office-hours" id="toc-webinar-and-office-hours" class="nav-link" data-scroll-target="#webinar-and-office-hours">Webinar and Office Hours</a></li>
+  <li><a href="#webinar-and-office-hours" id="toc-webinar-and-office-hours" class="nav-link active" data-scroll-target="#webinar-and-office-hours">Webinar and Office Hours</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#installing-the-stock-synthesis-latest-release" id="toc-installing-the-stock-synthesis-latest-release" class="nav-link" data-scroll-target="#installing-the-stock-synthesis-latest-release">Installing the Stock Synthesis latest release</a></li>
   <li><a href="#change-logs" id="toc-change-logs" class="nav-link" data-scroll-target="#change-logs">Change logs</a></li>
-  <li><a href="#getting-started-with-stock-synthesis" id="toc-getting-started-with-stock-synthesis" class="nav-link" data-scroll-target="#getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</a>
+  <li><a href="#sec-startSS3" id="toc-sec-startSS3" class="nav-link" data-scroll-target="#sec-startSS3">Getting Started with Stock Synthesis</a>
   <ul class="collapse">
-  <li><a href="#getting-started-using-the-stock-assessment-continuum-tool" id="toc-getting-started-using-the-stock-assessment-continuum-tool" class="nav-link" data-scroll-target="#getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</a></li>
+  <li><a href="#sec-startSAC" id="toc-sec-startSAC" class="nav-link" data-scroll-target="#sec-startSAC">Getting Started Using the Stock Assessment Continuum Tool</a></li>
   <li><a href="#getting-started-using-the-input-files" id="toc-getting-started-using-the-input-files" class="nav-link" data-scroll-target="#getting-started-using-the-input-files">Getting Started Using the Input Files</a></li>
   <li><a href="#interacting-with-stock-synthesis-and-viewing-output-using-r4ss" id="toc-interacting-with-stock-synthesis-and-viewing-output-using-r4ss" class="nav-link" data-scroll-target="#interacting-with-stock-synthesis-and-viewing-output-using-r4ss">Interacting with Stock Synthesis and Viewing Output Using {r4ss}</a></li>
   <li><a href="#user-example-models" id="toc-user-example-models" class="nav-link" data-scroll-target="#user-example-models">User Example Models</a></li>
@@ -254,12 +253,8 @@ div.csl-indent {
 
 
 <p>Welcome to the Stock Synthesis website!</p>
-<section id="news" class="level2">
-<h2 class="anchored" data-anchor-id="news">News!</h2>
-<ul>
-<li>New <a href="https://groups.google.com/g/ss3-forum">SS3 User Forum Google Group</a> - request to join. This is meant to replace VLAB forums and foster a self-sufficient user community.</li>
-</ul>
-</section>
+<p>If you are a new SS3 user, please see the <a href="#sec-startSS3" class="quarto-xref">Section&nbsp;5</a> and the <a href="#sec-startSAC" class="quarto-xref">Section&nbsp;5.1</a> sections as well as the <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html">SS3 User Manual</a>.</p>
+<p>We have a new <a href="https://groups.google.com/g/ss3-forum">SS3 User Forum Google Group</a>. Please let us know your institution and why you want to join the user group in your request to join.</p>
 <section id="webinar-and-office-hours" class="level2">
 <h2 class="anchored" data-anchor-id="webinar-and-office-hours">Webinar and Office Hours</h2>
 <ul>
@@ -297,8 +292,8 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="change-logs">Change logs</h2>
 <p>To see the changes made in the latest release of Stock Synthesis, please see the <a href="https://github.com/orgs/nmfs-ost/projects/11">change log on GitHub</a> that shows all changes from v.3.30.19 onward. To see the change log for v.3.30.00 to v.3.30.20, please download <a href="https://github.com/nmfs-ost/ss3-source-code/blob/v3.30.19/Change_log_for_SS_3.30.xlsx?raw=true">this Excel spreadsheet</a>. For the change log for v.3.24, please see <a href="Change_log_SS_3.24.xlsx">this Excel spreadsheet</a> and <a href="readme_StockSynthesis_changelogs.txt">the Readme</a> on the historical SS3 change logs.</p>
 </section>
-<section id="getting-started-with-stock-synthesis" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started-with-stock-synthesis">Getting Started with Stock Synthesis</h2>
+<section id="sec-startSS3" class="level2">
+<h2 class="anchored" data-anchor-id="sec-startSS3">Getting Started with Stock Synthesis</h2>
 <p>To get started with Stock Synthesis, please see the presentation below and the <a href="./qmds/getting_started_ss3.html">Getting Started with Stock Synthesis Tutorial</a>:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -309,8 +304,8 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<section id="getting-started-using-the-stock-assessment-continuum-tool" class="level3">
-<h3 class="anchored" data-anchor-id="getting-started-using-the-stock-assessment-continuum-tool">Getting Started Using the Stock Assessment Continuum Tool</h3>
+<section id="sec-startSAC" class="level3">
+<h3 class="anchored" data-anchor-id="sec-startSAC">Getting Started Using the Stock Assessment Continuum Tool</h3>
 <p>If you are just getting started with Stock Synthesis, we highly recommend downloading the <a href="https://github.com/shcaba/SS-DL-tool">Stock Assessment Continuum Tool</a>, a shiny app (pictured below) where users can provide data and life-history information to create the Stock Synthesis input files, run the model, and produce plots and tables via the <a href="https://github.com/r4ss/r4ss">{r4ss}</a> package. <img src="qmds/images/stock_assess_continuation_tool.png" class="img-fluid" style="width:90.0%" alt="Picture of the stock assessment continuum tool shiny app."></p>
 </section>
 <section id="getting-started-using-the-input-files" class="level3">
