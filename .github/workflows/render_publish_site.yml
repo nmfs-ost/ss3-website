@@ -6,7 +6,7 @@ name: Render and Publish
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: main
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
