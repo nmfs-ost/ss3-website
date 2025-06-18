@@ -5,7 +5,6 @@ format: html
 editor: 
   markdown: 
     wrap: 72
-  wrap: 72
 bibliography: references.bib
 ---
 

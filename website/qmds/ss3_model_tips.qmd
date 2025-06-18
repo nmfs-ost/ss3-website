@@ -154,7 +154,7 @@ For a fixed value of $\sigma R$, a section of the output will provide diagnostic
 
 # Where to get additional help
 
-+ Post questions in the GitHub [discussions](https://github.com/nmfs-stock-synthesis/ss3-source-code/discussions) or to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum) or send an emails to the team at NMFS.Stock.Synthesis@noaa.gov for assistance.
++ Post questions in the GitHub [discussions](https://github.com/nmfs-ost/ss3-source-code/discussions) or to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum) or send an emails to the team at NMFS.Stock.Synthesis@noaa.gov for assistance.
 + [Carvalho et al. 2021](https://doi.org/10.1016/j.fishres.2021.105959) contains guidance on developing stock assessments.
 
 

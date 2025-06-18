@@ -1,6 +1,6 @@
 on:
   push:
-    branches: main
+    branches: small-updates
 
 name: Render and Publish
 

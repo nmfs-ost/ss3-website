@@ -6,9 +6,9 @@ quarto-doc-website.Rproj
 .git
 .DS_Store
 
-/.quarto/
-/_site/
-/website/qmds/*.html
-/website/_extensions/
-/website/_freeze/
-/website/docs/site_libs/
+*/.quarto/
+*/_site/
+website/qmds/*.html
+website/_extensions/
+website/_freeze/
+website/docs/site_libs/
