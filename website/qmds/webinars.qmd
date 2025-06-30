@@ -12,6 +12,12 @@ part is a Q&A session. Subscribe to the [SS3 Webinar calendar](https://calendar.
 
 To suggest future webinar topics, please post to the [SS3 User Forum Google Group](https://groups.google.com/g/ss3-forum).
 
+## Impact of time-varying biology on reference points in SS3
+Date is TBD.
+```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of presentation from Rick Methot on the impact of time-varying biology on reference points in SS3"}
+knitr::include_graphics(normalizePath("../qmds/presentations/TVBiology_SR_RefPoints.pdf"))
+```
+
 ## January 16, 2025 - Richards curve with Arni Magnusson
 
 ```{r, echo = FALSE, out.width = "90%", out.height= "400px", fig.alt="pdf of presentation from Arni Magnusson on the Richards Curve"}
