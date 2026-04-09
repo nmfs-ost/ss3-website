@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Rick Methot">
 
-<title>Start Year Considerations – Stock Synthesis (SS3)</title>
+<title>Demonstration of Interaction of Growth and Seasonality in SS3 – Stock Synthesis (SS3)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -56,35 +57,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -228,9 +200,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#population-age-composition-in-the-start-year-is-composed-of" id="toc-population-age-composition-in-the-start-year-is-composed-of" class="nav-link active" data-scroll-target="#population-age-composition-in-the-start-year-is-composed-of">Population age composition in the start year is composed of:</a></li>
-  <li><a href="#start-year-considerations" id="toc-start-year-considerations" class="nav-link" data-scroll-target="#start-year-considerations">Start year considerations</a></li>
-  <li><a href="#first-year-with-recdevs" id="toc-first-year-with-recdevs" class="nav-link" data-scroll-target="#first-year-with-recdevs">First year with recdevs</a></li>
+  <li><a href="#in-progress" id="toc-in-progress" class="nav-link active" data-scroll-target="#in-progress">IN PROGRESS</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#test-setup" id="toc-test-setup" class="nav-link" data-scroll-target="#test-setup">Test setup</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -239,13 +213,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Start Year Considerations</h1>
+<h1 class="title">Demonstration of Interaction of Growth and Seasonality in SS3</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rick Methot </p>
+          </div>
+  </div>
     
   
     
@@ -256,60 +236,28 @@ window.Quarto = {
 </header>
 
 
-<p>The estimated population age composition in the first year of composition data interacts with the structural stiffness (especially asymptotic selectivity) to produce a strong influence on the model result. Therefore, <span class="math inline">\(R_{0}\)</span>, initial <span class="math inline">\(F\)</span>, and domed selectivity must be considered together.</p>
-<section id="population-age-composition-in-the-start-year-is-composed-of" class="level2">
-<h2 class="anchored" data-anchor-id="population-age-composition-in-the-start-year-is-composed-of">Population age composition in the start year is composed of:</h2>
-<ul>
-<li>An equilibrium age composition using <span class="math inline">\(Z = M + initial F\)</span></li>
-<li>Age-specific deviation from that vector for none, to all, of the ages.
-<ul>
-<li>These age deviations are a continuation of the recruitment deviations (devs), but now they are centered around the initial equilibrium age composition, rather than around the spawner-recruitment function.</li>
-<li>Because the devs are centered around the equilibrium age composition, it is important that the initial <span class="math inline">\(F\)</span> be approximately correct, otherwise a pattern can be introduced in the devs.</li>
-<li>SS3 provides the concept of early_devs, which are not zero-centered, to separate them from the main_rec_devs, which typically are zero-centered (but growing evidence that they should also be free devs).</li>
-</ul></li>
-</ul>
-<!-- **[Need a picture here]** -->
+<section id="in-progress" class="level1">
+<h1>IN PROGRESS</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In late 2025 it was <a href="https://github.com/nmfs-ost/ss3-source-code/issues/735">noticed</a> that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a <a href="https://github.com/nmfs-ost/ss3-source-code/issues/156">comprehensive review of growth</a>. The resolution of the discrepancies is found in <a href="https://github.com/nmfs-ost/ss3-source-code/pull/747">pull request #747</a> from March 2026. This document demonstrates the correctness of the SS3 growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.</p>
 </section>
-<section id="start-year-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="start-year-considerations">Start year considerations</h2>
-<ul>
-<li>Long historical period of relatively stable catch
-<ul>
-<li>This is the ideal situation for use of initial equilibrium catch with initial <span class="math inline">\(F\)</span> estimated. Even a low level of catch can have a noticeable impact on the expected occurrence of fish in the plus group if <span class="math inline">\(M\)</span> is low.</li>
-<li>If that level of catch is moderate, then the most internally consistent approach is to turn on the spawner-recruitment calculations within the initial equilibrium. Note that the ensuing calculation is identical to the MSY calculations. This means that SS3 will always make <span class="math inline">\(R_{0}\)</span> big enough such that MSY is greater than initial equilibrium catch. If you suspect that historical catch reduced biomass below <span class="math inline">\(B_{MSY}\)</span>, then it is incorrect to use initial equilibrium approach. Instead, move start year earlier, and included the time series of catches that previously were averaged into the initial equilibrium catch. With this alternative, the time series of catches will be able to create <span class="math inline">\(F\)</span>’s greater than <span class="math inline">\(F_{MSY}\)</span>. Also, what was a vector of initial age composition now appears in the model as a vector of recruitments extending further back in time.</li>
-</ul></li>
-<li>Substantial changes in historical catch levels have occurred within a lifespan before start year
-<ul>
-<li>In this situation, the equilibrium assumption is violated. Better approach is to start earlier and allow estimation of year specific <span class="math inline">\(F\)</span>.</li>
-</ul></li>
-</ul>
-</section>
-<section id="first-year-with-recdevs" class="level2">
-<h2 class="anchored" data-anchor-id="first-year-with-recdevs">First year with recdevs</h2>
-<ul>
-<li>By starting rec_devs early (even long before influential data occur) the variability associated with <span class="math inline">\(\sigma R\)</span> creates variance in the population abundance and this variance can be seen in both recruitment and spawning biomass.</li>
-</ul>
-<!-- **[Need picture here]** -->
-<ul>
-<li>The first year with rec_devs (main or early) can be Nages before start year.</li>
-<li>Devs that occur long before the data do not influence the goodness of fit to the data, but the variance of those devs is still important to capture. Use of the early_devs concept is helpful in this situation because they can wait to be turned on in a late phase just to capture that variance.</li>
-<li>The challenge with this long vector of devs is that the influence of data on the dev estimation gradually increases over time. So some of the devs may show unexpected patterns because of the influence of noise in the early data. Shortening up the number of years with devs may not help because the influence of the data is still there and the model response often will still show up in the first estimated dev.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Think of it as">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Think of it as
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>How much of a logL improvement in fit to some early length comp sample is needed to outweigh the logL penalty caused by an early dev moving away from 0.0?</p>
-</div>
-</div>
+<section id="test-setup" class="level2">
+<h2 class="anchored" data-anchor-id="test-setup">Test setup</h2>
+<p>The testbed for this demonstration started with the simple model setup which uses <a href="">von Bertallanffy growth</a>, single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:</p>
+<div class="line-block">Growth Options | 1, 2, 3, 4, 5, 8 |<br>
+Seasonality | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month season duration |<br>
+Model | 3.30.24.1 and new |</div>
+<p>Growth option 2 (<a href="">Richards</a>) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for <a href="">age-specific K</a> were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 (<a href="">cessation</a>) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.</p>
+<p>An additional design configuration set the AFIX2 value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.</p>
+<p>All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.</p>
+<p>The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.</p>
+<p>All models were run with no estimation (<code>-nohess -stopph 0</code>) so will produce output directly from the input parameter values.</p>
+<p>The report.sso output table labelled MEAN_SIZE_TIMESERIES was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons.</p>
+<p>While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
