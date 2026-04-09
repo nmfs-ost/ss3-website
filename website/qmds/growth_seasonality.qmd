@@ -1,0 +1,37 @@
+---
+title: "Demonstration of Interaction of Growth and Seasonality in SS3"
+author: "Rick Methot"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+  wrap: 72
+---
+# IN PROGRESS
+
+## Introduction
+
+In late 2025 it was [noticed](https://github.com/nmfs-ost/ss3-source-code/issues/735) that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a [comprehensive review of growth](https://github.com/nmfs-ost/ss3-source-code/issues/156). The resolution of the discrepancies is found in [pull request #747](https://github.com/nmfs-ost/ss3-source-code/pull/747) from March 2026. This document demonstrates the correctness of the SS3 growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.
+
+
+## Test setup
+
+The testbed for this demonstration started with the simple model setup which uses [von Bertallanffy growth](), single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
+
+| Growth Options | 1, 2, 3, 4, 5, 8 |
+| Seasonality    | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month season duration |
+| Model          | 3.30.24.1 and new |
+
+Growth option 2 ([Richards]()) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for [age-specific K]() were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 ([cessation]()) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.
+
+An additional design configuration set the AFIX2 value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.
+
+All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.
+
+The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.
+
+All models were run with no estimation (`-nohess -stopph 0`) so will produce output directly from the input parameter values.
+
+The report.sso output table labelled MEAN_SIZE_TIMESERIES was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons.
+
+While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.
