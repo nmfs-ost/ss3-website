@@ -47,7 +47,7 @@ At the beginning of season 1, subseason 1, in 1985 (which is after the time-vary
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated "test" executable for all growth options"
+#| fig-cap: "Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated 'test' executable for all growth options"
 
 library(gt)
 library(here)
@@ -93,7 +93,7 @@ However, the seasons-as-years configuration shows differences between the model 
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Mean length-at-age for the seasons-as-years models comparing the current SS3 executable and the updated "test" executable for all growth options"
+#| fig-cap: "Mean length-at-age for the seasons-as-years models comparing the current SS3 executable and the updated 'test' executable for all growth options"
 
 tbl2 <- tbl |>
   dplyr::filter(Season == "seas_as_years") |>
