@@ -34,6 +34,10 @@ jobs:
             any::systemfonts
             any::svglite
             any::kableExtra
+            any::dplyr
+            any::gt
+            any::scales
+            any::here
 
       - name: Install remotes and r4ss
         run: |

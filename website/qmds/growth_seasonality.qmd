@@ -18,8 +18,10 @@ In late 2025 it was [noticed](https://github.com/nmfs-ost/ss3-source-code/issues
 
 The testbed for this demonstration started with the simple model setup which uses [von Bertallanffy growth](), single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
 
+|                |                  |
+|----------------|----------------- |
 | Growth Options | 1, 2, 3, 4, 5, 8 |
-| Seasonality    | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month season duration |
+| Seasonality    | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month seasons |
 | Model          | 3.30.24.1 and new |
 
 Growth option 2 ([Richards]()) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for [age-specific K]() were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 ([cessation]()) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.
@@ -32,6 +34,81 @@ The Linf parameter was set to be time-varying with a block beginning in 1980. Th
 
 All models were run with no estimation (`-nohess -stopph 0`) so will produce output directly from the input parameter values.
 
-The report.sso output table labelled MEAN_SIZE_TIMESERIES was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons.
 
-While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.
+## Results
+
+The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons. While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.
+
+The tables below display mean length-at-age for females (Sex = 1), Season 1, Subseason 1, Yr = 1985 and selected ages for brevity.
+
+At the beginning of season 1, subseason 1, in 1985 (which is after the time-varying growth begins), the existing model and the updated model (test) all produce the same mean length-at-age for both the annual (oneseas) and the two season model.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated "test" executable for all growth options"
+
+library(gt)
+library(here)
+library(scales)
+
+results <- read.csv(here::here("example_files","all_models_growthseries.csv"))
+
+age_cols <- c("X0", "X1", "X2", "X3", "X4", "X39", "X40")
+
+# Create exactly 7 colors (one per shown column), from red -> orange -> yellow -> green
+fill_cols <- grDevices::colorRampPalette(
+  c("#d73027", "#f46d43", "#fee08b", "#a6d96a", "#1a9850"))(length(age_cols))
+
+tbl <- results |>
+  dplyr::filter(Yr == 1985,
+                Seas == 1,
+                SubSeas == 1) |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X39`,`X40`) |>
+  dplyr::mutate(
+    Season = factor(Season, levels = c("oneseas", "twoseas", "seas_as_years"))) |>
+  dplyr::arrange(Growth, Season, Seas, SubSeas) 
+
+tbl1 <- tbl |> dplyr::filter(Season %in% c("oneseas", "twoseas")) |>
+  gt::gt()
+
+for (i in seq_along(age_cols)) {
+  tbl1 <- tbl1 |>
+    gt::tab_style(
+      style = list(
+        gt::cell_fill(color = fill_cols[i]),
+        gt::cell_text(color = "black")
+      ),
+      locations = gt::cells_body(columns = dplyr::all_of(age_cols[i]))
+    )
+}
+
+tbl1
+```
+
+However, the seasons-as-years configuration shows differences between the model versions. These differences are consistent across all the growth options.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the seasons-as-years models comparing the current SS3 executable and the updated "test" executable for all growth options"
+
+tbl2 <- tbl |>
+  dplyr::filter(Season == "seas_as_years") |>
+  gt::gt()
+
+for (i in seq_along(age_cols)) {
+  tbl2 <- tbl2 |>
+    gt::tab_style(
+      style = list(
+        gt::cell_fill(color = fill_cols[i]),
+        gt::cell_text(color = "black")
+      ),
+      locations = gt::cells_body(columns = dplyr::all_of(age_cols[i]))
+    )
+}
+
+tbl2
+```
