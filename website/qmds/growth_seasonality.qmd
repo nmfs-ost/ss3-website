@@ -50,10 +50,9 @@ At the beginning of season 1, subseason 1, in 1985 (which is after the time-vary
 #| fig-cap: "Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated 'test' executable for all growth options"
 
 library(gt)
-library(here)
 library(scales)
 
-results <- read.csv(here::here("example_files","all_models_growthseries.csv"))
+results <- read.csv(file.path("example_files", "all_models_growthseries.csv"))
 
 age_cols <- c("X0", "X1", "X2", "X3", "X4", "X39", "X40")
 
