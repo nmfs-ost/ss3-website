@@ -204,6 +204,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#test-setup" id="toc-test-setup" class="nav-link" data-scroll-target="#test-setup">Test setup</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -245,16 +246,1668 @@ ul.task-list li input[type="checkbox"] {
 <section id="test-setup" class="level2">
 <h2 class="anchored" data-anchor-id="test-setup">Test setup</h2>
 <p>The testbed for this demonstration started with the simple model setup which uses <a href="">von Bertallanffy growth</a>, single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:</p>
-<div class="line-block">Growth Options | 1, 2, 3, 4, 5, 8 |<br>
-Seasonality | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month season duration |<br>
-Model | 3.30.24.1 and new |</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 51%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Growth Options</td>
+<td>1, 2, 3, 4, 5, 8</td>
+</tr>
+<tr class="even">
+<td>Seasonality</td>
+<td>annual, seasonal with two 6-month seasons, seasons-as-years with 6 month seasons</td>
+</tr>
+<tr class="odd">
+<td>Model</td>
+<td>3.30.24.1 and new</td>
+</tr>
+</tbody>
+</table>
 <p>Growth option 2 (<a href="">Richards</a>) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for <a href="">age-specific K</a> were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 (<a href="">cessation</a>) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.</p>
 <p>An additional design configuration set the AFIX2 value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.</p>
 <p>All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.</p>
 <p>The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.</p>
 <p>All models were run with no estimation (<code>-nohess -stopph 0</code>) so will produce output directly from the input parameter values.</p>
-<p>The report.sso output table labelled MEAN_SIZE_TIMESERIES was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons.</p>
-<p>While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons. While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.</p>
+<p>The tables below display mean length-at-age for females (Sex = 1), Season 1, Subseason 1, Yr = 1985 and selected ages for brevity.</p>
+<p>At the beginning of season 1, subseason 1, in 1985 (which is after the time-varying growth begins), the existing model and the updated model (test) all produce the same mean length-at-age for both the annual (oneseas) and the two season model.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="niqbjzbhhd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#niqbjzbhhd table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#niqbjzbhhd thead, #niqbjzbhhd tbody, #niqbjzbhhd tfoot, #niqbjzbhhd tr, #niqbjzbhhd td, #niqbjzbhhd th {
+  border-style: none;
+}
+
+#niqbjzbhhd p {
+  margin: 0;
+  padding: 0;
+}
+
+#niqbjzbhhd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#niqbjzbhhd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#niqbjzbhhd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#niqbjzbhhd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#niqbjzbhhd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#niqbjzbhhd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#niqbjzbhhd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#niqbjzbhhd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#niqbjzbhhd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#niqbjzbhhd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#niqbjzbhhd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#niqbjzbhhd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#niqbjzbhhd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#niqbjzbhhd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#niqbjzbhhd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niqbjzbhhd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#niqbjzbhhd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#niqbjzbhhd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#niqbjzbhhd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niqbjzbhhd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#niqbjzbhhd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niqbjzbhhd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#niqbjzbhhd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niqbjzbhhd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#niqbjzbhhd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niqbjzbhhd .gt_left {
+  text-align: left;
+}
+
+#niqbjzbhhd .gt_center {
+  text-align: center;
+}
+
+#niqbjzbhhd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#niqbjzbhhd .gt_font_normal {
+  font-weight: normal;
+}
+
+#niqbjzbhhd .gt_font_bold {
+  font-weight: bold;
+}
+
+#niqbjzbhhd .gt_font_italic {
+  font-style: italic;
+}
+
+#niqbjzbhhd .gt_super {
+  font-size: 65%;
+}
+
+#niqbjzbhhd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#niqbjzbhhd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#niqbjzbhhd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#niqbjzbhhd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#niqbjzbhhd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#niqbjzbhhd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#niqbjzbhhd .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#niqbjzbhhd .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#niqbjzbhhd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.5306</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.5306</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.4108</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.4108</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0381</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0381</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0403</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0403</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated ‘test’ executable for all growth options</p>
+</div>
+</div>
+<p>However, the seasons-as-years configuration shows differences between the model versions. These differences are consistent across all the growth options.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="ajootplcvt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ajootplcvt table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ajootplcvt thead, #ajootplcvt tbody, #ajootplcvt tfoot, #ajootplcvt tr, #ajootplcvt td, #ajootplcvt th {
+  border-style: none;
+}
+
+#ajootplcvt p {
+  margin: 0;
+  padding: 0;
+}
+
+#ajootplcvt .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ajootplcvt .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ajootplcvt .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ajootplcvt .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ajootplcvt .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ajootplcvt .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ajootplcvt .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ajootplcvt .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ajootplcvt .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ajootplcvt .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ajootplcvt .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ajootplcvt .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ajootplcvt .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ajootplcvt .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ajootplcvt .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ajootplcvt .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ajootplcvt .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ajootplcvt .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ajootplcvt .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ajootplcvt .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ajootplcvt .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ajootplcvt .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ajootplcvt .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ajootplcvt .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ajootplcvt .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ajootplcvt .gt_left {
+  text-align: left;
+}
+
+#ajootplcvt .gt_center {
+  text-align: center;
+}
+
+#ajootplcvt .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ajootplcvt .gt_font_normal {
+  font-weight: normal;
+}
+
+#ajootplcvt .gt_font_bold {
+  font-weight: bold;
+}
+
+#ajootplcvt .gt_font_italic {
+  font-style: italic;
+}
+
+#ajootplcvt .gt_super {
+  font-size: 65%;
+}
+
+#ajootplcvt .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ajootplcvt .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ajootplcvt .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ajootplcvt .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ajootplcvt .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ajootplcvt .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ajootplcvt .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ajootplcvt .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ajootplcvt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">23.71820</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">25.8056</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">26.85610</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">27.90910</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0693</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.3853</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">23.71820</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">25.8056</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">27.90910</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">30.01660</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">72.1648</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9544</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth3</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth4</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth5</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">1.25091</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">2.4984</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">3.74142</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">4.97864</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">48.8648</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">48.8637</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth8</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">2.50183</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">4.9968</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">7.48285</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">9.95728</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0227</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0207</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the seasons-as-years models comparing the current SS3 executable and the updated ‘test’ executable for all growth options</p>
+</div>
+</div>
 
 
 </section>
