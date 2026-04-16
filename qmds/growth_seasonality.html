@@ -202,7 +202,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#in-progress" id="toc-in-progress" class="nav-link active" data-scroll-target="#in-progress">IN PROGRESS</a>
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#growth-in-ss3" id="toc-growth-in-ss3" class="nav-link" data-scroll-target="#growth-in-ss3">Growth in SS3</a></li>
   <li><a href="#test-setup" id="toc-test-setup" class="nav-link" data-scroll-target="#test-setup">Test setup</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul></li>
@@ -239,9 +240,17 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="in-progress" class="level1">
 <h1>IN PROGRESS</h1>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="preface" class="level2">
+<h2 class="anchored" data-anchor-id="preface">Preface</h2>
 <p>In late 2025 it was <a href="https://github.com/nmfs-ost/ss3-source-code/issues/735">noticed</a> that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a <a href="https://github.com/nmfs-ost/ss3-source-code/issues/156">comprehensive review of growth</a>. The resolution of the discrepancies is found in <a href="https://github.com/nmfs-ost/ss3-source-code/pull/747">pull request #747</a> from March 2026. This document demonstrates the correctness of the SS3 growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.</p>
+</section>
+<section id="growth-in-ss3" class="level2">
+<h2 class="anchored" data-anchor-id="growth-in-ss3">Growth in SS3</h2>
+<p>Why is growth so complicated in SS3? Unlike most models, SS3 is designed to accommodate flexibility regarding the within year timing of when a cohort of fish begins its growth, and flexibility regarding the exact timing within a year of when an observation is made. There also is the capability to allow growth parameters to change over time, including density-dependence, so size-at-age cannot be calculated just once at the beginning of the time series.This means that there are three sections of code for calculating size-at-age: 1. At the beginning of the time series, calculate size-at-age; 2. At the beginning of each year, calculate the size at age to the beginning of each season within that year and to the beginning of the next year. This growth is according to the growth parameters of that year and follows the diagonal of the time x age matrix; 3. At the time of each subseason (minimum is two subseasons per year or season), calculate the size-at-age as growth from the beginning of that season.</p>
+<p>Within each of these sections, there are four sections of code for each major growth function: 1. Von Bertallanffy 2. Richards/Gompertz 3. Three variants of age-specific K 4. Growth cessation</p>
+<p>Within each of the growth functions, there is an equation to calculate size-at-age for the first age past the linear growth age range, and code for calculating growth of older ages, and some have specific code for growth within the plus group.</p>
+<p>All of the above needs to account for season duration, which is simply 1.0 for an annual model, but models with seasons within year have great flexibility on number and duration of seasons, and models with seasons-as-years have a time step with a user specified duration in fractions of a year.</p>
+<p>Unfortunately, as growth options were developed, nearly all the testing was with simple annual time steps; and as seasonality options were tested, nearly all the testing was with the simple von Bertallanffy function. This allowed some growth function x seasonality combinations to misbehave. Here we thoroughly test all combinations and update the code to behave as expected.</p>
 </section>
 <section id="test-setup" class="level2">
 <h2 class="anchored" data-anchor-id="test-setup">Test setup</h2>
@@ -254,7 +263,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Growth Options</td>
-<td>1, 2, 3, 4, 5, 8</td>
+<td>1, 2(Richards), 2(Gompertz), 3, 4, 5, 8</td>
 </tr>
 <tr class="even">
 <td>Seasonality</td>
@@ -262,40 +271,41 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Model</td>
-<td>3.30.24.1 and new</td>
+<td>3.30.24.1 and new/test</td>
 </tr>
 </tbody>
 </table>
 <p>Growth option 2 (<a href="">Richards</a>) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for <a href="">age-specific K</a> were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 (<a href="">cessation</a>) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.</p>
-<p>An additional design configuration set the AFIX2 value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.</p>
+<p>An additional design configuration set the AFIX2 (L at Amax) value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.</p>
 <p>All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.</p>
 <p>The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.</p>
 <p>All models were run with no estimation (<code>-nohess -stopph 0</code>) so will produce output directly from the input parameter values.</p>
+<p>While conducting this test which included time-varying growth, we found it useful to augment the MEAN_SIZE_TIMESERIES output by adding output organized by cohort rather than year.</p>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, seasonality, and model version. This allowed for easy filtering results to enable visual and numerical comparisons. While conducting this test which included time-varying growth, we added an additional output of mean size by cohort.</p>
+<p>The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES with an additional output of mean size by cohort to better understand models with time-varying growth.</p>
 <p>The tables below display mean length-at-age for females (Sex = 1), Season 1, Subseason 1, Yr = 1985 and selected ages for brevity.</p>
-<p>At the beginning of season 1, subseason 1, in 1985 (which is after the time-varying growth begins), the existing model and the updated model (test) all produce the same mean length-at-age for both the annual (oneseas) and the two season model.</p>
+<p>With growth 1, the impact of time-varying Linf in 1980 affects the age 1 fish at the beginning of 1980 because they are just appearing in the population.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="qwcwtsztrm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qwcwtsztrm table {
+<div id="yrmqbstxqt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yrmqbstxqt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qwcwtsztrm thead, #qwcwtsztrm tbody, #qwcwtsztrm tfoot, #qwcwtsztrm tr, #qwcwtsztrm td, #qwcwtsztrm th {
+#yrmqbstxqt thead, #yrmqbstxqt tbody, #yrmqbstxqt tfoot, #yrmqbstxqt tr, #yrmqbstxqt td, #yrmqbstxqt th {
   border-style: none;
 }
 
-#qwcwtsztrm p {
+#yrmqbstxqt p {
   margin: 0;
   padding: 0;
 }
 
-#qwcwtsztrm .gt_table {
+#yrmqbstxqt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -321,12 +331,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_caption {
+#yrmqbstxqt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qwcwtsztrm .gt_title {
+#yrmqbstxqt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -338,7 +348,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#qwcwtsztrm .gt_subtitle {
+#yrmqbstxqt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -350,7 +360,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#qwcwtsztrm .gt_heading {
+#yrmqbstxqt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -362,13 +372,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_bottom_border {
+#yrmqbstxqt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_col_headings {
+#yrmqbstxqt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -383,7 +393,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_col_heading {
+#yrmqbstxqt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -403,7 +413,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qwcwtsztrm .gt_column_spanner_outer {
+#yrmqbstxqt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -415,15 +425,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#qwcwtsztrm .gt_column_spanner_outer:first-child {
+#yrmqbstxqt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qwcwtsztrm .gt_column_spanner_outer:last-child {
+#yrmqbstxqt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qwcwtsztrm .gt_column_spanner {
+#yrmqbstxqt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -435,11 +445,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#qwcwtsztrm .gt_spanner_row {
+#yrmqbstxqt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qwcwtsztrm .gt_group_heading {
+#yrmqbstxqt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -465,7 +475,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#qwcwtsztrm .gt_empty_group_heading {
+#yrmqbstxqt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -480,15 +490,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#qwcwtsztrm .gt_from_md > :first-child {
+#yrmqbstxqt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qwcwtsztrm .gt_from_md > :last-child {
+#yrmqbstxqt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qwcwtsztrm .gt_row {
+#yrmqbstxqt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -507,7 +517,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qwcwtsztrm .gt_stub {
+#yrmqbstxqt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -520,7 +530,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qwcwtsztrm .gt_stub_row_group {
+#yrmqbstxqt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -534,15 +544,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#qwcwtsztrm .gt_row_group_first td {
+#yrmqbstxqt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qwcwtsztrm .gt_row_group_first th {
+#yrmqbstxqt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qwcwtsztrm .gt_summary_row {
+#yrmqbstxqt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -552,16 +562,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qwcwtsztrm .gt_first_summary_row {
+#yrmqbstxqt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_first_summary_row.thick {
+#yrmqbstxqt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qwcwtsztrm .gt_last_summary_row {
+#yrmqbstxqt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -571,7 +581,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_grand_summary_row {
+#yrmqbstxqt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -581,7 +591,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qwcwtsztrm .gt_first_grand_summary_row {
+#yrmqbstxqt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -591,7 +601,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_last_grand_summary_row_top {
+#yrmqbstxqt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -601,11 +611,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_striped {
+#yrmqbstxqt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qwcwtsztrm .gt_table_body {
+#yrmqbstxqt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -614,7 +624,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_footnotes {
+#yrmqbstxqt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -628,7 +638,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_footnote {
+#yrmqbstxqt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -637,7 +647,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qwcwtsztrm .gt_sourcenotes {
+#yrmqbstxqt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -651,7 +661,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qwcwtsztrm .gt_sourcenote {
+#yrmqbstxqt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -659,72 +669,2633 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qwcwtsztrm .gt_left {
+#yrmqbstxqt .gt_left {
   text-align: left;
 }
 
-#qwcwtsztrm .gt_center {
+#yrmqbstxqt .gt_center {
   text-align: center;
 }
 
-#qwcwtsztrm .gt_right {
+#yrmqbstxqt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qwcwtsztrm .gt_font_normal {
+#yrmqbstxqt .gt_font_normal {
   font-weight: normal;
 }
 
-#qwcwtsztrm .gt_font_bold {
+#yrmqbstxqt .gt_font_bold {
   font-weight: bold;
 }
 
-#qwcwtsztrm .gt_font_italic {
+#yrmqbstxqt .gt_font_italic {
   font-style: italic;
 }
 
-#qwcwtsztrm .gt_super {
+#yrmqbstxqt .gt_super {
   font-size: 65%;
 }
 
-#qwcwtsztrm .gt_footnote_marks {
+#yrmqbstxqt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qwcwtsztrm .gt_asterisk {
+#yrmqbstxqt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qwcwtsztrm .gt_indent_1 {
+#yrmqbstxqt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qwcwtsztrm .gt_indent_2 {
+#yrmqbstxqt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qwcwtsztrm .gt_indent_3 {
+#yrmqbstxqt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qwcwtsztrm .gt_indent_4 {
+#yrmqbstxqt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qwcwtsztrm .gt_indent_5 {
+#yrmqbstxqt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qwcwtsztrm .katex-display {
+#yrmqbstxqt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qwcwtsztrm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yrmqbstxqt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1972</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1973</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1974</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1975</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1976</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1977</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1978</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1980</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">28.9990</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.2398</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.6697</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.3561</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7304</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1981</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9990</td>
+<td class="gt_row gt_right" headers="X2">35.3335</td>
+<td class="gt_row gt_right" headers="X3">40.7199</td>
+<td class="gt_row gt_right" headers="X4">45.4064</td>
+<td class="gt_row gt_right" headers="X39">74.7807</td>
+<td class="gt_row gt_right" headers="X40">74.8875</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1982</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9990</td>
+<td class="gt_row gt_right" headers="X2">35.3335</td>
+<td class="gt_row gt_right" headers="X3">40.8008</td>
+<td class="gt_row gt_right" headers="X4">45.4498</td>
+<td class="gt_row gt_right" headers="X39">74.8241</td>
+<td class="gt_row gt_right" headers="X40">74.9309</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable</p>
+</div>
+</div>
+<p>And the time-varying Linf affects all other ages by the middle of 1980 (e.g.&nbsp;subseason = 2), then into 1981.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="xhybjinmne" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xhybjinmne table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xhybjinmne thead, #xhybjinmne tbody, #xhybjinmne tfoot, #xhybjinmne tr, #xhybjinmne td, #xhybjinmne th {
+  border-style: none;
+}
+
+#xhybjinmne p {
+  margin: 0;
+  padding: 0;
+}
+
+#xhybjinmne .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xhybjinmne .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xhybjinmne .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xhybjinmne .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xhybjinmne .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xhybjinmne .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xhybjinmne .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xhybjinmne .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xhybjinmne .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xhybjinmne .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xhybjinmne .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xhybjinmne .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xhybjinmne .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xhybjinmne .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xhybjinmne .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xhybjinmne .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xhybjinmne .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xhybjinmne .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xhybjinmne .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xhybjinmne .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xhybjinmne .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xhybjinmne .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xhybjinmne .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xhybjinmne .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xhybjinmne .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xhybjinmne .gt_left {
+  text-align: left;
+}
+
+#xhybjinmne .gt_center {
+  text-align: center;
+}
+
+#xhybjinmne .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xhybjinmne .gt_font_normal {
+  font-weight: normal;
+}
+
+#xhybjinmne .gt_font_bold {
+  font-weight: bold;
+}
+
+#xhybjinmne .gt_font_italic {
+  font-style: italic;
+}
+
+#xhybjinmne .gt_super {
+  font-size: 65%;
+}
+
+#xhybjinmne .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xhybjinmne .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xhybjinmne .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xhybjinmne .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xhybjinmne .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xhybjinmne .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xhybjinmne .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#xhybjinmne .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#xhybjinmne div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1972</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1973</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1974</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1975</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1976</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1977</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1978</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1980</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.0807</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.1252</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.4790</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7686</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.8678</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1981</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.1719</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.5257</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8153</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.9145</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1982</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.5661</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8557</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.9548</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 2 using the current SS3 executable</p>
+</div>
+</div>
+<p>The two season model matches the annual growth of the annual model, except for the plus group.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="jsgrmcdutq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jsgrmcdutq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#jsgrmcdutq thead, #jsgrmcdutq tbody, #jsgrmcdutq tfoot, #jsgrmcdutq tr, #jsgrmcdutq td, #jsgrmcdutq th {
+  border-style: none;
+}
+
+#jsgrmcdutq p {
+  margin: 0;
+  padding: 0;
+}
+
+#jsgrmcdutq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#jsgrmcdutq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jsgrmcdutq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jsgrmcdutq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#jsgrmcdutq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#jsgrmcdutq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#jsgrmcdutq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#jsgrmcdutq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#jsgrmcdutq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#jsgrmcdutq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#jsgrmcdutq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#jsgrmcdutq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#jsgrmcdutq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#jsgrmcdutq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#jsgrmcdutq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jsgrmcdutq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#jsgrmcdutq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#jsgrmcdutq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#jsgrmcdutq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jsgrmcdutq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#jsgrmcdutq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jsgrmcdutq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#jsgrmcdutq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jsgrmcdutq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jsgrmcdutq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jsgrmcdutq .gt_left {
+  text-align: left;
+}
+
+#jsgrmcdutq .gt_center {
+  text-align: center;
+}
+
+#jsgrmcdutq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#jsgrmcdutq .gt_font_normal {
+  font-weight: normal;
+}
+
+#jsgrmcdutq .gt_font_bold {
+  font-weight: bold;
+}
+
+#jsgrmcdutq .gt_font_italic {
+  font-style: italic;
+}
+
+#jsgrmcdutq .gt_super {
+  font-size: 65%;
+}
+
+#jsgrmcdutq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#jsgrmcdutq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#jsgrmcdutq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#jsgrmcdutq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#jsgrmcdutq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#jsgrmcdutq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#jsgrmcdutq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#jsgrmcdutq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#jsgrmcdutq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1972</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1973</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1974</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1975</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1976</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1977</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1978</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1980</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9990</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1981</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">28.9990</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.3335</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.7199</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.4064</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7807</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.8502</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1982</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">28.9990</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.3335</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.8008</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.4498</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8241</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.8775</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable</p>
+</div>
+</div>
+<p>This is because the plus group updating depends upon the numbers-at-age of the fish in the plus group and the numbers entering the plus group. The annual model does this correctly, but the order of operations in SS3 causes the seasonal model to do the updating as a simple average, not a numbers weighted average. This discrepancy is quite structural and is not addressed in the updated model.</p>
+<p>The middle of the year for a one season model should match the beginning of season 2 in a two season model. Below, the display for years 1971 shows a match, but during the time series after the time-varying growth, there are noticeable discrepancies for the two season model.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="hyslizapxx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hyslizapxx table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hyslizapxx thead, #hyslizapxx tbody, #hyslizapxx tfoot, #hyslizapxx tr, #hyslizapxx td, #hyslizapxx th {
+  border-style: none;
+}
+
+#hyslizapxx p {
+  margin: 0;
+  padding: 0;
+}
+
+#hyslizapxx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hyslizapxx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hyslizapxx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hyslizapxx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hyslizapxx .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hyslizapxx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hyslizapxx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hyslizapxx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hyslizapxx .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hyslizapxx .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#hyslizapxx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hyslizapxx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hyslizapxx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hyslizapxx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hyslizapxx .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hyslizapxx .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#hyslizapxx .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#hyslizapxx .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hyslizapxx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hyslizapxx .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#hyslizapxx .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hyslizapxx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hyslizapxx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hyslizapxx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hyslizapxx .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hyslizapxx .gt_left {
+  text-align: left;
+}
+
+#hyslizapxx .gt_center {
+  text-align: center;
+}
+
+#hyslizapxx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hyslizapxx .gt_font_normal {
+  font-weight: normal;
+}
+
+#hyslizapxx .gt_font_bold {
+  font-weight: bold;
+}
+
+#hyslizapxx .gt_font_italic {
+  font-style: italic;
+}
+
+#hyslizapxx .gt_super {
+  font-size: 65%;
+}
+
+#hyslizapxx .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#hyslizapxx .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#hyslizapxx .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#hyslizapxx .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#hyslizapxx .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#hyslizapxx .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#hyslizapxx .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#hyslizapxx .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#hyslizapxx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4644</td>
+<td class="gt_row gt_right" headers="X1">32.2828</td>
+<td class="gt_row gt_right" headers="X2">38.1677</td>
+<td class="gt_row gt_right" headers="X3">43.2470</td>
+<td class="gt_row gt_right" headers="X4">47.6309</td>
+<td class="gt_row gt_right" headers="X39">74.9464</td>
+<td class="gt_row gt_right" headers="X40">75.0456</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
+<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1985</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">2</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">28.9990</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.6309</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.9464</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.9855</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the current SS3 executable</p>
+</div>
+</div>
+<p>The code changes in 3.30.25 resolve this problem:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="rzrxdrphts" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rzrxdrphts table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rzrxdrphts thead, #rzrxdrphts tbody, #rzrxdrphts tfoot, #rzrxdrphts tr, #rzrxdrphts td, #rzrxdrphts th {
+  border-style: none;
+}
+
+#rzrxdrphts p {
+  margin: 0;
+  padding: 0;
+}
+
+#rzrxdrphts .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rzrxdrphts .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rzrxdrphts .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rzrxdrphts .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rzrxdrphts .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rzrxdrphts .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rzrxdrphts .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rzrxdrphts .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rzrxdrphts .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rzrxdrphts .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rzrxdrphts .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rzrxdrphts .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rzrxdrphts .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rzrxdrphts .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rzrxdrphts .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rzrxdrphts .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rzrxdrphts .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rzrxdrphts .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rzrxdrphts .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rzrxdrphts .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rzrxdrphts .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rzrxdrphts .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rzrxdrphts .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rzrxdrphts .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rzrxdrphts .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rzrxdrphts .gt_left {
+  text-align: left;
+}
+
+#rzrxdrphts .gt_center {
+  text-align: center;
+}
+
+#rzrxdrphts .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rzrxdrphts .gt_font_normal {
+  font-weight: normal;
+}
+
+#rzrxdrphts .gt_font_bold {
+  font-weight: bold;
+}
+
+#rzrxdrphts .gt_font_italic {
+  font-style: italic;
+}
+
+#rzrxdrphts .gt_super {
+  font-size: 65%;
+}
+
+#rzrxdrphts .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rzrxdrphts .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rzrxdrphts .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rzrxdrphts .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rzrxdrphts .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rzrxdrphts .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rzrxdrphts .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rzrxdrphts .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rzrxdrphts div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -752,18 +3323,18 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td class="gt_row gt_left" headers="Growth">growth1</td>
 <td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_left" headers="Model">test</td>
 <td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
 <td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Growth">growth1</td>
@@ -772,458 +3343,74 @@ ul.task-list li input[type="checkbox"] {
 <td class="gt_row gt_right" headers="Morph">1</td>
 <td class="gt_row gt_right" headers="Yr">1985</td>
 <td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4644</td>
+<td class="gt_row gt_right" headers="X1">32.2828</td>
+<td class="gt_row gt_right" headers="X2">38.1677</td>
+<td class="gt_row gt_right" headers="X3">43.2470</td>
+<td class="gt_row gt_right" headers="X4">47.6309</td>
+<td class="gt_row gt_right" headers="X39">74.9464</td>
+<td class="gt_row gt_right" headers="X40">75.0456</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Growth">growth1</td>
 <td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
 <td class="gt_row gt_left" headers="Model">test</td>
 <td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
 <td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.5306</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.5306</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.4108</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.80560</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">30.01660</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">34.1995</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">38.2756</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">77.3328</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">77.4108</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">75.0285</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">28.99900</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">45.5196</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">74.9218</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9639</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0381</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0381</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0403</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">4.54678</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">8.95711</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">13.2004</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">17.2431</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0377</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0403</td>
+<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
+<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
+<td class="gt_row gt_left" headers="Model" style="background-color: #FFFF00">test</td>
+<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1985</td>
+<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">2</td>
+<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
+<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
+<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">32.2828</td>
+<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
+<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
+<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.6309</td>
+<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.9464</td>
+<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.9855</td>
 </tr>
 </tbody>
 </table>
 
 </div>
-<p>Mean length-at-age for the one season and two season models comparing the current SS3 executable and the updated ‘test’ executable for all growth options</p>
+<p>Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the updated SS3 executable</p>
 </div>
 </div>
-<p>However, the seasons-as-years configuration shows differences between the model versions. These differences are consistent across all the growth options.</p>
+<p>This investigation was launched on the basis of discrepancies that appeared in a Richards/Gompertz model with seasons-as-years and time-varying growth. First let’s show that a continuous string of 6 month seasons-as-years compares as expected to the annual model and the two season model in a year before time-varying starts when using the growth option 1 or 2. The size at age 4 seasons in the seasons as years is the same as the size at age 2 years in the annual and seasonal model.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="qdvwusqfgg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qdvwusqfgg table {
+<div id="lskjcvfryz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lskjcvfryz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qdvwusqfgg thead, #qdvwusqfgg tbody, #qdvwusqfgg tfoot, #qdvwusqfgg tr, #qdvwusqfgg td, #qdvwusqfgg th {
+#lskjcvfryz thead, #lskjcvfryz tbody, #lskjcvfryz tfoot, #lskjcvfryz tr, #lskjcvfryz td, #lskjcvfryz th {
   border-style: none;
 }
 
-#qdvwusqfgg p {
+#lskjcvfryz p {
   margin: 0;
   padding: 0;
 }
 
-#qdvwusqfgg .gt_table {
+#lskjcvfryz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1249,12 +3436,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_caption {
+#lskjcvfryz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qdvwusqfgg .gt_title {
+#lskjcvfryz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1266,7 +3453,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#qdvwusqfgg .gt_subtitle {
+#lskjcvfryz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1278,7 +3465,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#qdvwusqfgg .gt_heading {
+#lskjcvfryz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1290,13 +3477,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_bottom_border {
+#lskjcvfryz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_col_headings {
+#lskjcvfryz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1311,7 +3498,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_col_heading {
+#lskjcvfryz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1331,7 +3518,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qdvwusqfgg .gt_column_spanner_outer {
+#lskjcvfryz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1343,15 +3530,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#qdvwusqfgg .gt_column_spanner_outer:first-child {
+#lskjcvfryz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qdvwusqfgg .gt_column_spanner_outer:last-child {
+#lskjcvfryz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qdvwusqfgg .gt_column_spanner {
+#lskjcvfryz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1363,11 +3550,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#qdvwusqfgg .gt_spanner_row {
+#lskjcvfryz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qdvwusqfgg .gt_group_heading {
+#lskjcvfryz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1393,7 +3580,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#qdvwusqfgg .gt_empty_group_heading {
+#lskjcvfryz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1408,15 +3595,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#qdvwusqfgg .gt_from_md > :first-child {
+#lskjcvfryz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qdvwusqfgg .gt_from_md > :last-child {
+#lskjcvfryz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qdvwusqfgg .gt_row {
+#lskjcvfryz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1435,7 +3622,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qdvwusqfgg .gt_stub {
+#lskjcvfryz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1448,7 +3635,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qdvwusqfgg .gt_stub_row_group {
+#lskjcvfryz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1462,15 +3649,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#qdvwusqfgg .gt_row_group_first td {
+#lskjcvfryz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qdvwusqfgg .gt_row_group_first th {
+#lskjcvfryz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qdvwusqfgg .gt_summary_row {
+#lskjcvfryz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1480,16 +3667,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qdvwusqfgg .gt_first_summary_row {
+#lskjcvfryz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_first_summary_row.thick {
+#lskjcvfryz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qdvwusqfgg .gt_last_summary_row {
+#lskjcvfryz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1499,7 +3686,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_grand_summary_row {
+#lskjcvfryz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1509,7 +3696,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qdvwusqfgg .gt_first_grand_summary_row {
+#lskjcvfryz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1519,7 +3706,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_last_grand_summary_row_top {
+#lskjcvfryz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1529,11 +3716,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_striped {
+#lskjcvfryz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qdvwusqfgg .gt_table_body {
+#lskjcvfryz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1542,7 +3729,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_footnotes {
+#lskjcvfryz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1556,7 +3743,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_footnote {
+#lskjcvfryz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1565,7 +3752,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qdvwusqfgg .gt_sourcenotes {
+#lskjcvfryz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1579,7 +3766,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qdvwusqfgg .gt_sourcenote {
+#lskjcvfryz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1587,77 +3774,605 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qdvwusqfgg .gt_left {
+#lskjcvfryz .gt_left {
   text-align: left;
 }
 
-#qdvwusqfgg .gt_center {
+#lskjcvfryz .gt_center {
   text-align: center;
 }
 
-#qdvwusqfgg .gt_right {
+#lskjcvfryz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qdvwusqfgg .gt_font_normal {
+#lskjcvfryz .gt_font_normal {
   font-weight: normal;
 }
 
-#qdvwusqfgg .gt_font_bold {
+#lskjcvfryz .gt_font_bold {
   font-weight: bold;
 }
 
-#qdvwusqfgg .gt_font_italic {
+#lskjcvfryz .gt_font_italic {
   font-style: italic;
 }
 
-#qdvwusqfgg .gt_super {
+#lskjcvfryz .gt_super {
   font-size: 65%;
 }
 
-#qdvwusqfgg .gt_footnote_marks {
+#lskjcvfryz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qdvwusqfgg .gt_asterisk {
+#lskjcvfryz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qdvwusqfgg .gt_indent_1 {
+#lskjcvfryz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qdvwusqfgg .gt_indent_2 {
+#lskjcvfryz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qdvwusqfgg .gt_indent_3 {
+#lskjcvfryz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qdvwusqfgg .gt_indent_4 {
+#lskjcvfryz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qdvwusqfgg .gt_indent_5 {
+#lskjcvfryz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qdvwusqfgg .katex-display {
+#lskjcvfryz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qdvwusqfgg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lskjcvfryz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">25.4383</td>
+<td class="gt_row gt_right" headers="X2">28.9487</td>
+<td class="gt_row gt_right" headers="X3">32.2100</td>
+<td class="gt_row gt_right" headers="X4">35.2398</td>
+<td class="gt_row gt_right" headers="X39">71.8855</td>
+<td class="gt_row gt_right" headers="X40">73.2279</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the updated SS3 executable</p>
+</div>
+</div>
+<p>Here we compare 1979 (before timevary growth) to 1983, after Linf increased in 1980. With the one season model, the size-at-age increases slightly, as expected. However, with the seasons-as-years, the size-at-age decreases. This is because that section of code was erroneously applying the season duration twice.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="bursdpodbo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bursdpodbo table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#bursdpodbo thead, #bursdpodbo tbody, #bursdpodbo tfoot, #bursdpodbo tr, #bursdpodbo td, #bursdpodbo th {
+  border-style: none;
+}
+
+#bursdpodbo p {
+  margin: 0;
+  padding: 0;
+}
+
+#bursdpodbo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#bursdpodbo .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bursdpodbo .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bursdpodbo .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bursdpodbo .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bursdpodbo .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bursdpodbo .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bursdpodbo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bursdpodbo .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#bursdpodbo .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#bursdpodbo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bursdpodbo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bursdpodbo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bursdpodbo .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bursdpodbo .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bursdpodbo .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#bursdpodbo .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#bursdpodbo .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#bursdpodbo .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bursdpodbo .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#bursdpodbo .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bursdpodbo .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bursdpodbo .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bursdpodbo .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bursdpodbo .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bursdpodbo .gt_left {
+  text-align: left;
+}
+
+#bursdpodbo .gt_center {
+  text-align: center;
+}
+
+#bursdpodbo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bursdpodbo .gt_font_normal {
+  font-weight: normal;
+}
+
+#bursdpodbo .gt_font_bold {
+  font-weight: bold;
+}
+
+#bursdpodbo .gt_font_italic {
+  font-style: italic;
+}
+
+#bursdpodbo .gt_super {
+  font-size: 65%;
+}
+
+#bursdpodbo .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#bursdpodbo .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#bursdpodbo .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#bursdpodbo .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#bursdpodbo .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#bursdpodbo .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#bursdpodbo .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#bursdpodbo .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#bursdpodbo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
@@ -1677,235 +4392,491 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </thead>
 <tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">23.71820</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">25.8056</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">26.85610</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">27.90910</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0693</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.3853</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_gompertz</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">23.71820</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">25.8056</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">27.90910</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">30.01660</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">72.1648</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">74.9544</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth2_richards</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth3</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth4</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">30.67110</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.3379</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.2246</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth5</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">25.46440</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">28.9990</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">32.28280</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">35.33350</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.9986</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">73.5683</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">1.25091</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">2.4984</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">3.74142</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">4.97864</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">48.8648</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">48.8637</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth8</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #D73027; color: #000000">0.0000</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #EA5839; color: #000000">2.50183</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #F7935A; color: #000000">4.9968</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FEE08B; color: #000000">7.48285</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #C3DB75; color: #000000">9.95728</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #77C361; color: #000000">71.0227</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #1A9850; color: #000000">71.0207</td>
-</tr>
 </tbody>
 </table>
 
 </div>
-<p>Mean length-at-age for the seasons-as-years models comparing the current SS3 executable and the updated ‘test’ executable for all growth options</p>
+<p>Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the 3.30.24.1 SS3 executable</p>
+</div>
+</div>
+<p>The updated model corrects this problem.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="cghhazkunq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cghhazkunq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#cghhazkunq thead, #cghhazkunq tbody, #cghhazkunq tfoot, #cghhazkunq tr, #cghhazkunq td, #cghhazkunq th {
+  border-style: none;
+}
+
+#cghhazkunq p {
+  margin: 0;
+  padding: 0;
+}
+
+#cghhazkunq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#cghhazkunq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cghhazkunq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cghhazkunq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cghhazkunq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cghhazkunq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cghhazkunq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cghhazkunq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cghhazkunq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#cghhazkunq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#cghhazkunq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cghhazkunq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cghhazkunq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cghhazkunq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cghhazkunq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cghhazkunq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#cghhazkunq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#cghhazkunq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#cghhazkunq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cghhazkunq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#cghhazkunq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cghhazkunq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#cghhazkunq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cghhazkunq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cghhazkunq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cghhazkunq .gt_left {
+  text-align: left;
+}
+
+#cghhazkunq .gt_center {
+  text-align: center;
+}
+
+#cghhazkunq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cghhazkunq .gt_font_normal {
+  font-weight: normal;
+}
+
+#cghhazkunq .gt_font_bold {
+  font-weight: bold;
+}
+
+#cghhazkunq .gt_font_italic {
+  font-style: italic;
+}
+
+#cghhazkunq .gt_super {
+  font-size: 65%;
+}
+
+#cghhazkunq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#cghhazkunq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#cghhazkunq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#cghhazkunq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#cghhazkunq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#cghhazkunq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#cghhazkunq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#cghhazkunq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#cghhazkunq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
+<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
+<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
+<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
+<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
+<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
+<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
+<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
+<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
+<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
+<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+</tbody>
+</table>
+
+</div>
+<p>Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the test SS3 executable</p>
 </div>
 </div>
 
