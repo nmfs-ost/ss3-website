@@ -7,7 +7,6 @@ editor:
     wrap: 72
   wrap: 72
 ---
-# IN PROGRESS
 
 ## Preface
 
