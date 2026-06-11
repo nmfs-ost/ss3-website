@@ -82,8 +82,13 @@ library(ggplot2)
 library(dplyr)
 library(gt)
 library(scales)
+library(here)
 
-results <- read.csv(here::here("website","qmds","example_files", "all_models_growthseries.csv"))
+csv_path <- here::here("qmds","example_files", "all_models_growthseries.csv")
+if (!file.exists(csv_path)) {
+  csv_path <- here::here("website","qmds","example_files", "all_models_growthseries.csv")
+}
+results <- read.csv(csv_path)
 
 dat <- results |>
   dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
