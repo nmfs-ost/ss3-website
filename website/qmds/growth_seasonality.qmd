@@ -178,6 +178,7 @@ tbl0 <- results |>
                       Yr == 1979,
                       Seas == 1,
                       SubSeas == 1) |>
+  gt::gt() |>
   gt::tab_style(
     style = gt::cell_borders(
       sides = "all",
