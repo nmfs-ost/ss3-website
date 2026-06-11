@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1ea36d06d6b103b56f47c6664ad7f2f9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-65f451a201b57ef03befcab1dccc952c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -57,6 +57,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -204,9 +233,21 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#preface" id="toc-preface" class="nav-link" data-scroll-target="#preface">Preface</a></li>
   <li><a href="#growth-in-ss3" id="toc-growth-in-ss3" class="nav-link" data-scroll-target="#growth-in-ss3">Growth in SS3</a></li>
-  <li><a href="#model-changes" id="toc-model-changes" class="nav-link" data-scroll-target="#model-changes">Model changes</a></li>
   <li><a href="#test-setup" id="toc-test-setup" class="nav-link" data-scroll-target="#test-setup">Test setup</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#result-1-base" id="toc-result-1-base" class="nav-link" data-scroll-target="#result-1-base">Result 1: Base</a></li>
+  <li><a href="#result-2-seasons-as-years-demo" id="toc-result-2-seasons-as-years-demo" class="nav-link" data-scroll-target="#result-2-seasons-as-years-demo">Result 2: Seasons-as-years demo</a></li>
+  <li><a href="#result-3-problem-with-season-duration-1.0" id="toc-result-3-problem-with-season-duration-1.0" class="nav-link" data-scroll-target="#result-3-problem-with-season-duration-1.0">Result 3: Problem with season duration &lt; 1.0</a></li>
+  <li><a href="#result-4-prevent-fish-shrinking" id="toc-result-4-prevent-fish-shrinking" class="nav-link" data-scroll-target="#result-4-prevent-fish-shrinking">Result 4: Prevent fish shrinking</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#growth-model-g1" id="toc-growth-model-g1" class="nav-link" data-scroll-target="#growth-model-g1">Growth model G1</a>
+  <ul class="collapse">
+  <li><a href="#result-5-plus-group-updating" id="toc-result-5-plus-group-updating" class="nav-link" data-scroll-target="#result-5-plus-group-updating">Result 5: Plus group updating</a></li>
+  <li><a href="#result-6-season-match-up" id="toc-result-6-season-match-up" class="nav-link" data-scroll-target="#result-6-season-match-up">Result 6: Season match-up</a></li>
+  <li><a href="#actions" id="toc-actions" class="nav-link" data-scroll-target="#actions">Actions</a></li>
+  <li><a href="#model-changes" id="toc-model-changes" class="nav-link" data-scroll-target="#model-changes">Model Changes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -243,88 +284,142 @@ ul.task-list li input[type="checkbox"] {
 <h1>IN PROGRESS</h1>
 <section id="preface" class="level2">
 <h2 class="anchored" data-anchor-id="preface">Preface</h2>
-<p>In late 2025 it was <a href="https://github.com/nmfs-ost/ss3-source-code/issues/735">noticed</a> that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a <a href="https://github.com/nmfs-ost/ss3-source-code/issues/156">comprehensive review of growth</a>. The resolution of the discrepancies is found in <a href="https://github.com/nmfs-ost/ss3-source-code/pull/747">pull request #747</a> from March 2026. This document demonstrates the correctness of the SS3 growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.</p>
+<p>A user <a href="https://github.com/nmfs-ost/ss3-source-code/issues/735">noticed</a> that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a <a href="https://github.com/nmfs-ost/ss3-source-code/issues/156">comprehensive review of growth</a>. The resolution of the discrepancy is found in <a href="https://github.com/nmfs-ost/ss3-source-code/pull/747">pull request #747</a> from June 2026. This document demonstrates the performance of the SS3’s growth and seasonality interaction as developed in SS3 v3.30.25, in comparison to the previous model version 3.30.24.1.</p>
 </section>
 <section id="growth-in-ss3" class="level2">
 <h2 class="anchored" data-anchor-id="growth-in-ss3">Growth in SS3</h2>
-<p>Why is growth so complicated in SS3? Unlike most models, SS3 is designed to accommodate flexibility regarding the within year timing of when a cohort of fish begins its growth, and flexibility regarding the exact timing within a year of when an observation is made. There also is the capability to allow growth parameters to change over time, including density-dependence, so size-at-age cannot be calculated just once at the beginning of the time series.This means that there are three sections of code for calculating size-at-age: 1. At the beginning of the time series, calculate size-at-age; 2. At the beginning of each year, calculate the size at age to the beginning of each season within that year and to the beginning of the next year. This growth is according to the growth parameters of that year and follows the diagonal of the time x age matrix; 3. At the time of each subseason (minimum is two subseasons per year or season), calculate the size-at-age as growth from the beginning of that season.</p>
-<p>Within each of these sections, there are four sections of code for each major growth function:</p>
+<p>Why is growth so complicated in SS3? Unlike most models, SS3 is designed to accommodate flexibility regarding the within year timing of when a cohort of fish begins its growth, and flexibility regarding the exact timing within a year of when an observation is made. There also is the capability to allow growth parameters to change over time, including density-dependence, so size-at-age cannot be calculated just once at the beginning of the time series. This led to the development of three sections of code for calculating size-at-age:</p>
+<ol type="1">
+<li>At the beginning of the time series, calculate size-at-age;</li>
+<li>At the beginning of each year, calculate the size-at-age to the beginning of each season within that year and to the beginning of the next year. This growth is according to the growth parameters of that year and follows cohorts alongthe diagonal of the time <span class="math inline">\(\times\)</span> age matrix. Each cohort grows from its current size towards the current <span class="math inline">\(L_{inf}\)</span> at a rate determined by the current growth rate (<span class="math inline">\(K\)</span>);</li>
+<li>At the time of each subseason (minimum is two subseasons per year or season), calculate the size-at-age as growth from the beginning of that season.</li>
+</ol>
+<p>Within each of these sections, there is specific code for each major growth function:</p>
 <ol type="1">
 <li>Von Bertallanffy</li>
-<li>Richards/Gompertz</li>
-<li>Three variants of age-specific K</li>
+<li>Richards or Gompertz</li>
+<li>Three variants of age-specific <span class="math inline">\(K\)</span></li>
 <li>Growth cessation</li>
 </ol>
-<p>Within each of the growth functions, there is an equation to calculate size-at-age for the first age past the linear growth age range, and code for calculating growth of older ages, and some have specific code for growth within the plus group.</p>
-<p>All of the above needs to account for season duration, which is simply 1.0 for an annual model, but models with seasons within year have great flexibility on number and duration of seasons, and models with seasons-as-years have a time step with a user specified duration in fractions of a year.</p>
-<p>Unfortunately, as growth options were developed, nearly all the testing was with simple annual time steps; and as seasonality options were tested, nearly all the testing was with the simple von Bertallanffy function. This allowed some growth function x seasonality combinations to misbehave. Here we thoroughly test all combinations and update the code to behave as expected.</p>
-</section>
-<section id="model-changes" class="level2">
-<h2 class="anchored" data-anchor-id="model-changes">Model changes</h2>
-<ol type="1">
-<li>Correct the usage of season duration as a multiplier on the growth rate and improve documentation in the code. Some scenarios were applying it twice, but that went undetected whenever season duration equaled 1.0</li>
-<li>Implement trap to prevent shrinkage of mean size for the Richards/Gompertz and Cessation model. Previously it was only implemented for von Bertallanffy models. Note that the trap for the von Bertallanffy models is implemented on the remaining growth potential, but the trap for the Richards and Cessation is done on the resultant size-at-age.</li>
-<li>Add warning if AFIX2 (L at Amax) age is set greater than nages.</li>
-<li>Cohort growth dev included in the testing.</li>
-<li>Correct (in readcontrol.tpl) the identification of ages as linear growth in order to implement time-varying growth parameters in the correct year.</li>
-<li>Add -997 option for growth in the plus group such that: <code>#_value should approx initial Z; or use a code:  #_ -999 replicates 3.24 (with Z = 0.2 and numbers weighted updating in years with time-varying growth)  #_-998 ignores growth within plus group in initial year and disables time-varying changes in plus group mean size  #_-997 ignores growth within plus group in initial year and enables updating time-varying plus group  #_note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned up.</code></li>
-<li>Augment the MEAN_SIZE_TIMESERIES output by adding a second table organized by cohort rather than year.</li>
-</ol>
+<p>Within each of the growth functions, there is an equation to calculate size-at-age for the first age past the linear growth age range, and code for calculating growth of older ages, and code for growth within the plus group.</p>
+<p>All of the above options need to account for season duration, which is simply 1.0 for an annual model, but models with seasons within a year have great flexibility on number and duration of seasons, and models with seasons-as-years have a time step with a user specified duration in fractions of a year.</p>
+<p>Unfortunately, as growth options were developed, nearly all the testing was with simple annual time steps; and as seasonality options were tested, nearly all the testing was with the simple von Bertallanffy function. This allowed some growth function and seasonality combinations to misbehave. Here we thoroughly tested all combinations and updated the code to behave as expected.</p>
 </section>
 <section id="test-setup" class="level2">
 <h2 class="anchored" data-anchor-id="test-setup">Test setup</h2>
-<p>The testbed for this demonstration started with the simple model setup which uses <a href="">von Bertallanffy growth</a>, single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:</p>
+<p>The testbed for this demonstration started with the simple model setup which uses <a href="https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html#Growth">von Bertallanffy growth</a>, single annual season, and growth parameters that were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 48%">
-<col style="width: 51%">
-</colgroup>
 <tbody>
 <tr class="odd">
 <td>Growth Options</td>
-<td>1, 2(Richards), 2(Gompertz), 3, 4, 5, 8</td>
+<td>G1, G2R, G2G, G3, G4, G5, G8</td>
 </tr>
 <tr class="even">
 <td>Seasonality</td>
-<td>annual, seasonal with two 6-month seasons, seasons-as-years with 6 month seasons</td>
+<td>annual, seasonal with two 6-month seasons, seasons-as-years with 6 month season duration</td>
 </tr>
 <tr class="odd">
 <td>Model</td>
-<td>3.30.24.1 and new/test</td>
+<td>3.30.24.1 and <a href="">3.30.25 (new)</a></td>
 </tr>
 </tbody>
 </table>
-<p>Growth option 2 (<a href="">Richards</a>) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for <a href="">age-specific K</a> were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 (<a href="">cessation</a>) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.</p>
-<p>An additional design configuration set the AFIX2 (L at Amax) value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.</p>
-<p>All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.</p>
-<p>The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.</p>
+<p>Growth option G2R (<a href="">Richards</a>) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option G1 (von Bertallanffy). Growth options G3, G4, G5 for <a href="">age-specific <span class="math inline">\(K\)</span></a> were configured to allow for <span class="math inline">\(K\)</span> at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option G1. Growth options G2G (Gompertz - same as Richards but with parameter set to 0.001) and G8 (<a href="">cessation</a>) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option G1.</p>
+<p>An additional design configuration set the <code>AFIX2</code> (<span class="math inline">\(L\)</span> at <span class="math inline">\(A_{max}\)</span>) value to 19 years old for the one season (annual) and two season models, and to 38 seasons in the seasons-as-years model. With this configuration and the same <span class="math inline">\(K\)</span> for all models, the seasons-as-years result is more easily compared to the other seasonality configurations.</p>
+<p>All models were run with <span class="math inline">\(A_{min} = 0.0\)</span> such that the <span class="math inline">\(L_{min}\)</span> growth parameter set the size-at-age 0.0 post-settlement. Additional tests with alternative Amin configurations seem useful to add to this comparison.</p>
+<p>The <span class="math inline">\(L_{inf}\)</span> parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years. The change was a decrease in <span class="math inline">\(L_{inf}\)</span>, so tests the code that prevents shrinkage of mean size-at-age for a cohort.</p>
+<p>The cohort growth deviation parameter was set to have a 10% increase in years 1995 - 1997.</p>
 <p>All models were run with no estimation (<code>-nohess -stopph 0</code>) so will produce output directly from the input parameter values.</p>
-<p>While conducting this test which included time-varying growth, we found it useful to augment the MEAN_SIZE_TIMESERIES output by adding output organized by cohort rather than year.</p>
+<p>The <code>report.sso</code> output table labelled <code>MEAN_SIZE_TIMESERIES</code> was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, season, subseason, and model version. This allowed for easy filtering of the results to enable visual and numerical comparisons.</p>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES with an additional output of mean size by cohort to better understand models with time-varying growth.</p>
-<p>The tables below display mean length-at-age for females (Sex = 1), Season 1, Subseason 1, Yr = 1985 and selected ages for brevity.</p>
-<p>With growth 1, the impact of time-varying Linf in 1980 affects the age 1 fish at the beginning of 1980 because they are just appearing in the population.</p>
+<section id="result-1-base" class="level3">
+<h3 class="anchored" data-anchor-id="result-1-base">Result 1: Base</h3>
+<p>The first result shows the comparability of growth models G1 and G3 at ages 4, 8, 30 and plus group (40) in an annual (one season) configuration. The results include the v3.30.24.1 (henceforth: old) model (X) and the new model (O).</p>
+<section id="growth-models-g1-and-g3" class="level4">
+<h4 class="anchored" data-anchor-id="growth-models-g1-and-g3">Growth models G1 and G3</h4>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1, G3</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>annual</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="cell-output-display">
-<div id="msrhpywstg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#msrhpywstg table {
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the one season model with growth option G1 (von Bertallanffy) and G3 in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This comparison of the old and new models illustrate their overall similarity. They both show the expected decline in mean length-at-age (henceforth: length) response to the 1980 reduction in <span class="math inline">\(L_{inf}\)</span>, followed by the increase in 1999 for four year olds from the cohort growth dev on the 1995-1997 cohorts. There is a small discrepancy for one cohort (4 year olds in 1983, 8 in 1987). The old model used the reduced <span class="math inline">\(L_{inf}\)</span> in 1980 to reduce the mean size of the entering year class in that year, rather than affecting only their growth to the next age in 1981. The new model corrects this problem.</p>
+</section>
+<section id="growth-model-g2r-richards" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g2r-richards">Growth model G2R (Richards)</h4>
+<p>With model G2R, we see that the old code did not contain the trap to prevent shrinking of fish. Therefore size at ages 30 and 40 began declining when <span class="math inline">\(L_{inf}\)</span> was reduced to 65. The shrinkage trap is now implemented for all growth models.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G2R</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>annual</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the one season model with growth option G2R (Richards) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="result-2-seasons-as-years-demo" class="level3">
+<h3 class="anchored" data-anchor-id="result-2-seasons-as-years-demo">Result 2: Seasons-as-years demo</h3>
+<p>This investigation was launched on the basis of discrepancies that appeared in a Gompertz model with seasons-as-years and time-varying growth. First let’s show that a continuous string of 6 month seasons-as-years compares as expected to the one season model and the two seasons model in a year before time-varying starts when using the growth option 1 or 2. The length at age 4 seasons in the seasons-as-years is the same as the length at age 2 years in the one season and two seasons model.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="zabyoqwjqk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zabyoqwjqk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#msrhpywstg thead, #msrhpywstg tbody, #msrhpywstg tfoot, #msrhpywstg tr, #msrhpywstg td, #msrhpywstg th {
+#zabyoqwjqk thead, #zabyoqwjqk tbody, #zabyoqwjqk tfoot, #zabyoqwjqk tr, #zabyoqwjqk td, #zabyoqwjqk th {
   border-style: none;
 }
 
-#msrhpywstg p {
+#zabyoqwjqk p {
   margin: 0;
   padding: 0;
 }
 
-#msrhpywstg .gt_table {
+#zabyoqwjqk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -350,12 +445,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_caption {
+#zabyoqwjqk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#msrhpywstg .gt_title {
+#zabyoqwjqk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -367,7 +462,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#msrhpywstg .gt_subtitle {
+#zabyoqwjqk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -379,7 +474,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#msrhpywstg .gt_heading {
+#zabyoqwjqk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -391,13 +486,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_bottom_border {
+#zabyoqwjqk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_col_headings {
+#zabyoqwjqk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -412,7 +507,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_col_heading {
+#zabyoqwjqk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -432,7 +527,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#msrhpywstg .gt_column_spanner_outer {
+#zabyoqwjqk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -444,15 +539,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#msrhpywstg .gt_column_spanner_outer:first-child {
+#zabyoqwjqk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#msrhpywstg .gt_column_spanner_outer:last-child {
+#zabyoqwjqk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#msrhpywstg .gt_column_spanner {
+#zabyoqwjqk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -464,11 +559,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#msrhpywstg .gt_spanner_row {
+#zabyoqwjqk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#msrhpywstg .gt_group_heading {
+#zabyoqwjqk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -494,7 +589,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#msrhpywstg .gt_empty_group_heading {
+#zabyoqwjqk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -509,15 +604,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#msrhpywstg .gt_from_md > :first-child {
+#zabyoqwjqk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#msrhpywstg .gt_from_md > :last-child {
+#zabyoqwjqk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#msrhpywstg .gt_row {
+#zabyoqwjqk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -536,7 +631,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#msrhpywstg .gt_stub {
+#zabyoqwjqk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -549,7 +644,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#msrhpywstg .gt_stub_row_group {
+#zabyoqwjqk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -563,15 +658,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#msrhpywstg .gt_row_group_first td {
+#zabyoqwjqk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#msrhpywstg .gt_row_group_first th {
+#zabyoqwjqk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#msrhpywstg .gt_summary_row {
+#zabyoqwjqk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -581,16 +676,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#msrhpywstg .gt_first_summary_row {
+#zabyoqwjqk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_first_summary_row.thick {
+#zabyoqwjqk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#msrhpywstg .gt_last_summary_row {
+#zabyoqwjqk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -600,7 +695,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_grand_summary_row {
+#zabyoqwjqk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -610,7 +705,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#msrhpywstg .gt_first_grand_summary_row {
+#zabyoqwjqk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +715,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_last_grand_summary_row_top {
+#zabyoqwjqk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -630,11 +725,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_striped {
+#zabyoqwjqk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#msrhpywstg .gt_table_body {
+#zabyoqwjqk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -643,7 +738,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_footnotes {
+#zabyoqwjqk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -657,7 +752,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_footnote {
+#zabyoqwjqk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -666,7 +761,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#msrhpywstg .gt_sourcenotes {
+#zabyoqwjqk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -680,7 +775,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#msrhpywstg .gt_sourcenote {
+#zabyoqwjqk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -688,72 +783,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#msrhpywstg .gt_left {
+#zabyoqwjqk .gt_left {
   text-align: left;
 }
 
-#msrhpywstg .gt_center {
+#zabyoqwjqk .gt_center {
   text-align: center;
 }
 
-#msrhpywstg .gt_right {
+#zabyoqwjqk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#msrhpywstg .gt_font_normal {
+#zabyoqwjqk .gt_font_normal {
   font-weight: normal;
 }
 
-#msrhpywstg .gt_font_bold {
+#zabyoqwjqk .gt_font_bold {
   font-weight: bold;
 }
 
-#msrhpywstg .gt_font_italic {
+#zabyoqwjqk .gt_font_italic {
   font-style: italic;
 }
 
-#msrhpywstg .gt_super {
+#zabyoqwjqk .gt_super {
   font-size: 65%;
 }
 
-#msrhpywstg .gt_footnote_marks {
+#zabyoqwjqk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#msrhpywstg .gt_asterisk {
+#zabyoqwjqk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#msrhpywstg .gt_indent_1 {
+#zabyoqwjqk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#msrhpywstg .gt_indent_2 {
+#zabyoqwjqk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#msrhpywstg .gt_indent_3 {
+#zabyoqwjqk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#msrhpywstg .gt_indent_4 {
+#zabyoqwjqk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#msrhpywstg .gt_indent_5 {
+#zabyoqwjqk .gt_indent_5 {
   text-indent: 25px;
 }
 
-#msrhpywstg .katex-display {
+#zabyoqwjqk .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#msrhpywstg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zabyoqwjqk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -762,7 +857,7 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="gt_col_headings header">
 <th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Season</th>
 <th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
 <th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
 <th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
@@ -780,135 +875,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1972</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1973</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1974</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1975</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1976</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1977</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1978</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Season">oneseas</td>
 <td class="gt_row gt_right" headers="Model">3.30.24.1</td>
 <td class="gt_row gt_right" headers="Morph">1</td>
 <td class="gt_row gt_right" headers="Yr">1979</td>
@@ -916,1223 +883,7 @@ ul.task-list li input[type="checkbox"] {
 <td class="gt_row gt_right" headers="SubSeas">1</td>
 <td class="gt_row gt_right" headers="X0">21.6597</td>
 <td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1980</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">28.9990</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.2398</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.6697</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.3561</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7304</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1981</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9990</td>
-<td class="gt_row gt_right" headers="X2">35.3335</td>
-<td class="gt_row gt_right" headers="X3">40.7199</td>
-<td class="gt_row gt_right" headers="X4">45.4064</td>
-<td class="gt_row gt_right" headers="X39">74.7807</td>
-<td class="gt_row gt_right" headers="X40">74.8875</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1982</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9990</td>
-<td class="gt_row gt_right" headers="X2">35.3335</td>
-<td class="gt_row gt_right" headers="X3">40.8008</td>
-<td class="gt_row gt_right" headers="X4">45.4498</td>
-<td class="gt_row gt_right" headers="X39">74.8241</td>
-<td class="gt_row gt_right" headers="X40">74.9309</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<p>Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable</p>
-</div>
-</div>
-<p>And the time-varying Linf affects all other ages by the middle of 1980 (e.g.&nbsp;subseason = 2), then into 1981.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="qwuaeyzreq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qwuaeyzreq table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#qwuaeyzreq thead, #qwuaeyzreq tbody, #qwuaeyzreq tfoot, #qwuaeyzreq tr, #qwuaeyzreq td, #qwuaeyzreq th {
-  border-style: none;
-}
-
-#qwuaeyzreq p {
-  margin: 0;
-  padding: 0;
-}
-
-#qwuaeyzreq .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#qwuaeyzreq .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#qwuaeyzreq .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#qwuaeyzreq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#qwuaeyzreq .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#qwuaeyzreq .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#qwuaeyzreq .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#qwuaeyzreq .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#qwuaeyzreq .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#qwuaeyzreq .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#qwuaeyzreq .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#qwuaeyzreq .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#qwuaeyzreq .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#qwuaeyzreq .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#qwuaeyzreq .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qwuaeyzreq .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#qwuaeyzreq .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#qwuaeyzreq .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#qwuaeyzreq .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qwuaeyzreq .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#qwuaeyzreq .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qwuaeyzreq .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#qwuaeyzreq .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qwuaeyzreq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#qwuaeyzreq .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#qwuaeyzreq .gt_left {
-  text-align: left;
-}
-
-#qwuaeyzreq .gt_center {
-  text-align: center;
-}
-
-#qwuaeyzreq .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#qwuaeyzreq .gt_font_normal {
-  font-weight: normal;
-}
-
-#qwuaeyzreq .gt_font_bold {
-  font-weight: bold;
-}
-
-#qwuaeyzreq .gt_font_italic {
-  font-style: italic;
-}
-
-#qwuaeyzreq .gt_super {
-  font-size: 65%;
-}
-
-#qwuaeyzreq .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#qwuaeyzreq .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#qwuaeyzreq .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#qwuaeyzreq .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#qwuaeyzreq .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#qwuaeyzreq .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#qwuaeyzreq .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#qwuaeyzreq .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#qwuaeyzreq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
-<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
-<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
-<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
-<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
-<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
-<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
-<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
-<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
-<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
-<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
-<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1972</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1973</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1974</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1975</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1976</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1977</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1978</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1979</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1980</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.0807</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.1252</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.4790</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7686</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.8678</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1981</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.1719</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.5257</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8153</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.9145</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">oneseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1982</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">2</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">32.2828</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.5661</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8557</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00">74.9548</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<p>Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 2 using the current SS3 executable</p>
-</div>
-</div>
-<p>The two season model matches the annual growth of the annual model, except for the plus group.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="pvczrwuqks" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pvczrwuqks table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#pvczrwuqks thead, #pvczrwuqks tbody, #pvczrwuqks tfoot, #pvczrwuqks tr, #pvczrwuqks td, #pvczrwuqks th {
-  border-style: none;
-}
-
-#pvczrwuqks p {
-  margin: 0;
-  padding: 0;
-}
-
-#pvczrwuqks .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#pvczrwuqks .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#pvczrwuqks .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#pvczrwuqks .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#pvczrwuqks .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#pvczrwuqks .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#pvczrwuqks .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#pvczrwuqks .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#pvczrwuqks .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#pvczrwuqks .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#pvczrwuqks .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#pvczrwuqks .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#pvczrwuqks .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#pvczrwuqks .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#pvczrwuqks .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pvczrwuqks .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#pvczrwuqks .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#pvczrwuqks .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#pvczrwuqks .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pvczrwuqks .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#pvczrwuqks .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pvczrwuqks .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#pvczrwuqks .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pvczrwuqks .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#pvczrwuqks .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#pvczrwuqks .gt_left {
-  text-align: left;
-}
-
-#pvczrwuqks .gt_center {
-  text-align: center;
-}
-
-#pvczrwuqks .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#pvczrwuqks .gt_font_normal {
-  font-weight: normal;
-}
-
-#pvczrwuqks .gt_font_bold {
-  font-weight: bold;
-}
-
-#pvczrwuqks .gt_font_italic {
-  font-style: italic;
-}
-
-#pvczrwuqks .gt_super {
-  font-size: 65%;
-}
-
-#pvczrwuqks .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#pvczrwuqks .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#pvczrwuqks .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#pvczrwuqks .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#pvczrwuqks .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#pvczrwuqks .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#pvczrwuqks .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#pvczrwuqks .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#pvczrwuqks div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
-<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
-<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
-<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
-<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
-<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
-<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
-<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
-<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
-<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
-<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
-<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X2" style="border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">35.2398</td>
 <td class="gt_row gt_right" headers="X3">40.6697</td>
 <td class="gt_row gt_right" headers="X4">45.3561</td>
 <td class="gt_row gt_right" headers="X39">74.7304</td>
@@ -2140,1784 +891,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1972</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1973</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1974</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1975</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1976</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1977</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1978</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1979</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1980</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9990</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1981</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">28.9990</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.3335</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.7199</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.4064</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.7807</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.8502</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1982</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">21.6597</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00">28.9990</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">35.3335</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">40.8008</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">45.4498</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.8241</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.8775</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<p>Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable</p>
-</div>
-</div>
-<p>This is because the plus group updating depends upon the numbers-at-age of the fish in the plus group and the numbers entering the plus group. The annual model does this correctly, but the order of operations in SS3 causes the seasonal model to do the updating as a simple average, not a numbers weighted average. This discrepancy is quite structural and is not addressed in the updated model.</p>
-<p>The middle of the year for a one season model should match the beginning of season 2 in a two season model. Below, the display for years 1971 shows a match, but during the time series after the time-varying growth, there are noticeable discrepancies for the two season model.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="ytbkvzocva" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ytbkvzocva table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#ytbkvzocva thead, #ytbkvzocva tbody, #ytbkvzocva tfoot, #ytbkvzocva tr, #ytbkvzocva td, #ytbkvzocva th {
-  border-style: none;
-}
-
-#ytbkvzocva p {
-  margin: 0;
-  padding: 0;
-}
-
-#ytbkvzocva .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#ytbkvzocva .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#ytbkvzocva .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#ytbkvzocva .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#ytbkvzocva .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#ytbkvzocva .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#ytbkvzocva .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#ytbkvzocva .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#ytbkvzocva .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#ytbkvzocva .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#ytbkvzocva .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#ytbkvzocva .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#ytbkvzocva .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#ytbkvzocva .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#ytbkvzocva .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ytbkvzocva .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#ytbkvzocva .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#ytbkvzocva .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#ytbkvzocva .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ytbkvzocva .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#ytbkvzocva .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ytbkvzocva .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#ytbkvzocva .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ytbkvzocva .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#ytbkvzocva .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ytbkvzocva .gt_left {
-  text-align: left;
-}
-
-#ytbkvzocva .gt_center {
-  text-align: center;
-}
-
-#ytbkvzocva .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#ytbkvzocva .gt_font_normal {
-  font-weight: normal;
-}
-
-#ytbkvzocva .gt_font_bold {
-  font-weight: bold;
-}
-
-#ytbkvzocva .gt_font_italic {
-  font-style: italic;
-}
-
-#ytbkvzocva .gt_super {
-  font-size: 65%;
-}
-
-#ytbkvzocva .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#ytbkvzocva .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#ytbkvzocva .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#ytbkvzocva .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#ytbkvzocva .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#ytbkvzocva .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#ytbkvzocva .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#ytbkvzocva .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#ytbkvzocva div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
-<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
-<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
-<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
-<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
-<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
-<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
-<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
-<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
-<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
-<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
-<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4644</td>
-<td class="gt_row gt_right" headers="X1">32.2828</td>
-<td class="gt_row gt_right" headers="X2">38.1677</td>
-<td class="gt_row gt_right" headers="X3">43.2470</td>
-<td class="gt_row gt_right" headers="X4">47.6309</td>
-<td class="gt_row gt_right" headers="X39">74.9464</td>
-<td class="gt_row gt_right" headers="X40">75.0456</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">2</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
-<td class="gt_row gt_right" headers="Model" style="background-color: #FFFF00">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1985</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">2</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">28.9990</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.6309</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.9464</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.9855</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<p>Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the current SS3 executable</p>
-</div>
-</div>
-<p>The code changes in 3.30.25 resolve this problem:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="tmqxnywymp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tmqxnywymp table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#tmqxnywymp thead, #tmqxnywymp tbody, #tmqxnywymp tfoot, #tmqxnywymp tr, #tmqxnywymp td, #tmqxnywymp th {
-  border-style: none;
-}
-
-#tmqxnywymp p {
-  margin: 0;
-  padding: 0;
-}
-
-#tmqxnywymp .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#tmqxnywymp .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#tmqxnywymp .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#tmqxnywymp .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#tmqxnywymp .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#tmqxnywymp .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#tmqxnywymp .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#tmqxnywymp .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#tmqxnywymp .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#tmqxnywymp .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#tmqxnywymp .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#tmqxnywymp .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#tmqxnywymp .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#tmqxnywymp .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#tmqxnywymp .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#tmqxnywymp .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#tmqxnywymp .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#tmqxnywymp .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#tmqxnywymp .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#tmqxnywymp .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#tmqxnywymp .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#tmqxnywymp .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#tmqxnywymp .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#tmqxnywymp .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#tmqxnywymp .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#tmqxnywymp .gt_left {
-  text-align: left;
-}
-
-#tmqxnywymp .gt_center {
-  text-align: center;
-}
-
-#tmqxnywymp .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#tmqxnywymp .gt_font_normal {
-  font-weight: normal;
-}
-
-#tmqxnywymp .gt_font_bold {
-  font-weight: bold;
-}
-
-#tmqxnywymp .gt_font_italic {
-  font-style: italic;
-}
-
-#tmqxnywymp .gt_super {
-  font-size: 65%;
-}
-
-#tmqxnywymp .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#tmqxnywymp .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#tmqxnywymp .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#tmqxnywymp .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#tmqxnywymp .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#tmqxnywymp .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#tmqxnywymp .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#tmqxnywymp .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#tmqxnywymp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
-<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
-<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
-<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
-<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
-<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
-<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
-<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
-<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
-<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
-<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
-<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1985</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">2</td>
-<td class="gt_row gt_right" headers="X0">25.4644</td>
-<td class="gt_row gt_right" headers="X1">32.2828</td>
-<td class="gt_row gt_right" headers="X2">38.1677</td>
-<td class="gt_row gt_right" headers="X3">43.2470</td>
-<td class="gt_row gt_right" headers="X4">47.6309</td>
-<td class="gt_row gt_right" headers="X39">74.9464</td>
-<td class="gt_row gt_right" headers="X40">75.0456</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_left" headers="Model">test</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1971</td>
-<td class="gt_row gt_right" headers="Seas">2</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">25.4383</td>
-<td class="gt_row gt_right" headers="X1">32.2100</td>
-<td class="gt_row gt_right" headers="X2">38.0546</td>
-<td class="gt_row gt_right" headers="X3">43.0991</td>
-<td class="gt_row gt_right" headers="X4">47.4530</td>
-<td class="gt_row gt_right" headers="X39">74.7425</td>
-<td class="gt_row gt_right" headers="X40">74.8417</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth" style="background-color: #FFFF00">growth1</td>
-<td class="gt_row gt_center" headers="Season" style="background-color: #FFFF00">twoseas</td>
-<td class="gt_row gt_left" headers="Model" style="background-color: #FFFF00">test</td>
-<td class="gt_row gt_right" headers="Morph" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="Yr" style="background-color: #FFFF00">1985</td>
-<td class="gt_row gt_right" headers="Seas" style="background-color: #FFFF00">2</td>
-<td class="gt_row gt_right" headers="SubSeas" style="background-color: #FFFF00">1</td>
-<td class="gt_row gt_right" headers="X0" style="background-color: #FFFF00">25.4644</td>
-<td class="gt_row gt_right" headers="X1" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">32.2828</td>
-<td class="gt_row gt_right" headers="X2" style="background-color: #FFFF00">38.1677</td>
-<td class="gt_row gt_right" headers="X3" style="background-color: #FFFF00">43.2470</td>
-<td class="gt_row gt_right" headers="X4" style="background-color: #FFFF00">47.6309</td>
-<td class="gt_row gt_right" headers="X39" style="background-color: #FFFF00">74.9464</td>
-<td class="gt_row gt_right" headers="X40" style="background-color: #FFFF00; border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">74.9855</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<p>Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the updated SS3 executable</p>
-</div>
-</div>
-<p>This investigation was launched on the basis of discrepancies that appeared in a Richards/Gompertz model with seasons-as-years and time-varying growth. First let’s show that a continuous string of 6 month seasons-as-years compares as expected to the annual model and the two season model in a year before time-varying starts when using the growth option 1 or 2. The size at age 4 seasons in the seasons as years is the same as the size at age 2 years in the annual and seasonal model.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="dhwacydbum" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dhwacydbum table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#dhwacydbum thead, #dhwacydbum tbody, #dhwacydbum tfoot, #dhwacydbum tr, #dhwacydbum td, #dhwacydbum th {
-  border-style: none;
-}
-
-#dhwacydbum p {
-  margin: 0;
-  padding: 0;
-}
-
-#dhwacydbum .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#dhwacydbum .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#dhwacydbum .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#dhwacydbum .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#dhwacydbum .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#dhwacydbum .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#dhwacydbum .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#dhwacydbum .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#dhwacydbum .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#dhwacydbum .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#dhwacydbum .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#dhwacydbum .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#dhwacydbum .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#dhwacydbum .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#dhwacydbum .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dhwacydbum .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#dhwacydbum .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#dhwacydbum .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#dhwacydbum .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dhwacydbum .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#dhwacydbum .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dhwacydbum .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#dhwacydbum .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dhwacydbum .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dhwacydbum .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dhwacydbum .gt_left {
-  text-align: left;
-}
-
-#dhwacydbum .gt_center {
-  text-align: center;
-}
-
-#dhwacydbum .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#dhwacydbum .gt_font_normal {
-  font-weight: normal;
-}
-
-#dhwacydbum .gt_font_bold {
-  font-weight: bold;
-}
-
-#dhwacydbum .gt_font_italic {
-  font-style: italic;
-}
-
-#dhwacydbum .gt_super {
-  font-size: 65%;
-}
-
-#dhwacydbum .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#dhwacydbum .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#dhwacydbum .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#dhwacydbum .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#dhwacydbum .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#dhwacydbum .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#dhwacydbum .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#dhwacydbum .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#dhwacydbum div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
-<th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
-<th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
-<th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
-<th id="SubSeas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">SubSeas</th>
-<th id="X0" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X0</th>
-<th id="X1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X1</th>
-<th id="X2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X2</th>
-<th id="X3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X3</th>
-<th id="X4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X4</th>
-<th id="X39" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X39</th>
-<th id="X40" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">X40</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">oneseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1979</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">twoseas</td>
-<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
-<td class="gt_row gt_right" headers="Morph">1</td>
-<td class="gt_row gt_right" headers="Yr">1979</td>
-<td class="gt_row gt_right" headers="Seas">1</td>
-<td class="gt_row gt_right" headers="SubSeas">1</td>
-<td class="gt_row gt_right" headers="X0">21.6597</td>
-<td class="gt_row gt_right" headers="X1">28.9487</td>
-<td class="gt_row gt_right" headers="X2">35.2398</td>
-<td class="gt_row gt_right" headers="X3">40.6697</td>
-<td class="gt_row gt_right" headers="X4">45.3561</td>
-<td class="gt_row gt_right" headers="X39">74.7304</td>
-<td class="gt_row gt_right" headers="X40">74.8372</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Growth">growth1</td>
-<td class="gt_row gt_center" headers="Season">seas_as_years</td>
+<td class="gt_row gt_left" headers="Season">seas_as_years</td>
 <td class="gt_row gt_right" headers="Model">3.30.24.1</td>
 <td class="gt_row gt_right" headers="Morph">1</td>
 <td class="gt_row gt_right" headers="Yr">1979</td>
@@ -3927,37 +901,336 @@ ul.task-list li input[type="checkbox"] {
 <td class="gt_row gt_right" headers="X1">25.4383</td>
 <td class="gt_row gt_right" headers="X2">28.9487</td>
 <td class="gt_row gt_right" headers="X3">32.2100</td>
-<td class="gt_row gt_right" headers="X4">35.2398</td>
+<td class="gt_row gt_right" headers="X4" style="border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">35.2398</td>
 <td class="gt_row gt_right" headers="X39">71.8855</td>
 <td class="gt_row gt_right" headers="X40">73.2279</td>
 </tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1979</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">21.6597</td>
+<td class="gt_row gt_right" headers="X1">28.9487</td>
+<td class="gt_row gt_right" headers="X2">35.2398</td>
+<td class="gt_row gt_right" headers="X3">40.6697</td>
+<td class="gt_row gt_right" headers="X4">45.3561</td>
+<td class="gt_row gt_right" headers="X39">74.7304</td>
+<td class="gt_row gt_right" headers="X40">74.8372</td>
+</tr>
 </tbody>
 </table>
 
 </div>
-<p>Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the updated SS3 executable</p>
+<p>Mean length-at-age for the all seasonal configurations of growth option 1 (von Bertalanffy) for season 1 and subseason 1 in 1979 using the old SS3 executable</p>
 </div>
 </div>
-<p>Here we compare 1979 (before timevary growth) to 1983, after Linf increased in 1980. With the one season model, the size-at-age increases slightly, as expected. However, with the seasons-as-years, the size-at-age decreases. This is because that section of code was erroneously applying the season duration twice.</p>
+</section>
+<section id="result-3-problem-with-season-duration-1.0" class="level3">
+<h3 class="anchored" data-anchor-id="result-3-problem-with-season-duration-1.0">Result 3: Problem with season duration &lt; 1.0</h3>
+<section id="growth-model-g2g-gompertz" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g2g-gompertz">Growth model G2G (Gompertz)</h4>
+<p>For this demonstration, the <u>seasons-as-years</u> configuration is used with G2G (Gompertz) growth. When growth becomes time-varying in 1980, SS3 begins recalculating size-at-age using the seasonal growth code. However, that code was applying season duration twice, so growth slows by 50% in comparison to the corrected model.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G2G</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>seasons-as-years</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="cell-output-display">
-<div id="erezxyzuej" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#erezxyzuej table {
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the seasons-as-years model with growth option G2G (Gompertz) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="growth-model-g2r-richards-1" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g2r-richards-1">Growth model G2R (Richards)</h4>
+<p>The same occurs for Richards which uses the same code as Gompertz, just a different value for the exponent:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G2R</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>seasons-as-years</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the seasons-as-years model with growth option G2R (Richards) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="growth-model-g1-with-seasons-as-years" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g1-with-seasons-as-years">Growth model G1 with seasons-as-years</h4>
+<p>The next figure shows that the season duration of 0.5 causes the same problem for model G1.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>seasons-as-years</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the seasons-as-years model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="growth-model-g1-with-seasons-as-years-in-subseason-2" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g1-with-seasons-as-years-in-subseason-2">Growth model G1 with seasons-as-years in subseason 2</h4>
+<p>For subseason 2 (middle of season), the differential is even seen for start year lengths (years 1971-1979).</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>seasons-as-years</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 2</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the seasons-as-years model with growth option G1 in season 1, subseason 2 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="growth-model-g1-with-two-seasons-during-season-2-subseason-1" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g1-with-two-seasons-during-season-2-subseason-1">Growth model G1 with two seasons during season 2, subseason 1</h4>
+<p>This also has some effect on the two season model for all growth types. Most affected is seasons after season 1 for the first age on the growth curve, which was age 1 in this example. The figure below shows season 2 for age 1 being much affected by the decline in <span class="math inline">\(L_{inf}\)</span> in 1980.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>two seasons</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>2, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the two season model with growth option G1 in season 2, subseason 1 using the old (+) and the new SS3 (O) executables at ages 1 and 2</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="result-4-prevent-fish-shrinking" class="level3">
+<h3 class="anchored" data-anchor-id="result-4-prevent-fish-shrinking">Result 4: Prevent fish shrinking</h3>
+</section>
+</section>
+</section>
+<section id="growth-model-g1" class="level1">
+<h1>Growth model G1</h1>
+<p>With <span class="math inline">\(L_{2}\)</span> at age 38 changing from 71.65 cm to 65.0 cm in 1980, fish that were above that size are not allowed to shrink with G1, G3, G4, G5. With the scenario’s growth rate, the <span class="math inline">\(L_{2}\)</span> resulted in <span class="math inline">\(L_{inf}\)</span> being 74.9 cm and the mean size in the plus group (age 40) being 74.75 cm in the initial year. The figure below shows ages 39 and 40 with a gradual decline towards 65.0 cm, with age 39 declining faster than the plus group.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>one season</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the one season model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="growth-model-g2" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g2">Growth model G2</h4>
+<p>Growth models G2/G3 and G8 lacked code to prevent shrinkage, so the decline in length occurred immediately after 1980.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G2G</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>one season</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the one season model with growth option G2G in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="result-5-plus-group-updating" class="level3">
+<h3 class="anchored" data-anchor-id="result-5-plus-group-updating">Result 5: Plus group updating</h3>
+<section id="growth-model-g1-with-two-seasons-for-age-39-and-the-plus-group" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g1-with-two-seasons-for-age-39-and-the-plus-group">Growth model G1 with two seasons for age 39 and the plus group</h4>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>two seasons</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the two seasons model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is because the plus group updating depends upon the numbers-at-age of the fish in the plus group and the numbers entering the plus group. The one season model does this correctly, but the order of operations in SS3 causes the seasonal model to do the updating as a simple average, not a numbers weighted average.</p>
+</section>
+<section id="growth-model-g1-with-one-season-for-age-39-and-the-plus-group" class="level4">
+<h4 class="anchored" data-anchor-id="growth-model-g1-with-one-season-for-age-39-and-the-plus-group">Growth model G1 with one season for age 39 and the plus group</h4>
+<p>Another finding is that as the numbers-at-age in the plusgroup decline over time, the plus group mean size updating is increasingly dominated by the constant (0.01) added to the numbers in the plus group and to the numbers entering the plus group. This constant is necessary to avoid dividing by zero, but as the numbers-at-age become small relative to the constant, the length in the plus group becomes just the average of current plus group size and incoming fish size, as shown for the old model below. Reducing the constant to a very small value mitigates its impact on the mean size of fish in the plus group. Inaccuracy in plus group mean size due to small numbers has trivial impact on important quantities like Spawning Biomass, but display of the time series of mean size becomes much more logical with this revision.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Growth model:</td>
+<td>G1</td>
+</tr>
+<tr class="even">
+<td>Seasonality:</td>
+<td>one season</td>
+</tr>
+<tr class="odd">
+<td>Season &amp; subseason:</td>
+<td>1, 1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="growth_seasonality_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Mean length-at-age for the one season model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="result-6-season-match-up" class="level3">
+<h3 class="anchored" data-anchor-id="result-6-season-match-up">Result 6: Season match-up</h3>
+<p>The middle of the year for a one season model should match the beginning of season 2 in a two seasons model. The table below shows a match for 1971, but during the time series after the time-varying growth, there is a discrepancy at age 1 for the two seasons model. This only occurs for age 1 because it is the first age after <span class="math inline">\(A_{1}\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="oqghxgfwga" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oqghxgfwga table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#erezxyzuej thead, #erezxyzuej tbody, #erezxyzuej tfoot, #erezxyzuej tr, #erezxyzuej td, #erezxyzuej th {
+#oqghxgfwga thead, #oqghxgfwga tbody, #oqghxgfwga tfoot, #oqghxgfwga tr, #oqghxgfwga td, #oqghxgfwga th {
   border-style: none;
 }
 
-#erezxyzuej p {
+#oqghxgfwga p {
   margin: 0;
   padding: 0;
 }
 
-#erezxyzuej .gt_table {
+#oqghxgfwga .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3983,12 +1256,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_caption {
+#oqghxgfwga .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#erezxyzuej .gt_title {
+#oqghxgfwga .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4000,7 +1273,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#erezxyzuej .gt_subtitle {
+#oqghxgfwga .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4012,7 +1285,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#erezxyzuej .gt_heading {
+#oqghxgfwga .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4024,13 +1297,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_bottom_border {
+#oqghxgfwga .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_col_headings {
+#oqghxgfwga .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4045,7 +1318,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_col_heading {
+#oqghxgfwga .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4065,7 +1338,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#erezxyzuej .gt_column_spanner_outer {
+#oqghxgfwga .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4077,15 +1350,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#erezxyzuej .gt_column_spanner_outer:first-child {
+#oqghxgfwga .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#erezxyzuej .gt_column_spanner_outer:last-child {
+#oqghxgfwga .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#erezxyzuej .gt_column_spanner {
+#oqghxgfwga .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4097,11 +1370,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#erezxyzuej .gt_spanner_row {
+#oqghxgfwga .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#erezxyzuej .gt_group_heading {
+#oqghxgfwga .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4127,7 +1400,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#erezxyzuej .gt_empty_group_heading {
+#oqghxgfwga .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4142,15 +1415,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#erezxyzuej .gt_from_md > :first-child {
+#oqghxgfwga .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#erezxyzuej .gt_from_md > :last-child {
+#oqghxgfwga .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#erezxyzuej .gt_row {
+#oqghxgfwga .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4169,7 +1442,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#erezxyzuej .gt_stub {
+#oqghxgfwga .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4182,7 +1455,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#erezxyzuej .gt_stub_row_group {
+#oqghxgfwga .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4196,15 +1469,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#erezxyzuej .gt_row_group_first td {
+#oqghxgfwga .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#erezxyzuej .gt_row_group_first th {
+#oqghxgfwga .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#erezxyzuej .gt_summary_row {
+#oqghxgfwga .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4214,16 +1487,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#erezxyzuej .gt_first_summary_row {
+#oqghxgfwga .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_first_summary_row.thick {
+#oqghxgfwga .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#erezxyzuej .gt_last_summary_row {
+#oqghxgfwga .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4233,7 +1506,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_grand_summary_row {
+#oqghxgfwga .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4243,7 +1516,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#erezxyzuej .gt_first_grand_summary_row {
+#oqghxgfwga .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4253,7 +1526,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_last_grand_summary_row_top {
+#oqghxgfwga .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4263,11 +1536,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_striped {
+#oqghxgfwga .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#erezxyzuej .gt_table_body {
+#oqghxgfwga .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4276,7 +1549,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_footnotes {
+#oqghxgfwga .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4290,7 +1563,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_footnote {
+#oqghxgfwga .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4299,7 +1572,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#erezxyzuej .gt_sourcenotes {
+#oqghxgfwga .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4313,7 +1586,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#erezxyzuej .gt_sourcenote {
+#oqghxgfwga .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4321,82 +1594,82 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#erezxyzuej .gt_left {
+#oqghxgfwga .gt_left {
   text-align: left;
 }
 
-#erezxyzuej .gt_center {
+#oqghxgfwga .gt_center {
   text-align: center;
 }
 
-#erezxyzuej .gt_right {
+#oqghxgfwga .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#erezxyzuej .gt_font_normal {
+#oqghxgfwga .gt_font_normal {
   font-weight: normal;
 }
 
-#erezxyzuej .gt_font_bold {
+#oqghxgfwga .gt_font_bold {
   font-weight: bold;
 }
 
-#erezxyzuej .gt_font_italic {
+#oqghxgfwga .gt_font_italic {
   font-style: italic;
 }
 
-#erezxyzuej .gt_super {
+#oqghxgfwga .gt_super {
   font-size: 65%;
 }
 
-#erezxyzuej .gt_footnote_marks {
+#oqghxgfwga .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#erezxyzuej .gt_asterisk {
+#oqghxgfwga .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#erezxyzuej .gt_indent_1 {
+#oqghxgfwga .gt_indent_1 {
   text-indent: 5px;
 }
 
-#erezxyzuej .gt_indent_2 {
+#oqghxgfwga .gt_indent_2 {
   text-indent: 10px;
 }
 
-#erezxyzuej .gt_indent_3 {
+#oqghxgfwga .gt_indent_3 {
   text-indent: 15px;
 }
 
-#erezxyzuej .gt_indent_4 {
+#oqghxgfwga .gt_indent_4 {
   text-indent: 20px;
 }
 
-#erezxyzuej .gt_indent_5 {
+#oqghxgfwga .gt_indent_5 {
   text-indent: 25px;
 }
 
-#erezxyzuej .katex-display {
+#oqghxgfwga .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#erezxyzuej div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oqghxgfwga div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
-<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
-<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Model</th>
 <th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
 <th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
 <th id="Seas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Seas</th>
@@ -4411,33 +1684,97 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </thead>
 <tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">oneseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">24.9353</td>
+<td class="gt_row gt_right" headers="X1">30.8056</td>
+<td class="gt_row gt_right" headers="X2">35.8722</td>
+<td class="gt_row gt_right" headers="X3">40.2452</td>
+<td class="gt_row gt_right" headers="X4">44.0195</td>
+<td class="gt_row gt_right" headers="X39">74.5446</td>
+<td class="gt_row gt_right" headers="X40">74.7674</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">twoseas</td>
+<td class="gt_row gt_right" headers="Model">3.30.24.1</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">24.9353</td>
+<td class="gt_row gt_right" headers="X1" style="border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">27.9784</td>
+<td class="gt_row gt_right" headers="X2">35.8722</td>
+<td class="gt_row gt_right" headers="X3">40.2452</td>
+<td class="gt_row gt_right" headers="X4">44.0195</td>
+<td class="gt_row gt_right" headers="X39">74.5446</td>
+<td class="gt_row gt_right" headers="X40">74.6325</td>
+</tr>
 </tbody>
 </table>
 
 </div>
-<p>Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the 3.30.24.1 SS3 executable</p>
+<p>Mean length-at-age for the one season and two seasons models with growth option G1 in years 1971 and 1985 using the v3.30.24.1 SS3 executable</p>
 </div>
 </div>
-<p>The updated model corrects this problem.</p>
+<p>The code changes in new SS3 executable resolve this problem:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="gqvotahjvp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gqvotahjvp table {
+<div id="czsjnqpblb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#czsjnqpblb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gqvotahjvp thead, #gqvotahjvp tbody, #gqvotahjvp tfoot, #gqvotahjvp tr, #gqvotahjvp td, #gqvotahjvp th {
+#czsjnqpblb thead, #czsjnqpblb tbody, #czsjnqpblb tfoot, #czsjnqpblb tr, #czsjnqpblb td, #czsjnqpblb th {
   border-style: none;
 }
 
-#gqvotahjvp p {
+#czsjnqpblb p {
   margin: 0;
   padding: 0;
 }
 
-#gqvotahjvp .gt_table {
+#czsjnqpblb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4463,12 +1800,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_caption {
+#czsjnqpblb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gqvotahjvp .gt_title {
+#czsjnqpblb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4480,7 +1817,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#gqvotahjvp .gt_subtitle {
+#czsjnqpblb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4492,7 +1829,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#gqvotahjvp .gt_heading {
+#czsjnqpblb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4504,13 +1841,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_bottom_border {
+#czsjnqpblb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_col_headings {
+#czsjnqpblb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4525,7 +1862,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_col_heading {
+#czsjnqpblb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4545,7 +1882,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gqvotahjvp .gt_column_spanner_outer {
+#czsjnqpblb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4557,15 +1894,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#gqvotahjvp .gt_column_spanner_outer:first-child {
+#czsjnqpblb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gqvotahjvp .gt_column_spanner_outer:last-child {
+#czsjnqpblb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gqvotahjvp .gt_column_spanner {
+#czsjnqpblb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4577,11 +1914,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#gqvotahjvp .gt_spanner_row {
+#czsjnqpblb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gqvotahjvp .gt_group_heading {
+#czsjnqpblb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4607,7 +1944,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#gqvotahjvp .gt_empty_group_heading {
+#czsjnqpblb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4622,15 +1959,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#gqvotahjvp .gt_from_md > :first-child {
+#czsjnqpblb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gqvotahjvp .gt_from_md > :last-child {
+#czsjnqpblb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gqvotahjvp .gt_row {
+#czsjnqpblb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4649,7 +1986,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gqvotahjvp .gt_stub {
+#czsjnqpblb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4662,7 +1999,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gqvotahjvp .gt_stub_row_group {
+#czsjnqpblb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4676,15 +2013,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#gqvotahjvp .gt_row_group_first td {
+#czsjnqpblb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gqvotahjvp .gt_row_group_first th {
+#czsjnqpblb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gqvotahjvp .gt_summary_row {
+#czsjnqpblb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4694,16 +2031,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gqvotahjvp .gt_first_summary_row {
+#czsjnqpblb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_first_summary_row.thick {
+#czsjnqpblb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gqvotahjvp .gt_last_summary_row {
+#czsjnqpblb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4713,7 +2050,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_grand_summary_row {
+#czsjnqpblb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4723,7 +2060,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gqvotahjvp .gt_first_grand_summary_row {
+#czsjnqpblb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4733,7 +2070,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_last_grand_summary_row_top {
+#czsjnqpblb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4743,11 +2080,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_striped {
+#czsjnqpblb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gqvotahjvp .gt_table_body {
+#czsjnqpblb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4756,7 +2093,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_footnotes {
+#czsjnqpblb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4770,7 +2107,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_footnote {
+#czsjnqpblb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4779,7 +2116,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gqvotahjvp .gt_sourcenotes {
+#czsjnqpblb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4793,7 +2130,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gqvotahjvp .gt_sourcenote {
+#czsjnqpblb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4801,81 +2138,81 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gqvotahjvp .gt_left {
+#czsjnqpblb .gt_left {
   text-align: left;
 }
 
-#gqvotahjvp .gt_center {
+#czsjnqpblb .gt_center {
   text-align: center;
 }
 
-#gqvotahjvp .gt_right {
+#czsjnqpblb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gqvotahjvp .gt_font_normal {
+#czsjnqpblb .gt_font_normal {
   font-weight: normal;
 }
 
-#gqvotahjvp .gt_font_bold {
+#czsjnqpblb .gt_font_bold {
   font-weight: bold;
 }
 
-#gqvotahjvp .gt_font_italic {
+#czsjnqpblb .gt_font_italic {
   font-style: italic;
 }
 
-#gqvotahjvp .gt_super {
+#czsjnqpblb .gt_super {
   font-size: 65%;
 }
 
-#gqvotahjvp .gt_footnote_marks {
+#czsjnqpblb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gqvotahjvp .gt_asterisk {
+#czsjnqpblb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gqvotahjvp .gt_indent_1 {
+#czsjnqpblb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gqvotahjvp .gt_indent_2 {
+#czsjnqpblb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gqvotahjvp .gt_indent_3 {
+#czsjnqpblb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gqvotahjvp .gt_indent_4 {
+#czsjnqpblb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gqvotahjvp .gt_indent_5 {
+#czsjnqpblb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gqvotahjvp .katex-display {
+#czsjnqpblb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gqvotahjvp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#czsjnqpblb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
-<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Growth" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Growth</th>
-<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Season</th>
+<th id="Season" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Season</th>
 <th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
 <th id="Morph" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Morph</th>
 <th id="Yr" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Yr</th>
@@ -4891,13 +2228,112 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </thead>
 <tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">oneseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">1</td>
+<td class="gt_row gt_right" headers="SubSeas">2</td>
+<td class="gt_row gt_right" headers="X0">24.9353</td>
+<td class="gt_row gt_right" headers="X1">30.8056</td>
+<td class="gt_row gt_right" headers="X2">35.8722</td>
+<td class="gt_row gt_right" headers="X3">40.2452</td>
+<td class="gt_row gt_right" headers="X4">44.0195</td>
+<td class="gt_row gt_right" headers="X39">74.5446</td>
+<td class="gt_row gt_right" headers="X40">74.7675</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1971</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">25.4383</td>
+<td class="gt_row gt_right" headers="X1">32.2100</td>
+<td class="gt_row gt_right" headers="X2">38.0546</td>
+<td class="gt_row gt_right" headers="X3">43.0991</td>
+<td class="gt_row gt_right" headers="X4">47.4530</td>
+<td class="gt_row gt_right" headers="X39">74.7425</td>
+<td class="gt_row gt_right" headers="X40">74.8417</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Growth">growth1</td>
+<td class="gt_row gt_left" headers="Season">twoseas</td>
+<td class="gt_row gt_left" headers="Model">test</td>
+<td class="gt_row gt_right" headers="Morph">1</td>
+<td class="gt_row gt_right" headers="Yr">1985</td>
+<td class="gt_row gt_right" headers="Seas">2</td>
+<td class="gt_row gt_right" headers="SubSeas">1</td>
+<td class="gt_row gt_right" headers="X0">24.9353</td>
+<td class="gt_row gt_right" headers="X1" style="border-left-width: 2px; border-left-style: solid; border-left-color: red; border-right-width: 2px; border-right-style: solid; border-right-color: red; border-top-width: 2px; border-top-style: solid; border-top-color: red; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: red">30.8056</td>
+<td class="gt_row gt_right" headers="X2">35.8722</td>
+<td class="gt_row gt_right" headers="X3">40.2452</td>
+<td class="gt_row gt_right" headers="X4">44.0195</td>
+<td class="gt_row gt_right" headers="X39">74.5446</td>
+<td class="gt_row gt_right" headers="X40">74.7675</td>
+</tr>
 </tbody>
 </table>
 
 </div>
-<p>Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the test SS3 executable</p>
+<p>Mean length-at-age for the one season and two seasons models with growth option G1 in years 1971 and 1985 using the new SS3 executable</p>
 </div>
 </div>
+</section>
+<section id="actions" class="level2">
+<h2 class="anchored" data-anchor-id="actions">Actions</h2>
+<ul>
+<li>Resolves <a href="https://github.com/nmfs-ost/ss3-source-code/issues/735">[Bug]: growth discrepancy when season duration is &lt; 1.0 (months &lt; 12) and growth type is Gompertz-Richards #735</a></li>
+<li><a href="https://github.com/nmfs-ost/ss3-source-code/issues/156">[Question]: Code review for growth #156</a></li>
+<li><a href="https://github.com/nmfs-ost/ss3-source-code/issues/24">[Bug]: Richards growth interacts with timevary growth trap #24</a></li>
+<li><a href="https://github.com/nmfs-ost/ss3-source-code/issues/760">plusgroup mean size updating #760</a></li>
+</ul>
+</section>
+<section id="model-changes" class="level2">
+<h2 class="anchored" data-anchor-id="model-changes">Model Changes</h2>
+<p><strong>Key change: Correct the usage of season duration as a multiplier on the growth rate and improve documentation of this code. Some scenarios were applying it twice, but that went undetected whenever season duration equaled 1.0</strong></p>
+<ul>
+<li>Implement a trap to prevent shrinkage of mean size for the Richards/Gompertz and Cessation model. Previously it was only implemented for von Bertalanffy models. Note that the trap for the von Bertalanffy models is implemented on the remaining growth potential, but the trap for the Richards and Cessation is done on the resultant size-at-age.</li>
+<li>Revise cohort growth dev to work correctly for Richards. The challenge is that growth is working on <span class="math inline">\(log(size)\)</span> in Richards and Gompertz.</li>
+<li>Add warning if <code>AFIX2</code> age is set greater than <code>nages</code> because it caused inaccurate <span class="math inline">\(L_{inf}\)</span> calculation (except if 999 code is used).</li>
+<li>Cohort growth dev included in the testing and added to the Cessation model.</li>
+<li>Correct (in <code>readcontrol.tpl</code>) the identification of ages as linear growth in order to implement time-varying growth parameters in the correct year.</li>
+<li>Add -997 to the options for growth in the plus group:
+<ul>
+<li>Value (e.g.&nbsp;0.12) which should approx initial <span class="math inline">\(Z\)</span>;</li>
+<li>-999 replicates v3.24 (with <span class="math inline">\(Z = 0.2\)</span> and numbers weighted updating in years with time-varying growth);</li>
+<li>-998 ignores growth within plus group in initial year and disables time-varying changes in plus group mean size during the time;</li>
+<li>-997 ignores growth within plus group in initial year and enables updating time-varying plus group;</li>
+<li>#_note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned on.</li>
+</ul></li>
+<li>Improve algorithm for calculating the numbers-weighted updating of the mean size in the plus group. The previous approach did a simple average in some configurations, especially with &gt; 1 season.
+<ul>
+<li>Numbers weighted averaging was adding 0.01 to the numbers to avoid divide by 0, but as actual numbers in population get below that value, the calculation of the weighted average size-at-age for the plusgroup was distorted. This was noted in the Growth Test by a difference in the rate of decline in plus group mean size between the two season and the one season model. Mitigate this issue by reducing the constant to <span class="math inline">\(1.0e-09\)</span>. Note that inaccurate mean size of plus group in this situation has trivial impact on Spawning Stock Biomass (SSB), but could be misleading if extracted and used outside the model. Note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned on.</li>
+<li>For models with &gt; 1 season the numbers-at-age were not yet calculated at the time they are needed for the plus group calculation, so the calculation was a simple average. Improve the situation by using the numbers from 1 year (<code>nseas</code>) ago, which should be close to the correct ratio of numbers in the plus group relative to incoming numbers. However, some inaccuracy remains when there is a large cohort involved.</li>
+</ul></li>
+<li>Refactor von Bertalanffy <span class="math inline">\(K\)</span> value. Previously, the von Bertalanffy <span class="math inline">\(K\)</span> variable was given a negative value when first created. This continually caused confusion when editing the code. Change so that the variable now has a positive value and the negative is in the code accessing that variable.</li>
+<li>Augment the <code>MEAN_SIZE_TIMESERIES</code> output by adding a second table organized by cohort rather than year.</li>
+</ul>
 
 
 </section>
