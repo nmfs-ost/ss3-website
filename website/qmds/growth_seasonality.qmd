@@ -86,7 +86,7 @@ library(scales)
 # locally this works better
 # results <- read.csv(here::here("website","qmds","example_files", "all_models_growthseries.csv"))
 
-results <- read.csv(file.path(getwd(), "example_files", "all_models_growthseries.csv"))
+results <- read.csv(here::here("website", "qmds", "example_files", "all_models_growthseries.csv"))
 
 dat <- results |>
   dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
