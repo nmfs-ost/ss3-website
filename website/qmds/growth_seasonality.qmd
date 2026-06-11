@@ -419,7 +419,7 @@ ggplot2::ggplot(dat, aes(x = Yr)) +
 
 ### Result 4: Prevent fish shrinking
 
-# Growth model G1
+#### Growth model G1
 With $L_{2}$ at age 38 changing from 71.65 cm to 65.0 cm in 1980, fish that were above that size are not allowed to shrink with G1, G3, G4, G5. With the scenario’s growth rate, the $L_{2}$ resulted in $L_{inf}$ being 74.9 cm and the mean size in the plus group (age 40) being 74.75 cm in the initial year. The figure below shows ages 39 and 40 with a gradual decline towards 65.0 cm, with age 39 declining faster than the plus group.
 
 |                     |             |
