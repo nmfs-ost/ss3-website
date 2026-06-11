@@ -444,7 +444,7 @@ dat <- results |>
 ggplot2::ggplot(dat, aes(x = Yr)) +
   geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
   geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
-  ylim(50, 80) +
+  ylim(60, 80) +
   scale_color_manual(
     values = c("X39" = "red", "X40" = "purple"),
     labels = c("X39" = "39", "X40" = "plus group"),
@@ -486,7 +486,7 @@ dat <- results |>
 ggplot2::ggplot(dat, aes(x = Yr)) +
   geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
   geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
-  ylim(50, 80) +
+  ylim(60, 80) +
   scale_color_manual(
     values = c("X39" = "red", "X40" = "purple"),
     labels = c("X39" = "39", "X40" = "plus group"),
@@ -528,7 +528,7 @@ dat <- results |>
 ggplot2::ggplot(dat, aes(x = Yr)) +
   geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
   geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
-  ylim(50, 80) +
+  ylim(60, 80) +
   scale_color_manual(
     values = c("X39" = "red", "X40" = "purple"),
     labels = c("X39" = "39", "X40" = "plus group"),
@@ -572,7 +572,7 @@ dat <- results |>
 ggplot2::ggplot(dat, aes(x = Yr)) +
   geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
   geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
-  ylim(50, 80) +
+  ylim(60, 80) +
   scale_color_manual(
     values = c("X39" = "red", "X40" = "purple"),
     labels = c("X39" = "39", "X40" = "plus group"),
