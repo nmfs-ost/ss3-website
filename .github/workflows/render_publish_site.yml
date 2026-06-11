@@ -37,6 +37,7 @@ jobs:
             any::dplyr
             any::gt
             any::scales
+            any::ggplot2
             
       - name: Install remotes and r4ss
         run: |

@@ -11,110 +11,598 @@ editor:
 
 ## Preface
 
-In late 2025 it was [noticed](https://github.com/nmfs-ost/ss3-source-code/issues/735) that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a [comprehensive review of growth](https://github.com/nmfs-ost/ss3-source-code/issues/156). The resolution of the discrepancies is found in [pull request #747](https://github.com/nmfs-ost/ss3-source-code/pull/747) from March 2026. This document demonstrates the correctness of the SS3 growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.
+A user [noticed](https://github.com/nmfs-ost/ss3-source-code/issues/735) that the Gompertz growth model was misbehaving when using seasons-as-years with time-varying growth. This prompted renewed priority in completing a [comprehensive review of growth](https://github.com/nmfs-ost/ss3-source-code/issues/156). The resolution of the discrepancy is found in [pull request #747](https://github.com/nmfs-ost/ss3-source-code/pull/747) from June 2026. This document demonstrates the performance of the SS3's growth x seasonality interaction as developed in SS3.30.24.3, in comparison to the previous model version 3.30.24.1.
 
 ## Growth in SS3
 
-Why is growth so complicated in SS3? Unlike most models, SS3 is designed to accommodate flexibility regarding the within year timing of when a cohort of fish begins its growth, and flexibility regarding the exact timing within a year of when an observation is made. There also is the capability to allow growth parameters to change over time, including density-dependence, so size-at-age cannot be calculated just once at the beginning of the time series.This means that there are three sections of code for calculating size-at-age:
+Why is growth so complicated in SS3? Unlike most models, SS3 is designed to accommodate flexibility regarding the within year timing of when a cohort of fish begins its growth, and flexibility regarding the exact timing within a year of when an observation is made. There also is the capability to allow growth parameters to change over time, including density-dependence, so size-at-age cannot be calculated just once at the beginning of the time series. This led to the development of three sections of code for calculating size-at-age:
+
 1. At the beginning of the time series, calculate size-at-age;
-2. At the beginning of each year, calculate the size at age to the beginning of each season within that year and to the beginning of the next year. This growth is according to the growth parameters of that year and follows the diagonal of the time x age matrix;
+2. At the beginning of each year, calculate the size at age to the beginning of each season within that year and to the beginning of the next year. This growth is according to the growth parameters of that year and follows cohorts alongthe diagonal of the time x age matrix. Each cohort grows from its current size towards the current Linf at a rate determined by the current growth rate (K);
 3. At the time of each subseason (minimum is two subseasons per year or season), calculate the size-at-age as growth from the beginning of that season.
 
-Within each of these sections, there are four sections of code for each major growth function:
+Within each of these sections, there is specific code for each major growth function:
 
 1. Von Bertallanffy
-2. Richards/Gompertz
+2. Richards or Gompertz
 3. Three variants of age-specific K
 4. Growth cessation
-   
-Within each of the growth functions, there is an equation to calculate size-at-age for the first age past the linear growth age range, and code for calculating growth of older ages, and some have specific code for growth within the plus group.
 
-All of the above needs to account for season duration, which is simply 1.0 for an annual model, but models with seasons within year have great flexibility on number and duration of seasons, and models with seasons-as-years have a time step with a user specified duration in fractions of a year.
+Within each of the growth functions, there is an equation to calculate size-at-age for the first age past the linear growth age range, and code for calculating growth of older ages, and code for growth within the plus group.
 
-Unfortunately, as growth options were developed, nearly all the testing was with simple annual time steps; and as seasonality options were tested, nearly all the testing was with the simple von Bertallanffy function. This allowed some growth function x seasonality combinations to misbehave. Here we thoroughly test all combinations and update the code to behave as expected.
+All of the above options need to account for season duration, which is simply 1.0 for an annual model, but models with seasons within a year have great flexibility on number and duration of seasons, and models with seasons-as-years have a time step with a user specified duration in fractions of a year.
 
-## Model changes
-
-1. Correct the usage of season duration as a multiplier on the growth rate and improve documentation in the code. Some scenarios were applying it twice, but that went undetected whenever season duration equaled 1.0
-2. Implement trap to prevent shrinkage of mean size for the Richards/Gompertz and Cessation model. Previously it was only implemented for von Bertallanffy models. Note that the trap for the von Bertallanffy models is implemented on the remaining growth potential, but the trap for the Richards and Cessation is done on the resultant size-at-age.
-3. Add warning if AFIX2 (L at Amax) age is set greater than nages.
-4. Cohort growth dev included in the testing.
-5. Correct (in readcontrol.tpl) the identification of ages as linear growth in order to implement time-varying growth parameters in the correct year.
-6. Add -997 option for growth in the plus group such that:
-    ```
-    #_value should approx initial Z; or use a code:
-    #_ -999 replicates 3.24 (with Z = 0.2 and numbers weighted updating in years with time-varying growth)
-    #_-998 ignores growth within plus group in initial year and disables time-varying changes in plus group mean size
-    #_-997 ignores growth within plus group in initial year and enables updating time-varying plus group
-    #_note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned up.
-    ```
-7. Augment the MEAN_SIZE_TIMESERIES output by adding a second table organized by cohort rather than year.
-
+Unfortunately, as growth options were developed, nearly all the testing was with simple annual time steps; and as seasonality options were tested, nearly all the testing was with the simple von Bertallanffy function. This allowed some growth function x seasonality combinations to misbehave. Here we thoroughly tested all combinations and updated the code to behave as expected.
 
 ## Test setup
 
-The testbed for this demonstration started with the simple model setup which uses [von Bertallanffy growth](), single annual season, and growth parameters were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
+The testbed for this demonstration started with the simple model setup which uses [von Bertallanffy growth](), single annual season, and growth parameters that were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
 
 |                |                  |
 |----------------|----------------- |
-| Growth Options | 1, 2(Richards), 2(Gompertz), 3, 4, 5, 8 |
+| Growth Options | G1, G2R, G2G, G3, G4, G5, G8 |
 | Seasonality    | annual, seasonal with two 6-month seasons, seasons-as-years with 6 month seasons |
-| Model          | 3.30.24.1 and new/test |
+| Model          | 3.30.24.1 and [3.30.xxx (new)]() |
 
-Growth option 2 ([Richards]()) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option 1 (von Bertallanffy). Growth options 3, 4, 5 for [age-specific K]() were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option 1. Growth options 2 (Gompertz - same as Richards but with parameter set to 0.001) and 8 ([cessation]()) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option 1.
+Growth option G2R ([Richards]()) was configured such that the additional parameter had nil effect so that the resultant growth curve should match growth option G1 (von Bertallanffy). Growth options G3, G4, G5 for [age-specific K]() were configured to allow for K at ages 2, 3 and 4 to have a multiplier, but all multipliers were fixed at 1.0 such that the resultant growth curve should match growth option G1. Growth options G2G (Gompertz - same as Richards but with parameter set to 0.001) and G8 ([cessation]()) were included in the demonstration, but there is no parameter configuration that allows exact match to growth option G1.
 
-An additional design configuration set the AFIX2 (L at Amax) value to 19 years old for the annual and two-season models, and to 39 seasons in the seasons-as-years model. With this configuration and the same K for all models, the relationship between the seasons-as-years result and the other two seasonality configurations should be apparent.
+An additional design configuration set the AFIX2 (L at Amax) value to 19 years old for the annual and two-season models, and to 38 seasons in the seasons-as-years model. With this configuration and the same K for all models, the seasons-as-years result is more easily compared to the other seasonality configurations.
 
-All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. A secondary test used a range of Amin values to demonstrate the transition from linear growth below Amin to growth according to the curve.
+All models were run with Amin = 0.0 such that the Lmin growth parameter set the size at age 0.0 post-settlement. Additional tests with alternative Amin configurations seem useful to add to this comparison.
 
-The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years.
+The Linf parameter was set to be time-varying with a block beginning in 1980. This triggers SS3 to update the growth calculations in that year and all subsequent years. The change was a decrease in Linf, so tests the code that prevents shrinkage of mean size-at-age for a cohort.
+
+The cohort growth deviation parameter was set to have a 10% increase in years 1995 - 1997.
 
 All models were run with no estimation (`-nohess -stopph 0`) so will produce output directly from the input parameter values.
 
-While conducting this test which included time-varying growth, we found it useful to augment the MEAN_SIZE_TIMESERIES output by adding output organized by cohort rather than year.
+The `report.sso` output table labelled `MEAN_SIZE_TIMESERIES` was used as the basis for model comparisons. Output for all years of each model configuration were output to a single csv file, with each row starting with identifiers for growth model, season, subseason, and model version. This allowed for easy filtering of the results to enable visual and numerical comparisons.
 
 ## Results
 
-The following results are based on the Report.sso output table labelled MEAN_SIZE_TIMESERIES with an additional output of mean size by cohort to better understand models with time-varying growth.
+### Result 1: Base
+The first result shows the comparability of growth models G1 and G3 at ages 4, 8, 30 and plus group (40) in an annual (one season) configuration.  The results include the old model (X) and the new model (O).
 
-The tables below display mean length-at-age for females (Sex = 1), Season 1, Subseason 1, Yr = 1985 and selected ages for brevity.
+#### Growth models G1 and G3
 
-With growth 1, the impact of time-varying Linf in 1980 affects the age 1 fish at the beginning of 1980 because they are just appearing in the population.
+|                     |         |
+|---------------------|---------|
+| Growth model:       | G1, G3  |
+| Seasonality:        | annual  |
+| Season & subseason: | 1, 1    |
+
 
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable"
+#| fig-cap: "Mean length-at-age for the one season model with growth option G1 (von Bertallanffy) and G3 in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
 
+library(ggplot2)
+library(dplyr)
 library(gt)
 library(scales)
 
 # locally this works better
-# results <- read.csv(here::here("example_files", "all_models_growthseries.csv"))
+# results <- read.csv(here::here("website","qmds","example_files", "all_models_growthseries.csv"))
 
 results <- read.csv(file.path(getwd(), "example_files", "all_models_growthseries.csv"))
 
-age_cols <- c("X0", "X1", "X2", "X3", "X4", "X39", "X40")
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "oneseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the one season model with growth option G1\n(von Bertallanffy) and G3 in subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+This comparison of the old and new models illustrate their overall similarity. They both show the expected decline in mean length-at-age (henceforth: length) response to the 1980 reduction in Linf, followed by the increase in 1999 for four year olds from the cohort growth dev on the 1995-1997 cohorts. There is a small discrepancy for one cohort (4 year olds in 1983, 8 in 1987). The old model used the reduced Linf in 1980 to reduce the mean size of the entering year class in that year, rather than affecting only their growth to the next age in 1981. The new model corrects this problem.
 
 
-tbl <- results |>
-  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X39`,`X40`) |>
-  dplyr::mutate(
-    Season = factor(Season, levels = c("oneseas", "twoseas", "seas_as_years"))) |>
-  dplyr::arrange(Growth, Season, Seas, SubSeas) 
+#### Growth model G2R (Richards)
+With model G2R, we see that the old code did not contain the trap to prevent shrinking of fish.  Therefore size at ages 30 and 40 began declining when Linf was reduced to 65. The shrinkage trap is now implemented for all growth models.
 
-tbl1 <- tbl |> dplyr::filter(Season %in% c("oneseas"),
-                             Model == "3.30.24.1",
-                             Growth == "growth1",
-                             Yr <=1982,
-                             Seas == 1,
-                             SubSeas == 1) |>
+|                     |         |
+|---------------------|---------|
+| Growth model:       | G2R     |
+| Seasonality:        | annual  |
+| Season & subseason: | 1, 1    |
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season model with growth option G2R (Richards) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth2_richards",
+                Season == "oneseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the one season model with growth option G2R\n(Richards) in subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+### Result 2: Seasons-as-years demo
+
+This investigation was launched on the basis of discrepancies that appeared in a Gompertz model with seasons-as-years and time-varying growth. First let’s show that a continuous string of 6 month seasons-as-years compares as expected to the annual model and the two season model in a year before time-varying starts when using the growth option 1 or 2.  The length at age 4 seasons in the seasons-as-years is the same as the length at age 2 years in the annual and seasonal model.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the all seasonal configurations of growth option 1 (von Bertalanffy) for season 1 and subseason 1 in 1979 using the v3.30.24.1 SS3 executable"
+tbl0 <- results |> 
+        dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X39`,`X40`) |>
+        dplyr::filter(Model == "3.30.24.1",
+                      Growth == "growth1",
+                      Yr == 1979,
+                      Seas == 1,
+                      SubSeas == 1) |>
+  gt::tab_style(
+    style = gt::cell_borders(
+      sides = "all",
+      color = "red",
+      weight = gt::px(2)
+    ),
+    locations = list(
+      gt::cells_body(
+        columns = X2,
+        rows = Season == "oneseas"
+      ),
+      gt::cells_body(
+        columns = X4,
+        rows = Season == "seas_as_years" 
+      )
+    )
+  )
+tbl0
+```
+
+### Result 3: Problem with season duration < 1.0
+
+#### Growth model G2G (Gompertz)
+ For this demonstration, the [seasons-as-years]{.underline} configuration is used with G2G (Gompertz) growth. When growth becomes time-varying in 1980, SS3 begins recalculating size-at-age using the seasonal growth code. However, that code was applying season duration twice, so growth slows by 50% in comparison to the corrected model.
+
+|                     |                  |
+|---------------------|------------------|
+| Growth model:       | G2G              |
+| Seasonality:        | seasons-as-years |
+| Season & subseason: | 1, 1             |
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the seasons-as-years model with growth option G2G (Gompertz) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth2_gompertz",
+                Season == "seas_as_years",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the seasons-as-years model with growth option G2G\n(Gompertz) in subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+#### Growth model G2R (Richards)
+The same occurs for Richards which uses the same code as Gompertz, just a different value for the exponent:
+
+|                     |                  |
+|---------------------|------------------|
+| Growth model:       | G2R              |
+| Seasonality:        | seasons-as-years |
+| Season & subseason: | 1, 1             |
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the seasons-as-years model with growth option G2R (Richards) in subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth2_richards",
+                Season == "seas_as_years",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the seasons-as-years model with growth option G2R\n(Richards) in subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+
+
+#### Growth model G1 with seasons-as-years 
+
+The next figure shows that the season duration of 0.5 causes the same problem for model G1.
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | seasons-as-years |
+| Season & subseason: | 1, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the seasons-as-years model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "seas_as_years",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the seasons-as-years model with growth option G1\n in season 1, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+#### Growth model G1 with seasons-as-years in subseason 2
+
+For subseason 2 (middle of season), the differential is even seen for start year lengths (years 1971-1979)
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | seasons-as-years |
+| Season & subseason: | 1, 2        |
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the seasons-as-years model with growth option G1 in season 1, subseason 2 using the old (+) and the new SS3 (O) executables at ages 4, 8, 30 and plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X4`,`X8`,`X30`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "seas_as_years",
+                Seas == 1,
+                SubSeas == 2)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X4, shape = Model, color = "X4"), size = 3) +
+  geom_point(aes(y = X8, shape = Model, color = "X8"), size = 3) +
+  geom_point(aes(y = X30, shape = Model, color = "X30"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X4" = "green", "X8" = "blue", "X30" = "red", "X40" = "purple"),
+    labels = c("X4" = "4", "X8" = "8", "X30" = "30", "X40" = "plus group"),
+    breaks = c("X4", "X8", "X30", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the seasons-as-years model with growth option G1\n in season 1, subseason 2",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+#### Growth model G1 with two seasons during season 2, subseason 1
+
+This also has some effect on the two season model for all growth types.  Most affected is seasons after season 1 for the first age on the growth curve, which was age 1 in this example.  The figure below shows season 2 for age 1 being much affected by the decline in Linf in 1980.
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | two seasons |
+| Season & subseason: | 2, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the two season model with growth option G1 in season 2, subseason 1 using the old (+) and the new SS3 (O) executables at ages 1 and 2"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X1`,`X2`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "twoseas",
+                Seas == 2,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X1, shape = Model, color = "X1"), size = 3) +
+  geom_point(aes(y = X2, shape = Model, color = "X2"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X1" = "green", "X2" = "blue"),
+    labels = c("X1" = "1", "X2" = "2"),
+    breaks = c("X1", "X2")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the two season model with growth option G1\n in season 2, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+
+### Result 4: Prevent fish shrinking
+
+# Growth model G1
+With L2 at age 38 changing from 71.65 cm to 65.0 cm in 1980, fish that were above that size are not allowed to shrink with G1, G3, G4, G5. With the scenario’s growth rate, the L2 resulted in Linf being 74.9 cm and the mean size in the plus group (age 40) being 74.75 cm in the initial year. The figure below shows ages 39 and 40 with a gradual decline towards 65.0 cm, with age 39 declining faster than the plus group.
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | one season |
+| Season & subseason: | 1, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X39`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "oneseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X39" = "red", "X40" = "purple"),
+    labels = c("X39" = "39", "X40" = "plus group"),
+    breaks = c("X39", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the one season model with growth option G1\n in season 1, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+#### Growth model G2
+
+Growth models G2/G3 and G8 lacked code to prevent shrinkage, so the decline in length occurred immediately after 1980.
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G2G         |
+| Seasonality:        | one season  |
+| Season & subseason: | 1, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season model with growth option G2G in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X39`,`X40`) |>
+  dplyr::filter(Growth == "growth2_gompertz",
+                Season == "oneseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X39" = "red", "X40" = "purple"),
+    labels = c("X39" = "39", "X40" = "plus group"),
+    breaks = c("X39", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the one season model with growth option G2G\n in season 1, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+### Result 5: Plus group updating
+
+#### Growth model G1 with two seasons for age 39 and the plus group
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | two seasons  |
+| Season & subseason: | 1, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the two seasons model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X39`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "twoseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X39" = "red", "X40" = "purple"),
+    labels = c("X39" = "39", "X40" = "plus group"),
+    breaks = c("X39", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the two seasons model with growth option G1\n in season 1, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+This is because the plus group updating depends upon the numbers-at-age of the fish in the plus group and the numbers entering the plus group. The annual model does this correctly, but the order of operations in SS3 causes the seasonal model to do the updating as a simple average, not a numbers weighted average.
+
+#### Growth model G1 with one season for age 39 and the plus group
+
+Another finding is that as the numbers-at-age in the plusgroup decline over time, the plus group mean size updating is increasingly dominated by the constant (0.01) added to the numbers in the plus group and to the numbers entering the plus group. This constant is necessary to avoid dividing by zero, but as the numbers-at-age become small relative to the constant, the length in the plus group becomes just the average of current plus group size and incoming fish size, as shown for the old model below. Reducing the constant to a very small value mitigates its impact on the mean size of fish in the plus group. Inaccuracy in plus group mean size due to small numbers has trivial impact on important quantities like Spawning Biomass, but display of the time series of mean size becomes much more logical with this revision.
+
+|                     |             |
+|---------------------|-------------|
+| Growth model:       | G1          |
+| Seasonality:        | one season  |
+| Season & subseason: | 1, 1        |
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season model with growth option G1 in season 1, subseason 1 using the old (+) and the new SS3 (O) executables at ages 39 and the plus group (40)"
+
+dat <- results |>
+  dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X39`,`X40`) |>
+  dplyr::filter(Growth == "growth1",
+                Season == "oneseas",
+                Seas == 1,
+                SubSeas == 1)
+
+ggplot2::ggplot(dat, aes(x = Yr)) +
+  geom_point(aes(y = X39, shape = Model, color = "X39"), size = 3) +
+  geom_point(aes(y = X40, shape = Model, color = "X40"), size = 3) +
+  ylim(30, 80) +
+  scale_color_manual(
+    values = c("X39" = "red", "X40" = "purple"),
+    labels = c("X39" = "39", "X40" = "plus group"),
+    breaks = c("X39", "X40")  # Controls order in legend
+  ) +
+  scale_shape_manual(values = c(1, 3)) +
+  labs(title = "Mean length-at-age for the one season model with growth option G1\n in season 1, subseason 1",
+       x = "Year",
+       y = "Mean length-at-age",
+       shape = "Model",
+       color = "Age") +
+  theme_minimal()
+```
+
+### Result 6: Season match-up
+
+The middle of the year for a one season model should match the beginning of season 2 in a two season model. The table below shows a match for 1971, but during the time series after the time-varying growth, there is a discrepancy at age 1 for the two season model. This only occurs for age 1 because it is the first age after A1.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Mean length-at-age for the one season and two seasons models with growth option G1 in years 1971 and 1985 using the v3.30.24.1 SS3 executable"
+tbl1 <- results |> 
+        dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X39`,`X40`) |>
+        dplyr::filter(Season %in% c("oneseas", "twoseas"),
+                      Model == "3.30.24.1",
+                      Growth == "growth1",
+                      Yr %in% c(1971, 1985),
+                      (Season == "oneseas" & Seas == 1 & SubSeas == 2) |
+                        (Season == "twoseas" & Seas == 2 & SubSeas == 1)) |>
   gt::gt() |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Yr == 1980)
-    ) |>
     gt::tab_style(
     style = gt::cell_borders(
       sides = "all",
@@ -122,54 +610,60 @@ tbl1 <- tbl |> dplyr::filter(Season %in% c("oneseas"),
       weight = gt::px(2)
     ),
     locations = gt::cells_body(
-      columns = X1,
-      rows = Yr == 1980
+      columns = c(X1),
+      rows = Yr == 1985 & Season == "twoseas"
     )
   )
-
 tbl1
 ```
 
-And the time-varying Linf affects all other ages by the middle of 1980 (e.g. subseason = 2), then into 1981.
+The code changes in new SS3 executable resolve this problem:
 
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Mean length-at-age for the one season model with growth option 1 (von Bertallanffy) in subseason 2 using the current SS3 executable"
-tbl2 <- tbl |> dplyr::filter(Season %in% c("oneseas"),
-                             Model == "3.30.24.1",
-                             Growth == "growth1",
-                             Yr <=1982,
-                             Seas == 1,
-                             SubSeas == 2) |>
+#| fig-cap: "Mean length-at-age for the one season and two seasons models with growth option G1 in years 1971 and 1985 using the new SS3 executable"
+tbl2 <- results |> 
+        dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X39`,`X40`) |>
+        dplyr::filter(Season %in% c("oneseas", "twoseas"),
+                      Model == "test",
+                      Growth == "growth1",
+                      Yr %in% c(1971, 1985),
+                      (Season == "oneseas" & Seas == 1 & SubSeas == 2) |
+                        (Season == "twoseas" & Seas == 2 & SubSeas == 1)) |>
   gt::gt() |>
-  gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Yr >= 1980)
+    gt::tab_style(
+    style = gt::cell_borders(
+      sides = "all",
+      color = "red",
+      weight = gt::px(2)
+    ),
+    locations = gt::cells_body(
+      columns = c(X1),
+      rows = Yr == 1985 & Season == "twoseas"
     )
-
+  )
 tbl2
 ```
 
-The two season model matches the annual growth of the annual model, except for the plus group.
+### Result 7: Delta tables
 
+#### Growth model G1; one season; season 1; subseas 1
 ```{r}
+#| eval: false
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the current SS3 executable"
-tbl3 <- tbl |> dplyr::filter(Season %in% c("twoseas"),
-                             Model == "3.30.24.1",
-                             Growth == "growth1",
-                             Yr <=1982,
-                             Seas == 1,
-                             SubSeas == 1) |>
+#| fig-cap: "Mean length-at-age for the one season and two seasons models with growth option G1 in years 1971 and 1985 using the new SS3 executable"
+tbl2 <- results |> 
+        dplyr::select(Growth,Season,Model,Morph,Yr,Seas,SubSeas,`X0`,`X1`,`X2`,`X3`,`X4`,`X5`,`X6`,`X7`,`X8`,`X28`,`X29`,`X30`,`X31`,`X32`,`X33`,`X34`,`X35`,`X36`,`X37`,`X38`,`X39`,`X40`) |>
+        dplyr::filter(Season %in% c("oneseas"),
+                      Model == "test",
+                      Growth == "growth1",
+                      Seas == 1,
+                      SubSeas == 1) |> 
   gt::gt() |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Yr >= 1981)
-    ) |>
     gt::tab_style(
     style = gt::cell_borders(
       sides = "all",
@@ -177,143 +671,46 @@ tbl3 <- tbl |> dplyr::filter(Season %in% c("twoseas"),
       weight = gt::px(2)
     ),
     locations = gt::cells_body(
-      columns = X40,
-      rows = Yr >= 1981
-    )
-  )
-
-tbl3
-```
-
-This is because the plus group updating depends upon the numbers-at-age of the fish in the plus group and the numbers entering the plus group. The annual model does this correctly, but the order of operations in SS3 causes the seasonal model to do the updating as a simple average, not a numbers weighted average. This discrepancy is quite structural and is not addressed in the updated model.
-
-The middle of the year for a one season model should match the beginning of season 2 in a two season model. Below, the display for years 1971 shows a match, but during the time series after the time-varying growth, there are noticeable discrepancies for the two season model.
-
-```{r}
-#| echo: false
-#| warning: false
-#| message: false
-#| fig-cap: "Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the current SS3 executable"
-tbl4 <- tbl |> dplyr::filter(Season %in% c("oneseas","twoseas"),
-                             Model == "3.30.24.1",
-                             Growth == "growth1",
-                             Yr %in% c(1971,1985),
-                             (Season == "oneseas" & Seas == 1 & SubSeas == 2) |
-                               (Season == "twoseas" & Seas == 2 & SubSeas == 1)) |>
-  gt::gt() |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Yr == 1985 & Season == "twoseas")
-    ) |>
-    gt::tab_style(
-    style = gt::cell_borders(
-      sides = "all",
-      color = "red",
-      weight = gt::px(2)
-    ),
-    locations = gt::cells_body(
-      columns = c(X1,X40),
+      columns = c(X1),
       rows = Yr == 1985 & Season == "twoseas"
     )
   )
-
-tbl4
+tbl2
 ```
 
-The code changes in 3.30.25 resolve this problem:
-```{r}
-#| echo: false
-#| warning: false
-#| message: false
-#| fig-cap: "Mean length-at-age for the one season and two season models with growth option 1 (von Bertallanffy) for season 1 and subseason 2 and then season 2 and subseason 1 for years 1971 and 1985 using the updated SS3 executable"
-tbl5 <- tbl |> dplyr::filter(Season %in% c("oneseas","twoseas"),
-                             Model == "test",
-                             Growth == "growth1",
-                             Yr %in% c(1971,1985),
-                             (Season == "oneseas" & Seas == 1 & SubSeas == 2) |
-                               (Season == "twoseas" & Seas == 2 & SubSeas == 1)) |>
-  gt::gt() |>
-    gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Yr == 1985 & Season == "twoseas")
-    ) |>
-    gt::tab_style(
-    style = gt::cell_borders(
-      sides = "all",
-      color = "red",
-      weight = gt::px(2)
-    ),
-    locations = gt::cells_body(
-      columns = c(X1,X40),
-      rows = Yr == 1985 & Season == "twoseas"
-    )
-  )
 
-tbl5
-```
+#### Growth model G1; two seasons; season 1; subseas 1
 
-This investigation was launched on the basis of discrepancies that appeared in a Richards/Gompertz model with seasons-as-years and time-varying growth. First let’s show that a continuous string of 6 month seasons-as-years compares as expected to the annual model and the two season model in a year before time-varying starts when using the growth option 1 or 2. The size at age 4 seasons in the seasons as years is the same as the size at age 2 years in the annual and seasonal model.
+#### Growth model G1; seasons-as-years; season 1; subseas 1
 
-```{r}
-#| echo: false
-#| warning: false
-#| message: false
-#| fig-cap: "Mean length-at-age for the two season model with growth option 1 (von Bertallanffy) in subseason 1 using the updated SS3 executable"
-tbl6 <- tbl |> dplyr::filter(Season %in% c("oneseas","twoseas", "seas_as_years"),
-                             Model == "3.30.24.1",
-                             Growth == "growth1",
-                             Yr %in% c(1979),
-                             Seas == 1,
-                             SubSeas == 1) |>
-
-  gt::gt()
-
-tbl6
-```
-
-Here we compare 1979 (before timevary growth) to 1983, after Linf increased in 1980. With the one season model, the size-at-age increases slightly, as expected. However, with the seasons-as-years, the size-at-age decreases. This is because that section of code was erroneously applying the season duration twice.
-
-```{r}
-#| echo: false
-#| warning: false
-#| message: false
-#| fig-cap: "Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the 3.30.24.1 SS3 executable"
-tbl6 <- tbl |> dplyr::filter(Season %in% c("oneseas","seas_as_years"),
-                             Model == "3.30.24.1",
-                             Growth == "growth2",
-                             Yr %in% c(1979, 1983),
-                             Seas == 1,
-                             SubSeas == 1) |>
-
-  gt::gt() |>
-      gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Season == "seas_as_years")
-    ) 
-
-tbl6
-```
-
-The updated model corrects this problem.
-
-```{r}
-#| echo: false
-#| warning: false
-#| message: false
-#| fig-cap: "Mean length-at-age for the one season and seasons-as-years models with growth option 2 (Richards/Gompertz) in subseason 1 using the test SS3 executable"
-tbl6 <- tbl |> dplyr::filter(Season %in% c("oneseas","seas_as_years"),
-                             Model == "test",
-                             Growth == "growth2",
-                             Yr %in% c(1979, 1983),
-                             Seas == 1,
-                             SubSeas == 1) |>
-
-  gt::gt() |>
-      gt::tab_style(
-      style = gt::cell_fill(color = "yellow"),
-      locations = gt::cells_body(rows = Season == "seas_as_years")
-    ) 
+#### Growth model G1; season 1; subseason 2. one season (top);seasons_as_years (mid); two seasons
 
 
-tbl6
-```
+## Actions
+
+- Resolves [[Bug]: growth discrepancy when season duration is < 1.0 (months < 12) and growth type is Gompertz-Richards #735](https://github.com/nmfs-ost/ss3-source-code/issues/735)
+- [[Question]: Code review for growth #156](https://github.com/nmfs-ost/ss3-source-code/issues/156)
+- [[Bug]: Richards growth interacts with timevary growth trap #24](https://github.com/nmfs-ost/ss3-source-code/issues/24)
+- [plusgroup mean size updating #760](https://github.com/nmfs-ost/ss3-source-code/issues/760)
+
+## Model Changes
+
+**Key change: Correct the usage of season duration as a multiplier on the growth rate and improve documentation of this code. Some scenarios were applying it twice, but that went undetected whenever season duration equaled 1.0**
+
+- Implement a trap to prevent shrinkage of mean size for the Richards/Gompertz and Cessation model. Previously it was only implemented for von Bertalanffy models. Note that the trap for the von Bertalanffy models is implemented on the remaining growth potential, but the trap for the Richards and Cessation is done on the resultant size-at-age.
+- Revise cohort growth dev to work correctly for Richards. The challenge is that growth is working on $log(size)$ in Richards and Gompertz.
+- Add warning if `AFIX2` age is set greater than `nages` because it caused inaccurate Linf calculation (except if 999 code is used).
+- Cohort growth dev included in the testing and added to the Cessation model.
+- Correct (in readcontrol.tpl) the identification of ages as linear growth in order to implement time-varying growth parameters in the correct year.
+- Add -997 to the options for growth in the plus group:
+    - Value (e.g. 0.12) which should approx initial Z;
+    - -999 replicates v3.24 (with Z = 0.2 and numbers weighted updating in years with time-varying growth)
+    - -998 ignores growth within plus group in initial year and disables time-varying changes in plus group mean size during the time series
+    - -997 ignores growth within plus group in initial year and enables updating time-varying plus group
+    - #_note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned on.
+- Improve algorithm for calculating the numbers-weighted updating of the mean size in the plus group. The previous approach did a simple average in some configurations, especially with > 1 season. 
+    - Numbers weighted averaging was adding 0.01 to the numbers to avoid divide by 0, but as actual numbers in population get below that value, the calculation of the weighted average size-at-age for the plusgroup was distorted. This was noted in the Growth Test by a difference in the rate of decline in plus group mean size between the two season and the one season model. Mitigate this issue by reducing the constant to 1.0e-09. Note that inaccurate mean size of plus group in this situation has trivial impact on SSB, but could be misleading if extracted and used outside the model. Note that the weighted average updating of plus group mean size-at-age is only implemented in years with time-varying growth flag turned on.
+    - For models with >1 season the numbers_at-age were not yet calculated at the time they are needed for the plus group calculation, so the calculation was a simple average. Improve the situation by using the numbers from 1 year (nseas) ago, which should be close to the correct ratio of numbers in the plus group relative to incoming numbers. However, some inaccuracy remains when there is a large cohort involved.
+- Refactor VBK value. Previously, the VBK variable was given a negative value when first created. This continually caused confusion when editing the code. Change so that the variable now has a positive value and the negative is in the code accessing that variable.
+- Augment the `MEAN_SIZE_TIMESERIES` output by adding a second table organized by cohort rather than year.
+
