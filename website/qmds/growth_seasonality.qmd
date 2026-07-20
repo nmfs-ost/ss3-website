@@ -35,7 +35,7 @@ Unfortunately, as growth options were developed, nearly all the testing was with
 
 ## Test setup
 
-The testbed for this demonstration started with the simple model setup which uses [von Bertallanffy growth](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html#Growth), single annual season, and growth parameters that were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
+The testbed for this demonstration (located in [this GitHub repository](https://github.com/e-perl-NOAA/growth-test-models)) started with the simple model setup which uses [von Bertallanffy growth](https://nmfs-ost.github.io/ss3-doc/SS330_User_Manual_release.html#Growth), single annual season, and growth parameters that were not time-varying. From that base model, 42 model setups were created to cover all combinations of the following features:
 
 |                |                  |
 |----------------|----------------- |
